@@ -47,8 +47,10 @@ Séances : M2A le 2/11 et le 25/11, M2B le 4/11 et le 26/11 (13h30-17h). Fil rou
 - [ ] Tester la chaîne de prompts de bout en bout sur un outil gratuit avec la fiche Nordval (vérifier que 7 à 8 min suffisent).
 - [ ] Imprimer ou projeter le texte de l'audit : les étudiants doivent pouvoir le lire en cellule (le prévoir aussi en PDF).
 - [ ] L'étude « Deloitte 2026 » de l'audit est **volontairement inventée** (erreur n°6) : ne pas la reprendre ailleurs.
-- [ ] Séance 2 : déroulé à valider (recommandation, charte d'usage de l'IA de l'équipe, comité de direction avec le simulateur).
-- [ ] Ressources PDF : fiche méthode chaîne de prompts, dossier Nordval, grille, glossaire.
+- [x] Séance 2 (`apps/ia-productivite-s2/?classe=m2a` ou `m2b`) : modélisation en chaîne, audit d'un modèle (7 erreurs), tri des usages, charte IA, comité, grille d'évaluation (page Jury).
+- [ ] Vidéo NotebookLM n°2 « Manager une équipe augmentée » (doc NotebookLM 25 novembre ; la même pour les M2B le 26).
+- [ ] Dire aux cellules d'apporter leur scénario de la séance 1 (le journal n'est repris que sur le même navigateur).
+- [ ] Ressources PDF : fiche méthode chaîne de prompts, dossier Nordval, grille, glossaire, fiche modélisation, modèle de charte IA.
 
 # Premier cours : B3, IA appliquée à la communication
 

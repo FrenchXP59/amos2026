@@ -55,7 +55,7 @@
   };
   const persist = () => {
     const equipes = { names: S.names, scores: S.scores, roster: S.roster, members: S.members, ordre: S.ordre, jury: S.jury };
-    if (KEY_J) write(KEY_J, { journal: S.journal });
+    if (KEY_J) write(KEY_J, Object.assign(read(KEY_J), { journal: S.journal }));   // fusion : ne jamais écraser les équipes stockées sous la même clé
     if (KEY_EQ === KEY) write(KEY, Object.assign({ theme: S.theme, journal: S.journal }, equipes));
     else { write(KEY, { theme: S.theme, journal: S.journal }); write(KEY_EQ, Object.assign(read(KEY_EQ), equipes)); }
   };

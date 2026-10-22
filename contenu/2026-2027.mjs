@@ -446,8 +446,8 @@ export default {
           "apps": [
             {
               "outil": "appli-ia-productivite",
-              "url": "apps/ia-productivite/index.html?classe=m2a#pitch",
-              "label": "Simulateur de comité de direction"
+              "url": "apps/ia-productivite-s2/index.html?classe=m2a",
+              "label": "Appli de la séance"
             }
           ],
           "ressources": []
@@ -485,8 +485,8 @@ export default {
           "apps": [
             {
               "outil": "appli-ia-productivite",
-              "url": "apps/ia-productivite/index.html?classe=m2b#pitch",
-              "label": "Simulateur de comité de direction"
+              "url": "apps/ia-productivite-s2/index.html?classe=m2b",
+              "label": "Appli de la séance"
             }
           ],
           "ressources": []
