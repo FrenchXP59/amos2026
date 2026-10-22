@@ -652,6 +652,39 @@ dialog::backdrop { background: rgba(6, 12, 22, .6); }
 .pal.first.in { animation: crown .9s cubic-bezier(.2, 1.5, .4, 1); }
 @keyframes crown { 0% { opacity: 0; transform: scale(.7); } 60% { transform: scale(1.05); } 100% { opacity: 1; transform: none; } }
 
+
+/* ---------- Motion design (lot 1) ---------- */
+/* Points volants */
+.flyer { position: fixed; left: 0; top: 0; z-index: 60; pointer-events: none; font: 900 2.6rem/1 var(--font-display); color: var(--lamp-ink); text-shadow: 0 0 18px var(--glow), 0 2px 0 rgba(0, 0, 0, .35); will-change: transform, opacity; }
+/* Compte à rebours géant (10 dernières secondes) */
+#countdown { position: fixed; inset: 0; z-index: 55; display: grid; place-items: center; pointer-events: none; opacity: 0; font: 900 min(46vh, 34vw)/1 var(--font-display); color: var(--ink); font-variant-numeric: tabular-nums; text-shadow: 0 0 60px var(--glow); }
+#countdown.on { opacity: .9; background: radial-gradient(circle at center, rgba(0, 0, 0, .35), transparent 65%); }
+#countdown.beat { animation: beat .9s cubic-bezier(.2, 1.4, .4, 1); }
+#countdown.stop { color: var(--ko); font-size: min(30vh, 22vw); text-transform: uppercase; animation: stopIn .5s cubic-bezier(.2, 1.4, .4, 1); }
+@keyframes beat { 0% { transform: scale(1.35); opacity: 0; } 25% { opacity: .9; } 100% { transform: scale(.92); opacity: .35; } }
+@keyframes stopIn { from { transform: scale(2); opacity: 0; } to { transform: none; opacity: 1; } }
+[data-theme="jour"] #countdown.on { background: radial-gradient(circle at center, rgba(255, 255, 255, .55), transparent 65%); }
+/* Machine à sous */
+.rolling { filter: blur(.6px); opacity: .85; display: inline-block; }
+.landed { display: inline-block; animation: land .45s cubic-bezier(.2, 1.6, .4, 1); }
+@keyframes land { 0% { transform: translateY(-14px) scale(1.08); color: var(--lamp-ink); } 100% { transform: none; } }
+.objection .landed { animation-name: landObj; }
+@keyframes landObj { 0% { transform: translateY(-14px) scale(1.06); color: #FFC93C; } 100% { transform: none; } }
+.tour-body strong.landed { color: var(--lamp-ink); }
+p.rolling, p.landed { display: block; }
+/* Carte du profil : battue avant d'être posée */
+.carte.shuffle { animation: shuffle .9s ease-in-out; }
+@keyframes shuffle { 0%, 100% { transform: none; } 15% { transform: translateX(-26px) rotate(-8deg); } 30% { transform: translateX(22px) rotate(7deg); } 45% { transform: translateX(-16px) rotate(-5deg); } 60% { transform: translateX(12px) rotate(4deg); } 75% { transform: translateX(-6px) rotate(-2deg); } }
+/* Suspense avant la première place */
+.suspense { animation: suspense .18s linear infinite; }
+@keyframes suspense { 50% { transform: translateX(2px); filter: brightness(1.15); } }
+.podium .bar b { font: inherit; }
+.podium .pl.winner .bar { animation: winner 1.2s ease-in-out 3; box-shadow: 0 0 0 3px var(--lamp), 0 0 50px var(--glow); }
+@keyframes winner { 50% { transform: translateY(-8px); } }
+.pal-pts b { font: inherit; }
+/* Confettis */
+canvas.confetti { position: fixed; inset: 0; width: 100vw; height: 100vh; z-index: 58; pointer-events: none; }
+
 /* ---------- Responsive ---------- */
 @media (max-width: 1100px) {
   .grid-3, .slots, .facts, .agences-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
