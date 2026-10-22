@@ -436,6 +436,41 @@ h1, h2, h3 { font-family: var(--font-display); line-height: 1.02; margin: 0; let
 .defauts { margin: 14px 0 0; padding-left: 20px; color: var(--ko); font-weight: 700; }
 .defauts li { margin: 4px 0; }
 
+/* ---------- Contexte du dossier ---------- */
+.ctx { margin: 0; padding-left: 20px; display: grid; gap: 8px; }
+
+/* ---------- Tri ---------- */
+.task.tri .cats button { width: auto; padding: 0 12px; font: 700 .9rem/1 var(--font-body); }
+
+/* ---------- Chaîne de prompts ---------- */
+.chain { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 26px; }
+.link { position: relative; background: var(--surface); border: 1px solid var(--line); border-radius: var(--r-m); padding: 16px; display: flex; flex-direction: column; gap: 8px; transition: border-color .3s, box-shadow .3s; }
+.link .n { font: 900 2.6rem/.8 var(--font-display); color: var(--muted); transition: color .3s; }
+.link h3 { font-size: 1.5rem; font-weight: 800; }
+.link p { margin: 0; font-size: .92rem; }
+.link textarea { width: 100%; background: var(--surface-2); border: 1px solid var(--line); border-radius: var(--r-s); padding: 8px 10px; font-size: .92rem; line-height: 1.45; resize: vertical; }
+.link::after { content: ""; position: absolute; right: -24px; top: 34px; width: 22px; height: 3px; background: var(--line); transform-origin: left; }
+.link:last-child::after { display: none; }
+.link.lit { border-color: var(--lamp); box-shadow: 0 0 26px -8px var(--glow); }
+.link.lit .n { color: var(--lamp-ink); }
+.link.flow::after { background: var(--lamp); animation: flow .6s ease-out; }
+@keyframes flow { from { transform: scaleX(0); } }
+
+/* ---------- Audit ---------- */
+.audit-grid { display: grid; grid-template-columns: 1.6fr 1fr; gap: 18px; align-items: start; }
+.audit-doc { font-size: 1.05rem; line-height: 1.7; }
+.audit-doc p { max-width: 70ch; }
+.kicker-doc { display: block; font: 800 1.3rem/1.1 var(--font-display); margin-bottom: 6px; color: var(--muted); }
+mark.err { background: transparent; color: inherit; border-radius: 3px; transition: background .3s, box-shadow .3s; }
+mark.err sup { display: none; font-weight: 700; color: var(--ko); margin-left: 2px; }
+mark.err.on { background: color-mix(in srgb, var(--ko) 22%, transparent); box-shadow: 0 0 0 2px color-mix(in srgb, var(--ko) 45%, transparent); }
+mark.err.on sup { display: inline; }
+.audit-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+.audit-list li { background: var(--surface); border: 1px solid var(--line); border-radius: var(--r-m); padding: 12px 14px; }
+.audit-list li.on { border-color: var(--ko); }
+.err-body p { margin: 4px 0 0; color: var(--muted); font-size: .95rem; }
+.err-body strong { display: block; margin-top: 8px; }
+
 /* ---------- Simulateur de pitch ---------- */
 .pitch-wrap { display: grid; grid-template-columns: minmax(260px, .8fr) 1.6fr; gap: 18px; align-items: start; }
 .roles { list-style: none; counter-reset: ro; margin: 6px 0 0; padding: 0; }
@@ -546,7 +581,8 @@ dialog::backdrop { background: rgba(6, 12, 22, .6); }
 /* ---------- Responsive ---------- */
 @media (max-width: 1100px) {
   .grid-3, .slots, .facts, .agences-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .draw, .pitch-wrap { grid-template-columns: 1fr; }
+  .draw, .pitch-wrap, .audit-grid { grid-template-columns: 1fr; }
+  .chain { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .rules, .work { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .tech { grid-template-columns: repeat(3, minmax(0, 1fr)); }
   .criteria { grid-template-columns: repeat(3, minmax(0, 1fr)); }
@@ -565,7 +601,7 @@ dialog::backdrop { background: rgba(6, 12, 22, .6); }
   .rail { position: fixed; inset: 0 30% 0 0; z-index: 30; transform: translateX(-102%); transition: transform .3s; border-right: 1px solid var(--line); }
   .rail.open { transform: none; box-shadow: 20px 0 60px rgba(0, 0, 0, .4); }
   .stage { overflow: visible; padding: 22px 16px 100px; }
-  .agences-grid, .grid-2, .grid-3, .slots, .facts, .rules, .work, .builder, .options, .vf, .gloss, .teaser, .tech { grid-template-columns: 1fr; }
+  .chain, .agences-grid, .grid-2, .grid-3, .slots, .facts, .rules, .work, .builder, .options, .vf, .gloss, .teaser, .tech { grid-template-columns: 1fr; }
   .criteria { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .stairs { grid-template-columns: repeat(2, minmax(0, 1fr)); min-height: 0; }
   .step:nth-child(n) { min-height: 0; }

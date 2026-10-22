@@ -9,7 +9,19 @@ Box 2026-2027 et premier cours (B3, IA appliquée à la communication).
 - [ ] Passer le dépôt en privé pour cloisonner vraiment le contenu.
 - [ ] Valider le rattachement des applis existantes aux cours (`contenu/2026-2027.mjs`, rubrique `outils`).
 - [ ] Ajouter l'adresse d'AmosBattle si on l'utilise, et celle de l'ancienne box 2025-2026 (`archive.url`).
-- [ ] Sortir le moteur de l'appli B3 en modèle réutilisable, puis créer l'appli M2 « IA et productivité » (1re séance le 2/11 après-midi).
+- [x] Moteur commun des applis (`apps/moteur/`) : adaptation par classe, gabarits tri, chaîne et audit.
+- [x] Appli M2 « IA et productivité », séance 1 (`apps/ia-productivite/?classe=m2a` ou `m2b`).
+
+# Cours M2 : IA et productivité
+
+Séances : M2A le 2/11 et le 25/11, M2B le 4/11 et le 26/11 (13h30-17h). Fil rouge : Olympique Nordval (club fictif de Ligue 2).
+
+- [ ] **Vidéo NotebookLM n°1** « Le manager augmenté : orchestrer l'IA pour décider » : URL dans `content.js`, rubrique `videos.s1.url`.
+- [ ] Tester la chaîne de prompts de bout en bout sur un outil gratuit avec la fiche Nordval (vérifier que 7 à 8 min suffisent).
+- [ ] Imprimer ou projeter le texte de l'audit : les étudiants doivent pouvoir le lire en cellule (le prévoir aussi en PDF).
+- [ ] L'étude « Deloitte 2026 » de l'audit est **volontairement inventée** (erreur n°6) : ne pas la reprendre ailleurs.
+- [ ] Séance 2 : déroulé à valider (recommandation, charte d'usage de l'IA de l'équipe, comité de direction avec le simulateur).
+- [ ] Ressources PDF : fiche méthode chaîne de prompts, dossier Nordval, grille, glossaire.
 
 # Premier cours : B3, IA appliquée à la communication
 

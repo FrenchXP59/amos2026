@@ -112,7 +112,7 @@ export default {
       "semestre": 1,
       "volume": "7 h en présentiel",
       "evaluation": "Contrôle continu",
-      "descriptif": "De l'utilisateur au manager qui intègre l'IA dans la décision stratégique : analyse concurrentielle, veille augmentée, modélisation de scénarios, évaluation de campagnes, et cadrage des usages de l'IA dans une équipe.",
+      "descriptif": "De l'utilisateur au manager qui intègre l'IA dans la décision stratégique : frontière irrégulière de l'IA, chaînes de prompts, audit des sorties, scénarios et cadrage des usages de l'IA dans une équipe. Fil rouge : l'Olympique Nordval, un club de Ligue 2 fictif.",
       "objectifs": [
         "Conduire une analyse stratégique fiable avec l'IA",
         "Concevoir des chaînes de prompts pour des problématiques marketing et com",
@@ -377,9 +377,15 @@ export default {
           "n": 1,
           "date": "2026-11-02",
           "heure": "13:30–17:00",
-          "titre": "",
+          "titre": "Frontière irrégulière, chaînes de prompts, diagnostic et scénarios",
           "video": "",
-          "apps": [],
+          "apps": [
+            {
+              "outil": "appli-ia-productivite",
+              "url": "apps/ia-productivite/index.html?classe=m2a",
+              "label": "Appli de la séance"
+            }
+          ],
           "ressources": []
         },
         {
@@ -387,9 +393,15 @@ export default {
           "n": 2,
           "date": "2026-11-25",
           "heure": "13:30–17:00",
-          "titre": "",
+          "titre": "Recommandation, charte IA d'équipe et comité de direction",
           "video": "",
-          "apps": [],
+          "apps": [
+            {
+              "outil": "appli-ia-productivite",
+              "url": "apps/ia-productivite/index.html?classe=m2a#pitch",
+              "label": "Simulateur de comité de direction"
+            }
+          ],
           "ressources": []
         }
       ]
@@ -404,9 +416,15 @@ export default {
           "n": 1,
           "date": "2026-11-04",
           "heure": "13:30–17:00",
-          "titre": "",
+          "titre": "Frontière irrégulière, chaînes de prompts, diagnostic et scénarios",
           "video": "",
-          "apps": [],
+          "apps": [
+            {
+              "outil": "appli-ia-productivite",
+              "url": "apps/ia-productivite/index.html?classe=m2b",
+              "label": "Appli de la séance"
+            }
+          ],
           "ressources": []
         },
         {
@@ -414,9 +432,15 @@ export default {
           "n": 2,
           "date": "2026-11-26",
           "heure": "13:30–17:00",
-          "titre": "",
+          "titre": "Recommandation, charte IA d'équipe et comité de direction",
           "video": "",
-          "apps": [],
+          "apps": [
+            {
+              "outil": "appli-ia-productivite",
+              "url": "apps/ia-productivite/index.html?classe=m2b#pitch",
+              "label": "Simulateur de comité de direction"
+            }
+          ],
           "ressources": []
         }
       ]

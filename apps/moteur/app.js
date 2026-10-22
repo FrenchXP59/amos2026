@@ -104,7 +104,7 @@
     const d = $("#agences-dialog");
     $("#agences-edit").innerHTML = S.names.map((n, i) => `
       <div class="edit-row">
-        <input value="${esc(n)}" data-name="${i}" aria-label="Nom de l'agence ${i + 1}">
+        <input value="${esc(n)}" data-name="${i}" aria-label="Nom de l'équipe ${i + 1}">
         <div class="score-ctl">
           <button type="button" class="icon-btn" data-sc="${i}" data-d="-1" aria-label="Retirer un point">−</button>
           <output data-out="${i}">${S.scores[i]}</output>
@@ -290,16 +290,16 @@
     </div>
 
     <section class="section" id="tirage">
-      <h2>Constituer les agences</h2>
-      <p class="intro">Collez la liste de la classe, un nom par ligne, puis tirez au sort. Mêmes agences jusqu'au pitch de la séance 2. Les noms restent dans ce navigateur : rien n'est envoyé.</p>
+      <h2>Constituer les ${esc(C.config.equipes || "agences")}</h2>
+      <p class="intro">Collez la liste de la classe, un nom par ligne, puis tirez au sort. ${esc(C.config.tirageNote || "Mêmes équipes jusqu'à la fin du module.")} Les noms restent dans ce navigateur : rien n'est envoyé.</p>
       <div class="draw">
         <div class="panel draw-input">
           <label for="roster" class="field-label">Liste de la classe <span class="muted" id="roster-count"></span></label>
           <textarea id="roster" rows="10" placeholder="Prénom Nom\nPrénom Nom\n…">${esc(S.roster.join("\n"))}</textarea>
           <div class="btn-row" style="margin-top:12px">
             <button class="btn lamp" id="draw-btn">Tirer au sort</button>
-            <button class="btn" id="draw-print">Imprimer les agences</button>
-            <button class="btn" id="draw-clear">Vider les agences</button>
+            <button class="btn" id="draw-print">Imprimer les ${esc(C.config.equipes || "agences")}</button>
+            <button class="btn" id="draw-clear">Vider les ${esc(C.config.equipes || "agences")}</button>
           </div>
         </div>
         <div class="agences-grid" id="agences-grid"></div>
@@ -330,7 +330,7 @@
     let k = 0;
     g.innerHTML = S.names.map((n, i) => `
       <div class="agence-col">
-        <div class="agence-head"><span class="num">${i + 1}</span><input value="${esc(n)}" data-agname="${i}" aria-label="Nom de l'agence ${i + 1}"></div>
+        <div class="agence-head"><span class="num">${i + 1}</span><input value="${esc(n)}" data-agname="${i}" aria-label="Nom de l'équipe ${i + 1}"></div>
         <ul>${(S.members[i] || []).map((m) => `<li class="${animate ? "drop" : ""}" style="--d:${(k++ % 99) * 0.09 + Math.floor(0) }s">${esc(m)}</li>`).join("") || `<li class="empty">En attente du tirage</li>`}</ul>
       </div>`).join("");
     if (animate) {   // ordre d'apparition : un nom par agence, à tour de rôle
@@ -341,8 +341,9 @@
     $$("[data-agname]", g).forEach((inp) => (inp.oninput = () => { S.names[+inp.dataset.agname] = inp.value || `Agence ${+inp.dataset.agname + 1}`; persist(); renderBibs(); }));
   }
   function profilePoints() {
-    // Profil d'altitude stylisé : un trail urbain qui monte vers la Citadelle
-    const ys = [150, 120, 138, 92, 108, 70, 160, 96, 60, 118];
+    // Profil d'altitude stylisé, un point par étape du parcours
+    const motif = [150, 120, 138, 92, 108, 70, 160, 96, 60, 118];
+    const ys = C.parcours.map((_, i) => motif[i % motif.length]);
     const n = ys.length, x0 = 30, x1 = 1170, step = (x1 - x0) / (n - 1);
     const cps = ys.map((y, i) => [x0 + i * step, y]);
     let line = `M ${cps[0][0]} ${cps[0][1]}`;
@@ -386,7 +387,7 @@
     ${head(p, p.lede)}
     ${videoHTML(C.videos.s1)}
     <section class="section"><h2>Quiz flash</h2>${quizHTML("quiz-flash")}</section>`;
-  BIND.video = (root) => mountQuiz($("#quiz-flash", root), C.quizFlash, { award: true, timer: true, awardLabel: "Agence la plus rapide" });
+  BIND.video = (root) => mountQuiz($("#quiz-flash", root), C.quizFlash, { award: true, timer: true, awardLabel: "Équipe la plus rapide" });
 
   /* --- CP3 Rupture 2026 --- */
   RENDER.rupture = (p) => `
@@ -576,7 +577,7 @@
   };
 
   /* --- Fil rouge : dossier client --- */
-  const CAS_TABS = ["Le client", "Les cibles", "La charte", "Le travail", "Le barème", "Journal de prompts"];
+  const CAS_TABS = C.client.onglets || ["Le client", "Les cibles", "La charte", "Le travail", "Le barème", "Journal de prompts"];
   RENDER.cas = (p) => {
     const c = C.client;
     return `
@@ -603,9 +604,9 @@
   const CAS = [
     () => `<div class="grid-2">
       <div class="panel"><dl class="kv">${C.client.fiche.map(([k, v]) => `<dt>${esc(k)}</dt><dd>${esc(v)}</dd>`).join("")}</dl></div>
-      <div class="panel"><h3 style="font-size:1.6rem;margin-bottom:10px">Objectifs de l'édition 2027</h3>
+      <div class="panel"><h3 style="font-size:1.6rem;margin-bottom:10px">${esc(C.client.objectifsTitre || "Objectifs")}</h3>
         <div class="facts" style="grid-template-columns:1fr 1fr">${C.client.objectifs.map((o) => `<div class="fact"><strong>${esc(o)}</strong></div>`).join("")}</div></div>
-    </div>`,
+    </div>` + (C.client.contexte ? `<div class="panel" style="margin-top:18px"><h3 style="font-size:1.6rem;margin-bottom:10px">${esc(C.client.contexteTitre || "Le contexte")}</h3><ul class="ctx">${C.client.contexte.map((x) => `<li>${esc(x.t)} ${x.src ? src(x.src, x.nom) : ""}</li>`).join("")}</ul></div>` : ""),
     () => `<div class="targets">${C.client.cibles.map((t) => `<div class="target"><strong>${esc(t.nom)}</strong><span>${esc(t.d)}</span></div>`).join("")}</div>`,
     () => { const ch = C.client.charte; return `<div class="panel">
       <div class="swatches">${ch.couleurs.map(([n, h]) => `<div class="sw"><span style="background:${h}"></span><small>${esc(n)}</small><em>${h}</em></div>`).join("")}</div>
@@ -613,24 +614,31 @@
       <p class="muted" style="margin:16px 0 0">Charte provisoire : elle servira de référence de cohérence graphique en séance 2.</p></div>`; },
     () => `<div class="work">${C.client.travail.map((w, i) => `<div class="rule"><strong>${i + 1}. ${esc(w.t)}</strong><p>${esc(w.d)}</p></div>`).join("")}</div>
       <div class="panel" style="margin-top:16px"><p style="margin:0 0 8px"><strong>${esc(C.client.etape)}</strong></p><p class="muted" style="margin:0">${esc(C.client.seance2)}</p></div>
-      <div class="btn-row" style="margin-top:16px"><button class="btn lamp" onclick="window.__setTimer(45, true)">Lancer 45 min de travail</button></div>`,
+      <div class="btn-row" style="margin-top:16px"><button class="btn lamp" onclick="window.__setTimer(${C.client.dureeTravail || 45}, true)">Lancer ${C.client.dureeTravail || 45} min de travail</button></div>`,
     () => { const tot = C.client.bareme.reduce((a, b) => a + b.p, 0); return `<div class="panel"><table class="bareme"><tbody>
       ${C.client.bareme.map((b) => `<tr><td>${esc(b.c)}</td><td>${b.p}</td></tr>`).join("")}
       <tr class="total"><td>Total</td><td>${tot}</td></tr></tbody></table>
       <p class="muted" style="margin:10px 0 0">${esc(C.client.baremeNote)}</p></div>`; },
     () => journalHTML()
   ];
+  const JOURNAL = Object.assign({
+    titre: "Journal de prompts",
+    etapes: [{ label: "Itération V1" }, { label: "Itération V2", changement: true }, { label: "Itération V3", changement: true }],
+    changementLabel: "Ce que nous avons changé, et pourquoi",
+    critique: "Critique d'un output (grille en 6 critères)"
+  }, C.client.journal || {});
   function journalHTML() {
     const j = S.journal, v = (k) => esc(j[k] || "");
     return `<div class="panel">
       <p class="muted" style="margin-top:0">Rempli au fil de la séance, enregistré dans ce navigateur. Téléchargez-le pour le déposer.</p>
-      <div class="field"><label for="j-agence">Agence</label><select id="j-agence" data-j="agence">${S.names.map((n) => `<option ${j.agence === n ? "selected" : ""}>${esc(n)}</option>`).join("")}</select></div>
+      <div class="field"><label for="j-agence">Équipe</label><select id="j-agence" data-j="agence">${S.names.map((n) => `<option ${j.agence === n ? "selected" : ""}>${esc(n)}</option>`).join("")}</select></div>
       <div class="field"><label for="j-membres">Membres</label><input id="j-membres" data-j="membres" value="${v("membres")}"></div>
-      ${[1, 2, 3].map((n) => `<div class="iter-block"><h4>Itération V${n}</h4>
+      ${JOURNAL.etapes.map((e, i) => { const n = i + 1; return `<div class="iter-block"><h4>${esc(e.label)}</h4>
+        ${e.aide ? `<p class="muted" style="margin:0 0 8px">${esc(e.aide)}</p>` : ""}
         <div class="field"><label for="j-p${n}">Prompt</label><textarea id="j-p${n}" data-j="p${n}" rows="3">${v("p" + n)}</textarea></div>
-        ${n > 1 ? `<div class="field"><label for="j-c${n}">Ce que nous avons changé, et pourquoi</label><textarea id="j-c${n}" data-j="c${n}" rows="2">${v("c" + n)}</textarea></div>` : ""}
-      </div>`).join("")}
-      <div class="field"><label for="j-crit">Critique d'un output (grille en 6 critères)</label><textarea id="j-crit" data-j="crit" rows="4">${v("crit")}</textarea></div>
+        ${e.changement ? `<div class="field"><label for="j-c${n}">${esc(JOURNAL.changementLabel)}</label><textarea id="j-c${n}" data-j="c${n}" rows="2">${v("c" + n)}</textarea></div>` : ""}
+      </div>`; }).join("")}
+      <div class="field"><label for="j-crit">${esc(JOURNAL.critique)}</label><textarea id="j-crit" data-j="crit" rows="4">${v("crit")}</textarea></div>
       <div class="btn-row"><button class="btn lamp" id="j-dl">Télécharger le journal</button><button class="btn" id="j-clear">Effacer</button></div>
     </div>`;
   }
@@ -638,16 +646,117 @@
     $$("[data-j]", root).forEach((f) => (f.oninput = f.onchange = () => { S.journal[f.dataset.j] = f.value; persist(); }));
     $("#j-dl", root).onclick = () => {
       const j = S.journal, L = [];
-      L.push(`JOURNAL DE PROMPTS — ${C.client.nom}`, `${C.config.cours}, ${C.config.seance}`, "", `Agence : ${j.agence || S.names[0]}`, `Membres : ${j.membres || ""}`, "");
-      [1, 2, 3].forEach((n) => { L.push(`--- V${n} ---`, `Prompt : ${j["p" + n] || ""}`); if (n > 1) L.push(`Changement et justification : ${j["c" + n] || ""}`); L.push(""); });
-      L.push("--- Critique ---", j.crit || "");
+      L.push(`${JOURNAL.titre.toUpperCase()} — ${C.client.nom}`, `${C.config.cours}, ${C.config.seance}`, "", `Équipe : ${j.agence || S.names[0]}`, `Membres : ${j.membres || ""}`, "");
+      JOURNAL.etapes.forEach((e, i) => { const n = i + 1; L.push(`--- ${e.label} ---`, `Prompt : ${j["p" + n] || ""}`); if (e.changement) L.push(`${JOURNAL.changementLabel} : ${j["c" + n] || ""}`); L.push(""); });
+      L.push(`--- ${JOURNAL.critique} ---`, j.crit || "");
       const blob = new Blob([L.join("\n")], { type: "text/plain;charset=utf-8" });
       const a = document.createElement("a"); a.href = URL.createObjectURL(blob);
-      a.download = `journal-prompts-${(j.agence || "agence").toLowerCase().replace(/[^a-z0-9]+/g, "-")}.txt`;
+      a.download = `journal-${(j.agence || "equipe").toLowerCase().normalize("NFD").replace(/[^a-z0-9]+/g, "-")}.txt`;
       a.click(); setTimeout(() => URL.revokeObjectURL(a.href), 2000); toast("Journal téléchargé");
     };
-    $("#j-clear", root).onclick = () => { if (confirm("Effacer le journal enregistré dans ce navigateur ?")) { S.journal = {}; persist(); $("#cas-body", root).innerHTML = journalHTML(); bindJournal(root); } };
+    $("#j-clear", root).onclick = () => { if (confirm("Effacer le journal enregistré dans ce navigateur ?")) { S.journal = {}; persist(); $("#cas-body", root).innerHTML = journalHTML(); bindJournal(root); } };
   }
+
+  /* --- Gabarit « tri » : classer des situations, puis révéler --- */
+  RENDER.tri = (p) => {
+    const T = C[p.data];
+    return `${head(p, p.lede)}
+      <p class="intro" style="color:var(--muted);max-width:75ch">${esc(T.intro)}</p>
+      <div class="btn-row" style="margin:12px 0"><button class="btn small lamp" data-tri-all>Tout révéler</button><button class="btn small" data-tri-reset>Recommencer</button></div>
+      <div class="tasks">${T.items.map((it, i) => `
+        <div class="task tri" data-tri="${i}">
+          <span class="t">${esc(it.t)}</span>
+          <div class="choices cats" role="group">${T.categories.map((c) => `<button data-cat="${esc(c.k)}" class="${c.k === it.cat ? "answer" : ""}">${esc(c.label)}</button>`).join("")}</div>
+          <button class="btn small" data-tr>Révéler</button>
+          <span class="why" hidden>${esc(it.why)}</span>
+        </div>`).join("")}</div>
+      ${T.faits ? `<section class="section"><h2>${esc(T.faitsTitre || "Ce que disent les données")}</h2>
+        <div class="btn-row" style="margin-bottom:12px"><button class="btn lamp" data-faits>Révéler l'étude</button></div>
+        <div data-faits-body hidden><div class="facts">${T.faits.map((f) => `<div class="fact"><strong>${esc(f.chiffre)}</strong><span>${esc(f.texte)}</span></div>`).join("")}</div>
+        ${T.faitsNote ? `<p class="ask" style="margin-top:16px">${esc(T.faitsNote)}</p>` : ""}
+        ${T.source ? `<p style="margin-top:10px">${src(T.source.url, T.source.nom)}</p>` : ""}</div></section>` : ""}
+      ${awardRow("Point pour")}`;
+  };
+  BIND.tri = (root, p) => {
+    const T = C[p.data];
+    const reveal = (row, force) => {
+      const it = T.items[+row.dataset.tri], pk = $("[data-cat].picked", row), on = force || !row.classList.contains("reveal");
+      row.classList.toggle("reveal", on);
+      row.classList.toggle("right", on && !!pk && pk.dataset.cat === it.cat);
+      row.classList.toggle("wrong", on && !!pk && pk.dataset.cat !== it.cat);
+      $(".why", row).hidden = !on;
+    };
+    $$("[data-tri]", root).forEach((row) => {
+      $$("[data-cat]", row).forEach((b) => (b.onclick = () => { $$("[data-cat]", row).forEach((x) => x.classList.remove("picked")); b.classList.add("picked"); }));
+      $("[data-tr]", row).onclick = () => reveal(row);
+    });
+    $("[data-tri-all]", root).onclick = () => $$("[data-tri]", root).forEach((r) => reveal(r, true));
+    $("[data-tri-reset]", root).onclick = () => $$("[data-tri]", root).forEach((r) => { r.className = "task tri"; $(".why", r).hidden = true; $$("[data-cat]", r).forEach((x) => x.classList.remove("picked")); });
+    const fb = $("[data-faits]", root); if (fb) fb.onclick = () => { const b = $("[data-faits-body]", root); b.hidden = !b.hidden; fb.textContent = b.hidden ? "Révéler l'étude" : "Masquer l'étude"; };
+  };
+
+  /* --- Gabarit « chaîne » : une chaîne de prompts, étape par étape --- */
+  RENDER.chaine = (p) => {
+    const K = C[p.data];
+    return `${head(p, p.lede)}
+      <p style="max-width:75ch;margin:-6px 0 18px;color:var(--muted)">${esc(K.intro)}</p>
+      <div class="btn-row" style="margin-bottom:14px"><button class="btn lamp" data-run>Dérouler la chaîne</button>${C.client && C.client.ficheTexte ? `<button class="btn" data-fiche>Copier la fiche ${esc(C.client.nom)}</button>` : ""}</div>
+      <ol class="chain">${K.etapes.map((e, i) => `
+        <li class="link" data-link="${i}">
+          <span class="n">${i + 1}</span>
+          <h3>${esc(e.titre)}</h3>
+          <p class="muted">${esc(e.role)}</p>
+          <textarea data-cp="${i}" rows="6" aria-label="Prompt de l'étape ${i + 1}">${esc(e.prompt)}</textarea>
+          <button class="btn small" data-copy="${i}">Copier l'étape</button>
+        </li>`).join("")}</ol>
+      <p class="muted" style="margin-top:12px;max-width:80ch">${esc(K.note)}</p>
+      ${K.principes ? `<section class="section"><h2>${esc(K.principesTitre || "Les règles d'une bonne chaîne")}</h2><div class="tech">${K.principes.map((t) => `<div class="rule"><strong>${esc(t.t)}</strong><p>${esc(t.d)}</p></div>`).join("")}</div></section>` : ""}
+      ${K.defis ? `<section class="section"><h2>${esc(K.defisTitre || "Défis chronométrés")}</h2>${K.defisNote ? `<p class="intro">${esc(K.defisNote)}</p>` : ""}
+        <div class="grid-3">${K.defis.map((d) => `<div class="panel defi"><span class="n">${d.n}</span><h3>${esc(d.titre)}</h3><p>${esc(d.consigne)}</p><button class="btn lamp" data-defi="${d.min}">Lancer ${d.min} min</button></div>`).join("")}</div></section>` : ""}
+      ${K.battle ? `<section class="section"><h2>${esc(K.battle.titre)}</h2><p class="intro">${esc(K.battle.texte)}</p>
+        <div class="award"><span>Gagnante :</span>${S.names.map((n, i) => `<button class="btn small lamp" data-award="${i}" data-pts="3">${esc(n)} +3</button>`).join("")}</div>
+        <div class="award" style="margin-top:8px"><span>Deuxième :</span>${S.names.map((n, i) => `<button class="btn small" data-award="${i}" data-pts="1">${esc(n)} +1</button>`).join("")}</div></section>` : ""}`;
+  };
+  BIND.chaine = (root) => {
+    const fit = (t) => { t.style.height = "auto"; t.style.height = t.scrollHeight + 2 + "px"; };
+    $$("[data-cp]", root).forEach((t) => { t.oninput = () => fit(t); requestAnimationFrame(() => fit(t)); });
+    $$("[data-copy]", root).forEach((b) => (b.onclick = async () => { try { await navigator.clipboard.writeText($(`[data-cp="${b.dataset.copy}"]`, root).value); toast("Étape copiée"); } catch (e) { toast("Copie impossible : sélectionnez le texte"); } }));
+    $("[data-run]", root).onclick = () => {
+      const links = $$("[data-link]", root);
+      links.forEach((l) => l.classList.remove("lit", "flow"));
+      links.forEach((l, i) => setTimeout(() => { l.classList.add("lit"); if (i < links.length - 1) l.classList.add("flow"); }, i * 650));
+    };
+    $$("[data-defi]", root).forEach((b) => (b.onclick = () => { setTimer(+b.dataset.defi, true); toast(`Chrono lancé : ${b.dataset.defi} minutes`); }));
+    const fb = $("[data-fiche]", root);
+    if (fb) fb.onclick = async () => { try { await navigator.clipboard.writeText(C.client.ficheTexte); toast("Fiche copiée"); } catch (e) { toast("Copie impossible"); } };
+  };
+
+  /* --- Gabarit « audit » : trouver les erreurs dans une sortie d'IA --- */
+  RENDER.audit = (p) => {
+    const A = C[p.data];
+    return `${head(p, p.lede)}
+      <p style="max-width:75ch;margin:-6px 0 18px">${esc(A.consigne)}</p>
+      <div class="btn-row" style="margin-bottom:14px"><button class="btn lamp" data-audit-time>Lancer ${A.minutes || 8} min de recherche</button><button class="btn" data-audit-all>Tout révéler</button><button class="btn" data-audit-reset>Masquer</button></div>
+      <div class="audit-grid">
+        <article class="panel audit-doc"><span class="kicker-doc">${esc(A.titreDoc)}</span>
+          ${A.texte.map((para) => `<p>${para.map((seg) => typeof seg === "string" ? esc(seg) : `<mark class="err" data-err="${seg.e}">${esc(seg.t)}<sup>${seg.e + 1}</sup></mark>`).join("")}</p>`).join("")}
+        </article>
+        <ol class="audit-list">${A.erreurs.map((e, i) => `<li data-erritem="${i}"><button class="btn small" data-errbtn="${i}">Erreur ${i + 1}</button><div class="err-body" hidden><strong>${esc(e.titre)}</strong><p>${esc(e.explication)}</p></div></li>`).join("")}</ol>
+      </div>
+      ${A.lecon ? `<p class="ask" style="margin-top:18px">${esc(A.lecon)}</p>` : ""}
+      ${awardRow("Erreur trouvée par")}`;
+  };
+  BIND.audit = (root, p) => {
+    const A = C[p.data];
+    const show = (i, on) => {
+      $$(`[data-err="${i}"]`, root).forEach((m) => m.classList.toggle("on", on));
+      const li = $(`[data-erritem="${i}"]`, root); $(".err-body", li).hidden = !on; li.classList.toggle("on", on);
+    };
+    $$("[data-errbtn]", root).forEach((b) => (b.onclick = () => { const i = +b.dataset.errbtn; show(i, $(".err-body", b.parentElement).hidden); }));
+    $("[data-audit-all]", root).onclick = () => A.erreurs.forEach((_, i) => show(i, true));
+    $("[data-audit-reset]", root).onclick = () => A.erreurs.forEach((_, i) => show(i, false));
+    $("[data-audit-time]", root).onclick = () => setTimer(A.minutes || 8, true);
+  };
 
   /* --- CP9 Battle finale --- */
   RENDER.final = (p) => `
@@ -679,10 +788,10 @@
   RENDER.pitch = () => {
     const P = C.pitch;
     return `
-    <header class="page-head"><h1>Simulateur de pitch</h1><p class="lede">${esc(P.lede)}</p></header>
+    <header class="page-head"><h1>${esc(P.titre || "Simulateur de pitch")}</h1><p class="lede">${esc(P.lede)}</p></header>
     <div class="pitch-wrap">
       <div class="panel">
-        <div class="field"><label for="p-agence">Agence qui pitche</label><select id="p-agence">${S.names.map((n, i) => `<option value="${i}">${esc(n)}</option>`).join("")}</select></div>
+        <div class="field"><label for="p-agence">Équipe qui présente</label><select id="p-agence">${S.names.map((n, i) => `<option value="${i}">${esc(n)}</option>`).join("")}</select></div>
         <ol class="roles" id="p-roles"></ol>
       </div>
       <div class="panel pitch-stage">

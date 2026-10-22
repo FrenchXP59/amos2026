@@ -22,7 +22,9 @@ window.CONTENT = {
       b3a: { date: "Mardi 3 novembre 2026, 13h30 – 17h00", debut: "13:30", variables: { seance2: "lundi 23 novembre, matin" } }
     },
     variables: { seance2: "date à venir" },   // valeur par défaut sans ?classe=
-    agences: ["Agence 1", "Agence 2", "Agence 3", "Agence 4"]
+    agences: ["Agence 1", "Agence 2", "Agence 3", "Agence 4"],
+    equipes: "agences",
+    tirageNote: "Mêmes agences jusqu'au pitch de la séance 2."
   },
 
   /* ---------- Vidéos NotebookLM (colle l'URL YouTube, Drive ou .mp4) ---------- */
@@ -307,6 +309,7 @@ window.CONTENT = {
       ["Budget com", "15 000 €"],
       ["Organisateur", "Comité d'organisation CITANUIT (association)"]
     ],
+    objectifsTitre: "Objectifs de l'édition 2027",
     objectifs: ["2 500 inscrits", "40 % de néo-coureurs", "3 sponsors locaux", "10 000 abonnés Instagram"],
     cibles: [
       { nom: "Néo-coureurs 20–35 ans", d: "Courent 1 à 2 fois par semaine, jamais fait de course officielle. Cherchent une expérience à partager." },
