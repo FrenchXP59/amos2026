@@ -12,6 +12,15 @@ Box 2026-2027 et premier cours (B3, IA appliquée à la communication).
 - [x] Moteur commun des applis (`apps/moteur/`) : adaptation par classe, gabarits tri, chaîne et audit.
 - [x] Appli M2 « IA et productivité », séance 1 (`apps/ia-productivite/?classe=m2a` ou `m2b`).
 
+# Cours M1 : IA et automatisation
+
+Séances : M1A le 3/11 et le 6/11 (9h-12h30). Évaluation : participation. Fil rouge : appel d'offres du Lys Padel Open (tournoi fictif).
+
+- [x] Appli séance 1 (`apps/ia-automatisation/?classe=m1a`).
+- [ ] **Vidéo NotebookLM n°1** « Du bricolage au métier » : URL dans `content.js`, rubrique `videos.s1.url`.
+- [ ] Préparer le texte de l'audit en PDF (synthèse avec six erreurs volontaires).
+- [ ] Séance 2 : déroulé à valider (veille, démo Make ou Zapier, soutenance).
+
 # Cours M2 : IA et productivité
 
 Séances : M2A le 2/11 et le 25/11, M2B le 4/11 et le 26/11 (13h30-17h). Fil rouge : Olympique Nordval (club fictif de Ligue 2).

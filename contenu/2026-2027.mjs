@@ -94,7 +94,7 @@ export default {
       "semestre": 1,
       "volume": "7 h en présentiel",
       "evaluation": "Participation",
-      "descriptif": "Passer de l'usage intuitif à l'usage professionnel des LLM : savoir ce qu'on délègue à la machine, comment le formuler et comment en évaluer la fiabilité. Cas d'usage marketing et com, veille assistée, puis introduction à l'automatisation no-code (Make, Zapier).",
+      "descriptif": "Passer de l'usage intuitif à l'usage professionnel des LLM : prompt engineering appliqué aux livrables d'agence (synthèse qualitative, brief, plan de contenu, réponse à appel d'offres), vérification des sorties, veille assistée et automatisation no-code. Fil rouge : l'appel d'offres du Lys Padel Open, un tournoi fictif.",
       "objectifs": [
         "Distinguer un usage amateur d'un usage professionnel des LLM",
         "Construire des prompts efficaces pour la rédaction, la synthèse et la reformulation",
@@ -350,9 +350,15 @@ export default {
           "n": 1,
           "date": "2026-11-03",
           "heure": "09:00–12:30",
-          "titre": "",
+          "titre": "Usage pro des LLM, prompt engineering, audit et 4 livrables d'agence",
           "video": "",
-          "apps": [],
+          "apps": [
+            {
+              "outil": "appli-ia-automatisation",
+              "url": "apps/ia-automatisation/index.html?classe=m1a",
+              "label": "Appli de la séance"
+            }
+          ],
           "ressources": []
         },
         {
@@ -360,9 +366,15 @@ export default {
           "n": 2,
           "date": "2026-11-06",
           "heure": "09:00–12:30",
-          "titre": "",
+          "titre": "Veille assistée, automatisation no-code et soutenance de l'appel d'offres",
           "video": "",
-          "apps": [],
+          "apps": [
+            {
+              "outil": "appli-ia-automatisation",
+              "url": "apps/ia-automatisation/index.html?classe=m1a#pitch",
+              "label": "Simulateur de soutenance"
+            }
+          ],
           "ressources": []
         }
       ]
