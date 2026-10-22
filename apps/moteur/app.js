@@ -37,6 +37,8 @@
   const KEY_EQ = (C.config.idEquipes || C.config.id || "amos-cours") + suffixe;
   const read = (k) => { try { return JSON.parse(localStorage.getItem(k)) || {}; } catch (e) { return {}; } };
   const write = (k, v) => { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) { /* stockage indisponible */ } };
+  // Journal partageable entre séances (config.idJournal) : la feuille de route suit l'équipe.
+  const KEY_J = C.config.idJournal ? C.config.idJournal + suffixe : null;
   const saved = read(KEY), eq = KEY_EQ === KEY ? saved : Object.assign({}, read(KEY_EQ));
   const pick = (f) => (eq[f] !== undefined ? eq[f] : saved[f]);
   const n = C.config.agences.length;
@@ -44,19 +46,22 @@
     theme: saved.theme || "nuit",
     names: pick("names") && pick("names").length === n ? pick("names") : C.config.agences.slice(),
     scores: pick("scores") && pick("scores").length === n ? pick("scores") : C.config.agences.map(() => 0),
-    journal: saved.journal || {},
+    journal: (KEY_J ? read(KEY_J).journal : saved.journal) || {},
+    ordre: pick("ordre") && pick("ordre").length === n ? pick("ordre") : null,
+    jury: pick("jury") || {},
     roster: pick("roster") || [],
     members: pick("members") && pick("members").length === n ? pick("members") : C.config.agences.map(() => []),
     animated: false
   };
   const persist = () => {
-    const equipes = { names: S.names, scores: S.scores, roster: S.roster, members: S.members };
+    const equipes = { names: S.names, scores: S.scores, roster: S.roster, members: S.members, ordre: S.ordre, jury: S.jury };
+    if (KEY_J) write(KEY_J, { journal: S.journal });
     if (KEY_EQ === KEY) write(KEY, Object.assign({ theme: S.theme, journal: S.journal }, equipes));
     else { write(KEY, { theme: S.theme, journal: S.journal }); write(KEY_EQ, Object.assign(read(KEY_EQ), equipes)); }
   };
 
   const PAGES = C.parcours.map((p) => p.id);
-  const EXTRA = ["ressources", "glossaire", "pitch"];
+  const EXTRA = ["ressources", "glossaire", "pitch", "jury"];
 
   /* ---------- Toast ---------- */
   let toastT;
@@ -68,6 +73,8 @@
   /* ---------- En-tête ---------- */
   function initHeader() {
     $("#cours-titre").textContent = C.config.cours;
+    const dh = $("#agences-dialog h2"); if (dh && C.config.equipes) dh.textContent = "Les " + C.config.equipes;
+    if (C.jury && !$('.rail-extra a[data-page="jury"]')) { const a = document.createElement("a"); a.href = "#jury"; a.dataset.page = "jury"; a.textContent = "Jury"; $(".rail-extra").appendChild(a); }
     $("#seance-label").textContent = `${C.config.seance}, ${C.config.classe}`;
     const img = $("#logo");
     img.onload = () => { img.hidden = false; $("#logo-fallback").hidden = true; };
@@ -298,10 +305,10 @@
     </div>
 
     <section class="section" id="tirage">
-      <h2>Constituer les ${esc(C.config.equipes || "agences")}</h2>
-      <p class="intro">Collez la liste de la classe, un nom par ligne, puis tirez au sort. ${esc(C.config.tirageNote || "Mêmes équipes jusqu'à la fin du module.")} Les noms restent dans ce navigateur : rien n'est envoyé.</p>
-      <div class="draw">
-        <div class="panel draw-input">
+      <h2>${C.config.tirage === false ? "Les" : "Constituer les"} ${esc(C.config.equipes || "agences")}</h2>
+      <p class="intro">${C.config.tirage === false ? esc(C.config.tirageNote || "") : `Collez la liste de la classe, un nom par ligne, puis tirez au sort. ${esc(C.config.tirageNote || "Mêmes équipes jusqu'à la fin du module.")} Les noms restent dans ce navigateur : rien n'est envoyé.`}</p>
+      <div class="draw ${C.config.tirage === false ? "fixe" : ""}">
+        ${C.config.tirage === false ? "" : `<div class="panel draw-input">
           <label for="roster" class="field-label">Liste de la classe <span class="muted" id="roster-count"></span></label>
           <textarea id="roster" rows="10" placeholder="Prénom Nom\nPrénom Nom\n…">${esc(S.roster.join("\n"))}</textarea>
           <div class="btn-row" style="margin-top:12px">
@@ -309,7 +316,7 @@
             <button class="btn" id="draw-print">Imprimer les ${esc(C.config.equipes || "agences")}</button>
             <button class="btn" id="draw-clear">Vider les ${esc(C.config.equipes || "agences")}</button>
           </div>
-        </div>
+        </div>`}
         <div class="agences-grid" id="agences-grid"></div>
       </div>
     </section>`;
@@ -317,6 +324,7 @@
   BIND.accueil = (root) => {
     S.animated = true;
     const ta = $("#roster", root);
+    if (!ta) { drawGrid(root, false); return; }
     const parse = () => ta.value.split(/\n|;/).map((s) => s.trim()).filter(Boolean);
     const count = () => { const n = parse().length; $("#roster-count", root).textContent = n ? `(${n})` : ""; };
     ta.oninput = () => { S.roster = parse(); persist(); count(); }; count();
@@ -542,9 +550,9 @@
   /* --- Pause --- */
   RENDER.pause = (p) => `
     <div class="pause-wrap"><div>
-      <p class="muted" style="font-size:1.3rem;margin:0 0 10px">Ravitaillement. Reprise à ${(C.parcours[PAGES.indexOf("pause") + 1] || p).heure.replace(":", "h")}.</p>
+      <p class="muted" style="font-size:1.3rem;margin:0 0 10px">${esc(p.sous || "Ravitaillement")}. Reprise à ${(C.parcours[PAGES.indexOf(p.id) + 1] || p).heure.replace(":", "h")}.</p>
       <div class="pause-clock live-clock">${fmt(p.duree * 60)}</div>
-      <p class="muted" style="margin-top:14px">Le chrono tourne déjà. Prochaine étape : regard critique.</p>
+      <p class="muted" style="margin-top:14px">Le chrono tourne déjà.${C.parcours[PAGES.indexOf(p.id) + 1] ? ` Prochaine étape : ${esc(C.parcours[PAGES.indexOf(p.id) + 1].titre.toLowerCase())}.` : ""}</p>
     </div></div>`;
 
   /* --- CP7 Regard critique --- */
@@ -628,8 +636,8 @@
     () => `<div class="work">${C.client.travail.map((w, i) => `<div class="rule"><strong>${i + 1}. ${esc(w.t)}</strong><p>${esc(w.d)}</p></div>`).join("")}</div>
       <div class="panel" style="margin-top:16px"><p style="margin:0 0 8px"><strong>${esc(C.client.etape)}</strong></p><p class="muted" style="margin:0">${esc(C.client.seance2)}</p></div>
       <div class="btn-row" style="margin-top:16px"><button class="btn lamp" onclick="window.__setTimer(${C.client.dureeTravail || 45}, true)">Lancer ${C.client.dureeTravail || 45} min de travail</button></div>`,
-    () => { const tot = C.client.bareme.reduce((a, b) => a + b.p, 0); return `<div class="panel"><table class="bareme"><tbody>
-      ${C.client.bareme.map((b) => `<tr><td>${esc(b.c)}</td><td>${b.p}</td></tr>`).join("")}
+    () => { const tot = C.client.bareme.reduce((a, b) => a + (b.p || 0), 0); return `<div class="panel"><table class="bareme"><tbody>
+      ${C.client.bareme.map((b) => b.g ? `<tr class="groupe"><td colspan="2">${esc(b.g)}</td></tr>` : `<tr><td>${esc(b.c)}</td><td>${b.p}</td></tr>`).join("")}
       <tr class="total"><td>Total</td><td>${tot}</td></tr></tbody></table>
       <p class="muted" style="margin:10px 0 0">${esc(C.client.baremeNote)}</p></div>`; },
     () => journalHTML()
@@ -886,6 +894,7 @@
       if (!fired && left <= P.duree - P.objectionA) fire();
       if (left === 0) { clearInterval(id); id = null; chime(); $("#p-go", root).textContent = "Lancer le pitch"; }
     };
+    if (window.__pitchTeam != null) { $("#p-agence", root).value = String(window.__pitchTeam); window.__pitchTeam = null; }
     $("#p-agence", root).onchange = roles; roles(); draw();
     $("#p-go", root).onclick = () => {
       if (id) { clearInterval(id); id = null; $("#p-go", root).textContent = "Reprendre"; return; }
@@ -894,6 +903,196 @@
     };
     $("#p-reset", root).onclick = () => { clearInterval(id); id = null; left = P.duree; fired = false; $("#p-obj", root).hidden = true; $("#p-go", root).textContent = "Lancer le pitch"; draw(); };
     $("#p-now", root).onclick = fire;
+  };
+
+
+  /* --- Ordre de passage (partagé entre séances) --- */
+  const ordre = () => (S.ordre && S.ordre.length === S.names.length ? S.ordre : S.names.map((_, i) => i));
+
+  /* --- Gabarit « tour » : chaque équipe passe à son tour (restitution, pitch, soutenance) --- */
+  RENDER.tour = (p) => {
+    const T = C[p.data];
+    return `${head(p, p.lede)}
+      ${T.intro ? `<p style="max-width:75ch;margin:-6px 0 18px;color:var(--muted)">${esc(T.intro)}</p>` : ""}
+      ${T.consignes ? `<div class="rules" style="margin-bottom:18px">${T.consignes.map((r) => `<div class="rule"><strong>${esc(r.t)}</strong><p>${esc(r.d)}</p></div>`).join("")}</div>` : ""}
+      ${T.ordre ? `<div class="btn-row" style="margin-bottom:14px"><button class="btn lamp" data-ordre>Tirer l'ordre de passage</button><span class="muted">${S.ordre ? "Ordre déjà tiré : il est conservé jusqu'au concours." : "L'ordre tiré est conservé pour les séances suivantes."}</span></div>` : ""}
+      <ol class="tour" id="tour"></ol>
+      ${T.questions ? `<section class="section"><h2>${esc(T.questionsTitre || "Les questions")}</h2><ul class="ctx" style="max-width:80ch">${T.questions.map((q) => `<li>${esc(q)}</li>`).join("")}</ul></section>` : ""}
+      ${T.award === false ? "" : `<section class="section">${awardRow(T.awardLabel || "Point pour")}</section>`}`;
+  };
+  BIND.tour = (root, p) => {
+    const T = C[p.data];
+    const draw = (anim) => {
+      $("#tour", root).innerHTML = ordre().map((i, k) => `
+        <li class="tour-item ${anim ? "drop" : ""}" style="--d:${k * 0.18}s" data-team="${i}">
+          <span class="tour-n">${k + 1}</span>
+          <div class="tour-body"><strong>${esc(S.names[i])}</strong><span class="muted">${esc((S.members[i] || []).join(", ") || "Membres à tirer au départ")}</span></div>
+          <div class="btn-row">
+            <button class="btn small lamp" data-tgo="${i}">Lancer ${T.minutes} min</button>
+            ${T.simulateur ? `<button class="btn small" data-tsim="${i}">Simulateur</button>` : ""}
+            <button class="btn small" data-tdone="${i}">Terminé</button>
+          </div>
+        </li>`).join("");
+      $$("[data-tgo]", root).forEach((b) => (b.onclick = () => {
+        $$(".tour-item", root).forEach((li) => li.classList.toggle("now", li.dataset.team === b.dataset.tgo));
+        setTimer(T.minutes, true); toast(`${S.names[+b.dataset.tgo]} : ${T.minutes} min`);
+      }));
+      $$("[data-tsim]", root).forEach((b) => (b.onclick = () => { window.__pitchTeam = +b.dataset.tsim; go("pitch"); }));
+      $$("[data-tdone]", root).forEach((b) => (b.onclick = () => { const li = b.closest(".tour-item"); li.classList.toggle("done"); li.classList.remove("now"); }));
+    };
+    draw(false);
+    const o = $("[data-ordre]", root);
+    if (o) o.onclick = () => {
+      if (S.ordre && !confirm("Un ordre de passage existe déjà. Le tirer à nouveau ?")) return;
+      const a = S.names.map((_, i) => i);
+      for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; }
+      S.ordre = a; persist(); draw(true); chime();
+    };
+  };
+
+  /* --- Gabarit « construire » : un texte en blocs (découverte, pitch, plan), avec durée à l'oral --- */
+  RENDER.construire = (p) => {
+    const B = C[p.data];
+    return `${head(p, p.lede)}
+      ${B.intro ? `<p style="max-width:75ch;margin:-6px 0 18px;color:var(--muted)">${esc(B.intro)}</p>` : ""}
+      <div class="field" style="max-width:340px"><label for="cb-eq">Équipe</label><select id="cb-eq">${S.names.map((n, i) => `<option value="${i}">${esc(n)}</option>`).join("")}</select></div>
+      <div class="builder">
+        <div>${B.blocs.map((b) => `<div class="bloc"><label for="cb-${b.k}">${esc(b.nom)}<small>${esc(b.aide || "")}</small></label><textarea id="cb-${b.k}" data-cb="${b.k}" rows="${b.rows || 3}" placeholder="${esc(b.ex || "")}"></textarea></div>`).join("")}</div>
+        <div class="assembled">
+          ${B.oral ? `<div class="oral" id="cb-oral"><span class="oral-t">0 s</span><div class="oral-bar"><span></span><i style="left:${Math.min(100, 100 * B.oral.cible / (B.oral.cible * 1.5))}%"></i></div><small></small></div>` : ""}
+          <pre id="cb-out" aria-live="polite"></pre>
+          <div class="btn-row"><button class="btn lamp" id="cb-copy">Copier</button><button class="btn" id="cb-dl">Télécharger</button><button class="btn" id="cb-ex">Voir l'exemple</button><button class="btn" id="cb-clear">Vider</button></div>
+          ${B.minutes ? `<div class="btn-row" style="margin-top:10px"><button class="btn" data-cbt="${B.minutes}">Lancer ${B.minutes} min de travail</button></div>` : ""}
+        </div>
+      </div>
+      ${B.note ? `<p class="muted" style="margin-top:14px;max-width:80ch">${esc(B.note)}</p>` : ""}`;
+  };
+  BIND.construire = (root, p) => {
+    const B = C[p.data], sel = $("#cb-eq", root);
+    if (S.journal.agence) { const k = S.names.indexOf(S.journal.agence); if (k >= 0) sel.value = String(k); }
+    const key = (k) => `c_${p.data}_${sel.value}_${k}`;
+    const fit = (t) => { t.style.height = "auto"; t.style.height = t.scrollHeight + 2 + "px"; };
+    const text = () => B.blocs.map((b) => { const v = $(`[data-cb="${b.k}"]`, root).value.trim(); return v ? `${b.nom.toUpperCase()}\n${v}` : ""; }).filter(Boolean).join("\n\n");
+    const build = () => {
+      const t = text(); $("#cb-out", root).textContent = t || "Remplissez les blocs : le texte se construit ici.";
+      if (B.oral) {
+        const words = B.blocs.map((b) => $(`[data-cb="${b.k}"]`, root).value).join(" ").split(/\s+/).filter(Boolean).length;
+        const sec = Math.round(words / B.oral.motsMinute * 60), o = $("#cb-oral", root);
+        $(".oral-t", o).textContent = `≈ ${fmt(sec)} à l'oral`;
+        $(".oral-bar span", o).style.width = `${Math.min(100, 100 * sec / (B.oral.cible * 1.5))}%`;
+        o.classList.toggle("hot", sec > B.oral.cible);
+        $("small", o).textContent = `${words} mots. Estimation à ${B.oral.motsMinute} mots par minute ; cible : ${fmt(B.oral.cible)}. Chronométrez-vous à voix haute pour vérifier.`;
+      }
+    };
+    const load = () => { B.blocs.forEach((b) => { const t = $(`[data-cb="${b.k}"]`, root); t.value = S.journal[key(b.k)] || ""; requestAnimationFrame(() => fit(t)); }); build(); };
+    $$("[data-cb]", root).forEach((t) => (t.oninput = () => { S.journal[key(t.dataset.cb)] = t.value; persist(); fit(t); build(); }));
+    sel.onchange = load; load();
+    $("#cb-copy", root).onclick = async () => { try { await navigator.clipboard.writeText(text()); toast("Texte copié"); } catch (e) { toast("Copie impossible : sélectionnez le texte"); } };
+    $("#cb-dl", root).onclick = () => {
+      const blob = new Blob([`${p.titre.toUpperCase()} — ${S.names[+sel.value]}\n${C.config.cours}, ${C.config.seance}\n\n${text()}\n`], { type: "text/plain;charset=utf-8" });
+      const a = document.createElement("a"); a.href = URL.createObjectURL(blob);
+      a.download = `${p.id}-${S.names[+sel.value].toLowerCase().normalize("NFD").replace(/[^a-z0-9]+/g, "-")}.txt`;
+      a.click(); setTimeout(() => URL.revokeObjectURL(a.href), 2000); toast("Fichier téléchargé");
+    };
+    $("#cb-ex", root).onclick = () => { const out = $("#cb-out", root); out.textContent = B.blocs.map((b) => `${b.nom.toUpperCase()}\n${b.ex || ""}`).join("\n\n"); toast("Exemple affiché : vos blocs ne sont pas modifiés"); };
+    $("#cb-clear", root).onclick = () => { if (!confirm("Vider les blocs de cette équipe ?")) return; B.blocs.forEach((b) => { delete S.journal[key(b.k)]; }); persist(); load(); };
+    const t = $("[data-cbt]", root); if (t) t.onclick = () => setTimer(+t.dataset.cbt, true);
+  };
+
+  /* --- Gabarit « duel » : une objection tirée au sort, une équipe désignée, réponse chronométrée --- */
+  RENDER.duel = (p) => {
+    const D = C[p.data];
+    return `${head(p, p.lede)}
+      ${D.intro ? `<p style="max-width:75ch;margin:-6px 0 18px;color:var(--muted)">${esc(D.intro)}</p>` : ""}
+      <div class="panel pitch-stage">
+        <div class="btn-row" style="justify-content:center"><button class="btn lamp" id="d-draw">Tirer une objection</button></div>
+        <div class="objection" id="d-obj" hidden></div>
+        <div class="pitch-clock" id="d-clock" style="margin-top:16px">${fmt(D.secondes)}</div>
+      </div>
+      <section class="section">
+        <div class="award"><span>Réponse convaincante :</span>${S.names.map((n, i) => `<button class="btn small lamp" data-award="${i}" data-pts="2">${esc(n)} +2</button>`).join("")}</div>
+        <div class="award" style="margin-top:8px"><span>Réponse correcte :</span>${S.names.map((n, i) => `<button class="btn small" data-award="${i}">${esc(n)} +1</button>`).join("")}</div>
+      </section>`;
+  };
+  BIND.duel = (root, p) => {
+    const D = C[p.data]; let pool = [], turn = 0, id = null;
+    const queue = ordre().slice(); for (let i = queue.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [queue[i], queue[j]] = [queue[j], queue[i]]; }
+    $("#d-draw", root).onclick = () => {
+      if (!pool.length) { pool = D.objections.slice(); for (let i = pool.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [pool[i], pool[j]] = [pool[j], pool[i]]; } }
+      const ob = pool.pop(), team = queue[turn++ % queue.length];
+      const mem = (S.members[team] || []).filter(Boolean), who = mem.length ? mem[Math.floor(Math.random() * mem.length)] : "";
+      const o = $("#d-obj", root); o.hidden = false;
+      o.innerHTML = `<span class="kicker">L'acheteur</span><p>${esc(ob)}</p><span class="who">Répond : <strong>${esc(S.names[team])}</strong>${who ? `, ${esc(who)} prend la parole` : ""}</span>`;
+      o.classList.remove("in"); void o.offsetWidth; o.classList.add("in"); chime();
+      clearInterval(id); let left = D.secondes; const end = Date.now() + left * 1000, c = $("#d-clock", root);
+      const tk = () => { left = Math.max(0, Math.round((end - Date.now()) / 1000)); c.textContent = fmt(left); c.classList.toggle("hot", left <= 10); if (!left) { clearInterval(id); chime(); } };
+      id = setInterval(tk, 250); tk();
+    };
+  };
+
+  /* --- Grille du jury : notation par équipe, total, export --- */
+  RENDER.jury = () => {
+    const J = C.jury, tot = J.criteres.reduce((a, b) => a + b.p, 0);
+    return `<header class="page-head"><h1>${esc(J.titre || "Grille du jury")}</h1><p class="lede">${esc(J.lede || "")}</p></header>
+      <div class="jury">${ordre().map((i, k) => { const g = S.jury[i] || {}; return `
+        <article class="panel jury-card" data-jt="${i}">
+          <h3><span class="tour-n">${k + 1}</span>${esc(S.names[i])}<output class="jury-tot" data-jtot="${i}">0 / ${tot}</output></h3>
+          ${J.criteres.map((c, ci) => `<div class="jury-row"><label for="j-${i}-${ci}">${esc(c.c)}</label><input id="j-${i}-${ci}" type="number" inputmode="decimal" min="0" max="${c.p}" step="0.5" value="${g[ci] ?? ""}" data-jn="${i}" data-jc="${ci}"><span class="muted">/ ${c.p}</span></div>`).join("")}
+          <div class="field" style="margin-top:10px"><label for="j-obs-${i}">Observations</label><textarea id="j-obs-${i}" rows="2" data-jobs="${i}">${esc(g.obs || "")}</textarea></div>
+        </article>`; }).join("")}</div>
+      <div class="btn-row" style="margin-top:16px"><button class="btn lamp" id="jury-csv">Exporter (tableur)</button><button class="btn" onclick="window.print()">Imprimer</button><button class="btn" id="jury-clear">Effacer les notes</button></div>
+      ${J.note ? `<p class="muted" style="margin-top:12px;max-width:80ch">${esc(J.note)}</p>` : ""}`;
+  };
+  const juryTotal = (i) => { const g = S.jury[i] || {}; return C.jury.criteres.reduce((a, c, ci) => a + (Number(g[ci]) || 0), 0); };
+  BIND.jury = (root) => {
+    const J = C.jury, tot = J.criteres.reduce((a, b) => a + b.p, 0);
+    const upd = (i) => { const o = $(`[data-jtot="${i}"]`, root); if (o) o.textContent = `${juryTotal(i).toLocaleString("fr-FR")} / ${tot}`; };
+    S.names.forEach((_, i) => upd(i));
+    $$("[data-jn]", root).forEach((inp) => (inp.oninput = () => {
+      const i = +inp.dataset.jn, c = +inp.dataset.jc, max = J.criteres[c].p;
+      let v = inp.value === "" ? "" : Math.min(max, Math.max(0, Number(inp.value.replace(",", "."))));
+      S.jury[i] = S.jury[i] || {}; if (v === "") delete S.jury[i][c]; else S.jury[i][c] = v; persist(); upd(i);
+    }));
+    $$("[data-jn]", root).forEach((inp) => (inp.onchange = () => { const g = S.jury[+inp.dataset.jn] || {}; inp.value = g[+inp.dataset.jc] ?? ""; }));
+    $$("[data-jobs]", root).forEach((t) => (t.oninput = () => { const i = +t.dataset.jobs; S.jury[i] = S.jury[i] || {}; S.jury[i].obs = t.value; persist(); }));
+    $("#jury-csv", root).onclick = () => {
+      const q = (x) => `"${String(x ?? "").replace(/"/g, '""')}"`;
+      const L = [["Passage", "Équipe", "Membres", ...J.criteres.map((c) => `${c.c} (/${c.p})`), `Total (/${tot})`, "Observations"].map(q).join(";")];
+      ordre().forEach((i, k) => { const g = S.jury[i] || {}; L.push([k + 1, S.names[i], (S.members[i] || []).join(", "), ...J.criteres.map((_, ci) => String(g[ci] ?? "").replace(".", ",")), String(juryTotal(i)).replace(".", ","), g.obs || ""].map(q).join(";")); });
+      const blob = new Blob(["﻿" + L.join("\r\n")], { type: "text/csv;charset=utf-8" });
+      const a = document.createElement("a"); a.href = URL.createObjectURL(blob); a.download = "notes-jury.csv"; a.click(); setTimeout(() => URL.revokeObjectURL(a.href), 2000); toast("Notes exportées");
+    };
+    $("#jury-clear", root).onclick = () => { if (confirm("Effacer toutes les notes du jury ?")) { S.jury = {}; persist(); route(); } };
+  };
+
+  /* --- Palmarès : révélation des places, de la dernière à la première --- */
+  RENDER.palmares = (p) => {
+    const P = C[p.data] || {};
+    return `${head(p, p.lede)}
+      ${P.intro ? `<p style="max-width:75ch;margin:-6px 0 18px;color:var(--muted)">${esc(P.intro)}</p>` : ""}
+      <div class="btn-row" style="margin-bottom:18px"><button class="btn lamp" id="pal-next">Révéler la place suivante</button><button class="btn" id="pal-reset">Recommencer</button></div>
+      <ol class="palmares" id="pal"></ol>
+      ${P.mot ? `<section class="section"><div class="client-card"><span class="kicker">${esc(P.motKicker || "Le mot du jury")}</span><p>${esc(P.mot)}</p></div></section>` : ""}`;
+  };
+  BIND.palmares = (root) => {
+    const tot = C.jury ? C.jury.criteres.reduce((a, b) => a + b.p, 0) : 0;
+    const noted = S.names.map((_, i) => i).filter((i) => Object.keys(S.jury[i] || {}).some((k) => k !== "obs"));
+    if (!C.jury || !noted.length) { $("#pal", root).innerHTML = `<li class="muted">Aucune note du jury dans ce navigateur : remplissez la grille (page Jury) avant le palmarès.</li>`; $("#pal-next", root).disabled = true; return; }
+    // Égalité : départage sur les critères listés dans C.jury.departage (index), dans l'ordre
+    const dep = (C.jury.departage || []), crit = (i, c) => Number((S.jury[i] || {})[c]) || 0;
+    const cmp = (a, b) => b.s - a.s || dep.reduce((r, c) => r || crit(b.i, c) - crit(a.i, c), 0);
+    const rows = S.names.map((n, i) => ({ i, n, s: juryTotal(i) })).sort(cmp);
+    rows.forEach((r, k) => (r.rang = k && cmp(r, rows[k - 1]) === 0 ? rows[k - 1].rang : k + 1));
+    let shown = 0;
+    const draw = () => {
+      const vis = rows.slice(rows.length - shown);
+      $("#pal", root).innerHTML = vis.map((r, k) => `<li class="pal ${r.rang === 1 ? "first" : ""} ${k === 0 ? "in" : ""}"><span class="pal-rang">${r.rang === 1 ? "1er" : r.rang + "e"}</span><strong>${esc(r.n)}</strong><span class="pal-pts">${r.s.toLocaleString("fr-FR")} / ${tot}</span></li>`).join("");
+      $("#pal-next", root).disabled = shown >= rows.length;
+      if (shown && rows[rows.length - shown].rang === 1) chime();
+    };
+    $("#pal-next", root).onclick = () => { shown = Math.min(rows.length, shown + 1); draw(); };
+    $("#pal-reset", root).onclick = () => { shown = 0; draw(); };
+    draw();
   };
 
   /* --- Glossaire --- */

@@ -176,7 +176,13 @@ export default {
           "heure": "13:30–17:00",
           "titre": "Restitution terrain et besoins de l'enseigne",
           "video": "",
-          "apps": [],
+          "apps": [
+            {
+              "outil": "appli-concours",
+              "url": "apps/concours-vente-s2/index.html?classe=b1a",
+              "label": "Appli de la séance"
+            }
+          ],
           "ressources": []
         },
         {
@@ -184,9 +190,15 @@ export default {
           "n": 3,
           "date": "2026-11-24",
           "heure": "13:30–17:00",
-          "titre": "Argumentaire CAB, pitch AIDA, répartition des rôles",
+          "titre": "Argumentaire CAB, pitch AIDA, rôles et plan de négociation",
           "video": "",
-          "apps": [],
+          "apps": [
+            {
+              "outil": "appli-concours",
+              "url": "apps/concours-vente-s3/index.html?classe=b1a",
+              "label": "Appli de la séance"
+            }
+          ],
           "ressources": []
         },
         {
@@ -194,13 +206,13 @@ export default {
           "n": 4,
           "date": "2026-11-25",
           "heure": "09:00–12:30",
-          "titre": "Objections et simulations en petits groupes",
+          "titre": "Objections, simulations complètes et auto-évaluation",
           "video": "",
           "apps": [
             {
               "outil": "appli-concours",
-              "url": "apps/concours-vente/index.html?classe=b1a#pitch",
-              "label": "Simulateur de soutenance"
+              "url": "apps/concours-vente-s4/index.html?classe=b1a",
+              "label": "Appli de la séance"
             }
           ],
           "ressources": []
@@ -210,13 +222,13 @@ export default {
           "n": 5,
           "date": "2026-11-27",
           "heure": "09:00–12:30",
-          "titre": "Répétition générale, auto-évaluation et note réflexive",
+          "titre": "Ordre de passage, répétition générale, préparation de la note réflexive",
           "video": "",
           "apps": [
             {
               "outil": "appli-concours",
-              "url": "apps/concours-vente/index.html?classe=b1a#pitch",
-              "label": "Simulateur de soutenance"
+              "url": "apps/concours-vente-s5/index.html?classe=b1a",
+              "label": "Appli de la séance"
             }
           ],
           "ressources": []
@@ -228,7 +240,13 @@ export default {
           "heure": "13:30–17:00",
           "titre": "Concours devant le jury",
           "video": "",
-          "apps": [],
+          "apps": [
+            {
+              "outil": "appli-concours",
+              "url": "apps/concours-vente-s6/index.html?classe=b1a",
+              "label": "Appli de la séance"
+            }
+          ],
           "ressources": []
         },
         {

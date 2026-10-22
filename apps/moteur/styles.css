@@ -190,7 +190,7 @@ h1, h2, h3 { font-family: var(--font-display); line-height: 1.02; margin: 0; let
   box-shadow: 0 0 0 6px var(--glow), 0 0 26px 6px var(--glow);
 }
 .cp.current .cp-time { color: var(--lamp-ink); }
-.rail-extra { display: flex; gap: 16px; padding: 18px 22px 0; border-top: 1px solid var(--line); margin-top: 14px; }
+.rail-extra { display: flex; flex-wrap: wrap; gap: 8px 16px; padding: 18px 22px 0; border-top: 1px solid var(--line); margin-top: 14px; }
 .rail-extra a { color: var(--muted); font-weight: 700; text-decoration: none; font-size: .95rem; }
 .rail-extra a:hover, .rail-extra a.active { color: var(--lamp-ink); }
 
@@ -270,6 +270,7 @@ h1, h2, h3 { font-family: var(--font-display); line-height: 1.02; margin: 0; let
 
 /* ---------- Tirage des agences ---------- */
 .draw { display: grid; grid-template-columns: minmax(260px, .8fr) 2fr; gap: 18px; align-items: start; }
+.draw.fixe { grid-template-columns: 1fr; }
 .field-label { font-weight: 700; display: block; margin-bottom: 8px; }
 .draw-input textarea { width: 100%; background: var(--surface-2); border: 1px solid var(--line); border-radius: var(--r-s); padding: 10px 12px; line-height: 1.5; resize: vertical; }
 .agences-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; }
@@ -605,6 +606,52 @@ dialog::backdrop { background: rgba(6, 12, 22, .6); }
 .flash { animation: flash 1.2s ease-out 3; }
 @keyframes flash { 0% { box-shadow: inset 0 0 0 0 var(--ko); } 30% { box-shadow: inset 0 0 0 6px var(--ko); } 100% { box-shadow: inset 0 0 0 0 transparent; } }
 
+
+/* ---------- Barème : groupes ---------- */
+.bareme tr.groupe td { padding: 22px 0 8px; text-align: left; width: auto; font: 900 1.25rem/1.1 var(--font-display); text-transform: uppercase; letter-spacing: .03em; color: var(--lamp-ink); border-bottom: 2px solid var(--lamp); }
+
+/* ---------- Tour de passage ---------- */
+.tour { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+.tour-item { display: grid; grid-template-columns: auto 1fr auto; gap: 16px; align-items: center; background: var(--surface); border: 1px solid var(--line); border-left: 5px solid var(--line); border-radius: var(--r-m); padding: 14px 18px; transition: border-color .3s, opacity .3s, transform .3s; }
+.tour-item.drop { opacity: 0; animation: drop .5s cubic-bezier(.2, 1.4, .4, 1) forwards; animation-delay: var(--d); }
+.tour-item.now { border-left-color: var(--lamp); box-shadow: 0 0 0 1px var(--lamp), 0 10px 40px var(--glow); transform: translateX(6px); }
+.tour-item.done { opacity: .5; }
+.tour-item.done .tour-n { background: var(--surface-2); color: var(--muted); }
+.tour-n { display: inline-grid; place-items: center; width: 46px; height: 46px; border-radius: 50%; background: var(--lamp); color: var(--on-lamp); font: 900 1.6rem/1 var(--font-display); flex: none; }
+.tour-body { display: grid; gap: 2px; }
+.tour-body strong { font: 800 1.6rem/1.05 var(--font-display); }
+
+/* ---------- Construire : durée à l'oral ---------- */
+.oral { margin-bottom: 12px; display: grid; gap: 6px; }
+.oral-t { font: 900 2.4rem/1 var(--font-display); font-variant-numeric: tabular-nums; }
+.oral-bar { position: relative; height: 10px; border-radius: 999px; background: var(--surface-2); overflow: visible; }
+.oral-bar span { display: block; height: 100%; width: 0; border-radius: 999px; background: var(--lamp); transition: width .4s cubic-bezier(.2, 1, .3, 1), background .3s; }
+.oral-bar i { position: absolute; top: -5px; bottom: -5px; width: 2px; background: var(--ink); }
+.oral.hot .oral-t { color: var(--ko); }
+.oral.hot .oral-bar span { background: var(--ko); }
+.oral small { color: var(--muted); }
+
+/* ---------- Grille du jury ---------- */
+.jury { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 16px; }
+.jury-card h3 { display: flex; align-items: center; gap: 12px; font-size: 1.7rem; margin: 0 0 12px; }
+.jury-card h3 .tour-n { width: 36px; height: 36px; font-size: 1.2rem; }
+.jury-tot { margin-left: auto; font: 900 1.7rem/1 var(--font-display); color: var(--lamp-ink); font-variant-numeric: tabular-nums; }
+.jury-row { display: grid; grid-template-columns: 1fr 72px 36px; gap: 8px; align-items: center; padding: 6px 0; border-bottom: 1px solid var(--line); }
+.jury-row label { font-size: .95rem; }
+.jury-row input { width: 100%; padding: 6px 8px; border-radius: var(--r-s); border: 1px solid var(--line); background: var(--surface-2); color: var(--ink); font: 700 1.1rem var(--font-body); text-align: center; }
+
+/* ---------- Palmarès ---------- */
+.palmares { list-style: none; margin: 0; padding: 0; display: grid; gap: 12px; max-width: 900px; }
+.pal { display: grid; grid-template-columns: 110px 1fr auto; align-items: center; gap: 18px; background: var(--surface); border: 1px solid var(--line); border-radius: var(--r-m); padding: 16px 22px; }
+.pal.in { animation: slam .6s cubic-bezier(.2, 1.4, .4, 1); }
+.pal-rang { font: 900 2.6rem/1 var(--font-display); color: var(--muted); }
+.pal strong { font: 900 clamp(1.8rem, 3.4vw, 2.8rem)/1 var(--font-display); }
+.pal-pts { font: 800 1.5rem/1 var(--font-display); font-variant-numeric: tabular-nums; }
+.pal.first { background: var(--lamp); color: var(--on-lamp); border-color: var(--lamp); box-shadow: 0 18px 60px var(--glow); }
+.pal.first .pal-rang { color: var(--on-lamp); }
+.pal.first.in { animation: crown .9s cubic-bezier(.2, 1.5, .4, 1); }
+@keyframes crown { 0% { opacity: 0; transform: scale(.7); } 60% { transform: scale(1.05); } 100% { opacity: 1; transform: none; } }
+
 /* ---------- Responsive ---------- */
 @media (max-width: 1100px) {
   .grid-3, .slots, .facts, .agences-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
@@ -643,6 +690,11 @@ dialog::backdrop { background: rgba(6, 12, 22, .6); }
   .stagenav { padding: 0 12px; gap: 8px; }
   .nav-btn { padding: 8px 12px; font-size: .9rem; }
   .assembled { position: static; }
+  .tour-item { grid-template-columns: auto 1fr; }
+  .tour-item .btn-row { grid-column: 1 / -1; }
+  .jury { grid-template-columns: 1fr; }
+  .pal { grid-template-columns: 70px 1fr; }
+  .pal-pts { grid-column: 2; }
 }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
@@ -654,4 +706,6 @@ dialog::backdrop { background: rgba(6, 12, 22, .6); }
   .agence-col { border: 1px solid #999; break-inside: avoid; }
   body { overflow: visible; background: #fff; color: #000; }
   .layout { display: block; height: auto; }
+  .jury { grid-template-columns: 1fr 1fr; } .jury-card { break-inside: avoid; border: 1px solid #999; }
+  .jury-card ~ .btn-row, .page-head .lede { display: none; }
 }

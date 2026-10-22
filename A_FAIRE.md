@@ -17,10 +17,15 @@ Box 2026-2027 et premier cours (B3, IA appliquée à la communication).
 Six séances : 4/11 matin, 23/11 après-midi, 24/11 après-midi, 25/11 matin, 27/11 matin et après-midi (concours). Sujet : le défi Kilomètre Nord (enseigne de running fictive), chaque équipe crée une marque fictive à faire référencer.
 
 - [x] Appli séance 1 (`apps/concours-vente/?classe=b1a`) : positionnement, méthodes, tri CAB et SONCAS, sujet, fiche de marge, mission terrain, simulateur avec profil caché.
-- [ ] Mail à Bertrand : prérequis (cours Relation client), pondération de la rétrospective, date et jury du concours, effectif, salle.
-- [ ] Ajuster le nombre d'équipes (5 par défaut, `config.agences`) quand l'effectif est connu.
-- [ ] PDF : fiches méthode, sujet et fiche de marge, grille client mystère, grille du jury, modèle de note réflexive.
-- [ ] Séances 2 à 5 et organisation du concours : à construire.
+- [x] Réponse de Bertrand (22/10) : cours de vente déjà suivis (rappel suffit), 27 étudiants, concours le 27/11 après-midi, barème libre.
+- [x] Barème validé : soutenance 14 (collective) + rétrospective 6 (compte-rendu terrain 2, note réflexive individuelle 4).
+- [x] Séances 2 à 6 (`apps/concours-vente-s2` à `-s6`) + sujet commun (`apps/concours-vente/commun.js`), grille du jury, palmarès.
+- [ ] Mail final à Bertrand avec les documents (sujet, grille, consignes rétrospective, fiche de marge) : jury (Bertrand ? ancien élève ?) toujours à confirmer.
+- [ ] Trancher : note réflexive rédigée pendant la délibération (construit ainsi) ou le matin ; page de notes manuscrites autorisée ; fiches de notes tolérées pendant l'oral.
+- [ ] Qui joue l'acheteur le 27 (proposition : l'ancien élève, avec la carte de profil).
+- [ ] Imprimer les cartes de profil SONCAS si l'acheteur ne lit pas la carte sur l'écran.
+- [ ] Vidéos NotebookLM des séances 2, 3 et 4 (docs NotebookLM du 23, 24 et 25 novembre).
+- [ ] PDF : fiches méthode, sujet et fiche de marge, grille client mystère, grille du jury, grille d'auto-évaluation, fiche objections, consignes de note réflexive.
 - [ ] Nom « Kilomètre Nord » : recherche web négative, base INPI non consultée.
 
 # Cours M1 : IA et automatisation
