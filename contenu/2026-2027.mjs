@@ -384,13 +384,13 @@ export default {
           "n": 2,
           "date": "2026-11-06",
           "heure": "09:00–12:30",
-          "titre": "Veille assistée, automatisation no-code et soutenance de l'appel d'offres",
+          "titre": "Veille augmentée, flux no-code et soutenance de l'appel d'offres",
           "video": "",
           "apps": [
             {
-              "outil": "appli-ia-automatisation",
-              "url": "apps/ia-automatisation/index.html?classe=m1a#pitch",
-              "label": "Simulateur de soutenance"
+              "outil": "appli-ia-auto-s2",
+              "url": "apps/ia-automatisation-s2/index.html?classe=m1a",
+              "label": "Appli de la séance"
             }
           ],
           "ressources": []
