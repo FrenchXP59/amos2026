@@ -12,6 +12,17 @@ Box 2026-2027 et premier cours (B3, IA appliquée à la communication).
 - [x] Moteur commun des applis (`apps/moteur/`) : adaptation par classe, gabarits tri, chaîne et audit.
 - [x] Appli M2 « IA et productivité », séance 1 (`apps/ia-productivite/?classe=m2a` ou `m2b`).
 
+# Cours B1 : concours de vente
+
+Six séances : 4/11 matin, 23/11 après-midi, 24/11 après-midi, 25/11 matin, 27/11 matin et après-midi (concours). Sujet : le défi Kilomètre Nord (enseigne de running fictive), chaque équipe crée une marque fictive à faire référencer.
+
+- [x] Appli séance 1 (`apps/concours-vente/?classe=b1a`) : positionnement, méthodes, tri CAB et SONCAS, sujet, fiche de marge, mission terrain, simulateur avec profil caché.
+- [ ] Mail à Bertrand : prérequis (cours Relation client), pondération de la rétrospective, date et jury du concours, effectif, salle.
+- [ ] Ajuster le nombre d'équipes (5 par défaut, `config.agences`) quand l'effectif est connu.
+- [ ] PDF : fiches méthode, sujet et fiche de marge, grille client mystère, grille du jury, modèle de note réflexive.
+- [ ] Séances 2 à 5 et organisation du concours : à construire.
+- [ ] Nom « Kilomètre Nord » : recherche web négative, base INPI non consultée.
+
 # Cours M1 : IA et automatisation
 
 Séances : M1A le 3/11 et le 6/11 (9h-12h30). Évaluation : participation. Fil rouge : appel d'offres du Lys Padel Open (tournoi fictif).

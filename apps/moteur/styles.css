@@ -436,6 +436,33 @@ h1, h2, h3 { font-family: var(--font-display); line-height: 1.02; margin: 0; let
 .defauts { margin: 14px 0 0; padding-left: 20px; color: var(--ko); font-weight: 700; }
 .defauts li { margin: 4px 0; }
 
+/* ---------- Fiches méthode ---------- */
+.fiches { display: grid; gap: 10px; }
+.fiche { background: var(--surface); border: 1px solid var(--line); border-radius: var(--r-m); overflow: hidden; }
+.fiche-head { width: 100%; display: grid; grid-template-columns: 110px 1fr; gap: 16px; align-items: center; text-align: left; background: none; border: 0; padding: 14px 18px; }
+.fiche-head .sigle { font: 900 2.2rem/1 var(--font-display); color: var(--lamp-ink); letter-spacing: .04em; }
+.fiche-head strong { display: block; font-size: 1.2rem; }
+.fiche-head .muted { display: block; font-size: .95rem; }
+.fiche-body { display: grid; grid-template-rows: 0fr; transition: grid-template-rows .35s ease; }
+.fiche-body > div { overflow: hidden; padding: 0 18px 0 144px; }
+.fiche.open .fiche-body { grid-template-rows: 1fr; }
+.fiche.open .fiche-body > div { padding-bottom: 16px; }
+.fiche-points { margin: 0 0 10px; padding-left: 18px; display: grid; gap: 6px; max-width: 75ch; }
+.bareme.marge th { text-align: left; font-size: .9rem; color: var(--muted); padding: 8px 10px 8px 0; border-bottom: 1px solid var(--line); }
+.bareme.marge td { padding: 10px 10px 10px 0; font: inherit; color: inherit; text-align: left; width: auto; }
+.bareme.marge td:last-child { font: inherit; text-align: left; color: inherit; width: auto; }
+
+/* ---------- Simulateur : phase et carte ---------- */
+.phase { font: 800 1.4rem/1 var(--font-display); color: var(--lamp-ink); margin-bottom: 6px; }
+.carte-zone { margin-top: 18px; }
+.carte { margin: 12px auto 0; max-width: 360px; border-radius: 12px; padding: 18px; text-align: center; display: grid; gap: 6px; cursor: default; }
+.carte.dos { background: repeating-linear-gradient(45deg, #1B2A4A 0 10px, #22355C 10px 20px); color: #F4F7FB; cursor: pointer; }
+.carte.dos span { font: 900 1.6rem/1 var(--font-display); }
+.carte.juge { background: #F4F7FB; color: #14213D; }
+.carte.face { background: var(--lamp); color: var(--on-lamp); animation: slam .55s cubic-bezier(.2, 1.4, .4, 1); }
+.carte strong { font: 900 2.2rem/1 var(--font-display); }
+.carte small, .carte em { font-size: .9rem; }
+
 /* ---------- Contexte du dossier ---------- */
 .ctx { margin: 0; padding-left: 20px; display: grid; gap: 8px; }
 
@@ -582,6 +609,8 @@ dialog::backdrop { background: rgba(6, 12, 22, .6); }
 @media (max-width: 1100px) {
   .grid-3, .slots, .facts, .agences-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .draw, .pitch-wrap, .audit-grid { grid-template-columns: 1fr; }
+  .fiche-head { grid-template-columns: 70px 1fr; }
+  .fiche-body > div { padding-left: 18px; }
   .chain { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .rules, .work { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .tech { grid-template-columns: repeat(3, minmax(0, 1fr)); }

@@ -38,7 +38,7 @@ export default {
       "semestre": 1,
       "volume": "21 h en présentiel et 21 h en projet autonome",
       "evaluation": "Oral collectif de mise en situation devant un jury professionnel",
-      "descriptif": "Se préparer au métier de la vente et au premier stage : observation de points de vente et visites en client mystère, compte-rendu d'analyse terrain, puis construction d'un argumentaire et d'un pitch commercial sur un produit ou service du sport, défendu devant un jury de professionnels.",
+      "descriptif": "Se préparer au métier de la vente : méthodes AIDA, SONCAS et CAB, mission terrain en client mystère, puis le défi Kilomètre Nord. Chaque équipe crée une marque de running fictive et doit la faire référencer par l'acheteur d'une enseigne spécialisée, devant un jury professionnel.",
       "objectifs": [
         "Identifier les besoins client à partir d'un contexte donné",
         "Construire un argumentaire structuré avec les méthodes AIDA, SONCAS ou CAB",
@@ -158,9 +158,15 @@ export default {
           "n": 1,
           "date": "2026-11-04",
           "heure": "09:00–12:30",
-          "titre": "",
+          "titre": "Lancement, méthodes de vente, sujet Kilomètre Nord, mission terrain",
           "video": "",
-          "apps": [],
+          "apps": [
+            {
+              "outil": "appli-concours",
+              "url": "apps/concours-vente/index.html?classe=b1a",
+              "label": "Appli de la séance"
+            }
+          ],
           "ressources": []
         },
         {
@@ -168,7 +174,7 @@ export default {
           "n": 2,
           "date": "2026-11-23",
           "heure": "13:30–17:00",
-          "titre": "",
+          "titre": "Restitution terrain et besoins de l'enseigne",
           "video": "",
           "apps": [],
           "ressources": []
@@ -178,7 +184,7 @@ export default {
           "n": 3,
           "date": "2026-11-24",
           "heure": "13:30–17:00",
-          "titre": "",
+          "titre": "Argumentaire CAB, pitch AIDA, répartition des rôles",
           "video": "",
           "apps": [],
           "ressources": []
@@ -188,9 +194,15 @@ export default {
           "n": 4,
           "date": "2026-11-25",
           "heure": "09:00–12:30",
-          "titre": "",
+          "titre": "Objections et simulations en petits groupes",
           "video": "",
-          "apps": [],
+          "apps": [
+            {
+              "outil": "appli-concours",
+              "url": "apps/concours-vente/index.html?classe=b1a#pitch",
+              "label": "Simulateur de soutenance"
+            }
+          ],
           "ressources": []
         },
         {
@@ -198,9 +210,15 @@ export default {
           "n": 5,
           "date": "2026-11-27",
           "heure": "09:00–12:30",
-          "titre": "",
+          "titre": "Répétition générale, auto-évaluation et note réflexive",
           "video": "",
-          "apps": [],
+          "apps": [
+            {
+              "outil": "appli-concours",
+              "url": "apps/concours-vente/index.html?classe=b1a#pitch",
+              "label": "Simulateur de soutenance"
+            }
+          ],
           "ressources": []
         },
         {
@@ -208,7 +226,7 @@ export default {
           "n": 6,
           "date": "2026-11-27",
           "heure": "13:30–17:00",
-          "titre": "",
+          "titre": "Concours devant le jury",
           "video": "",
           "apps": [],
           "ressources": []

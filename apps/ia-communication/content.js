@@ -280,12 +280,12 @@ window.CONTENT = {
     objectionA: 60,
     roles: ["Introduction", "Besoin du client", "Solution", "Bénéfices", "Conclusion et appel à l'action"],
     objections: [
-      "15 000 €, c'est tout notre budget : pourquoi en mettre autant sur les réseaux ?",
-      "Nos coureurs réguliers ne sont pas sur Instagram.",
-      "Des visuels faits par IA, ça fait bas de gamme pour un événement local.",
-      "Les riverains vont se plaindre du bruit la nuit : votre com en parle ?",
-      "Pourquoi viser les néo-coureurs plutôt que les clubs de course ?",
-      "Comment saurez-vous que votre campagne a marché ?"
+      "« 15 000 €, c'est tout notre budget : pourquoi en mettre autant sur les réseaux ? »",
+      "« Nos coureurs réguliers ne sont pas sur Instagram. »",
+      "« Des visuels faits par IA, ça fait bas de gamme pour un événement local. »",
+      "« Les riverains vont se plaindre du bruit la nuit : votre com en parle ? »",
+      "« Pourquoi viser les néo-coureurs plutôt que les clubs de course ? »",
+      "« Comment saurez-vous que votre campagne a marché ? »"
     ],
     origine: "Mécanique reprise de ton appli Pitchcoach : 2 minutes, objection tirée au hasard à mi-parcours, personne désignée au hasard pour répondre."
   },

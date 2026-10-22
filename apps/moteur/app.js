@@ -608,10 +608,10 @@
         <div class="facts" style="grid-template-columns:1fr 1fr">${C.client.objectifs.map((o) => `<div class="fact"><strong>${esc(o)}</strong></div>`).join("")}</div></div>
     </div>` + (C.client.contexte ? `<div class="panel" style="margin-top:18px"><h3 style="font-size:1.6rem;margin-bottom:10px">${esc(C.client.contexteTitre || "Le contexte")}</h3><ul class="ctx">${C.client.contexte.map((x) => `<li>${esc(x.t)} ${x.src ? src(x.src, x.nom) : ""}</li>`).join("")}</ul></div>` : ""),
     () => `<div class="targets">${C.client.cibles.map((t) => `<div class="target"><strong>${esc(t.nom)}</strong><span>${esc(t.d)}</span></div>`).join("")}</div>`,
-    () => { const ch = C.client.charte; return `<div class="panel">
+    () => C.client.marge ? margeHTML() : (() => { const ch = C.client.charte; return `<div class="panel">
       <div class="swatches">${ch.couleurs.map(([n, h]) => `<div class="sw"><span style="background:${h}"></span><small>${esc(n)}</small><em>${h}</em></div>`).join("")}</div>
       <dl class="kv" style="margin-top:20px"><dt>Ton</dt><dd>${esc(ch.ton)}</dd><dt>Valeurs</dt><dd>${ch.valeurs.map(esc).join(", ")}</dd><dt>À éviter</dt><dd>${ch.interdits.map(esc).join(", ")}</dd></dl>
-      <p class="muted" style="margin:16px 0 0">Charte provisoire : elle servira de référence de cohérence graphique en séance 2.</p></div>`; },
+      <p class="muted" style="margin:16px 0 0">Charte provisoire : elle servira de référence de cohérence graphique en séance 2.</p></div>`; })(),
     () => `<div class="work">${C.client.travail.map((w, i) => `<div class="rule"><strong>${i + 1}. ${esc(w.t)}</strong><p>${esc(w.d)}</p></div>`).join("")}</div>
       <div class="panel" style="margin-top:16px"><p style="margin:0 0 8px"><strong>${esc(C.client.etape)}</strong></p><p class="muted" style="margin:0">${esc(C.client.seance2)}</p></div>
       <div class="btn-row" style="margin-top:16px"><button class="btn lamp" onclick="window.__setTimer(${C.client.dureeTravail || 45}, true)">Lancer ${C.client.dureeTravail || 45} min de travail</button></div>`,
@@ -621,6 +621,15 @@
       <p class="muted" style="margin:10px 0 0">${esc(C.client.baremeNote)}</p></div>`; },
     () => journalHTML()
   ];
+  function margeHTML() {
+    const M = C.client.marge;
+    return `<div class="panel">
+      <p style="margin-top:0;max-width:75ch">${esc(M.intro)}</p>
+      <div style="overflow-x:auto"><table class="bareme marge"><thead><tr>${M.colonnes.map((c) => `<th>${esc(c)}</th>`).join("")}</tr></thead>
+      <tbody>${M.lignes.map((l) => `<tr>${l.map((c) => `<td>${esc(c)}</td>`).join("")}</tr>`).join("")}</tbody></table></div>
+      ${M.regles ? `<h3 style="font-size:1.5rem;margin:18px 0 8px">${esc(M.reglesTitre || "Les règles")}</h3><ul class="ctx">${M.regles.map((r) => `<li>${esc(r)}</li>`).join("")}</ul>` : ""}
+      ${M.note ? `<p class="muted" style="margin:14px 0 0">${esc(M.note)}</p>` : ""}</div>`;
+  }
   const JOURNAL = Object.assign({
     titre: "Journal de prompts",
     etapes: [{ label: "Itération V1" }, { label: "Itération V2", changement: true }, { label: "Itération V3", changement: true }],
@@ -635,7 +644,7 @@
       <div class="field"><label for="j-membres">Membres</label><input id="j-membres" data-j="membres" value="${v("membres")}"></div>
       ${JOURNAL.etapes.map((e, i) => { const n = i + 1; return `<div class="iter-block"><h4>${esc(e.label)}</h4>
         ${e.aide ? `<p class="muted" style="margin:0 0 8px">${esc(e.aide)}</p>` : ""}
-        <div class="field"><label for="j-p${n}">Prompt</label><textarea id="j-p${n}" data-j="p${n}" rows="3">${v("p" + n)}</textarea></div>
+        <div class="field"><label for="j-p${n}">${esc(e.champ || JOURNAL.champ || "Prompt")}</label><textarea id="j-p${n}" data-j="p${n}" rows="3">${v("p" + n)}</textarea></div>
         ${e.changement ? `<div class="field"><label for="j-c${n}">${esc(JOURNAL.changementLabel)}</label><textarea id="j-c${n}" data-j="c${n}" rows="2">${v("c" + n)}</textarea></div>` : ""}
       </div>`; }).join("")}
       <div class="field"><label for="j-crit">${esc(JOURNAL.critique)}</label><textarea id="j-crit" data-j="crit" rows="4">${v("crit")}</textarea></div>
@@ -647,7 +656,7 @@
     $("#j-dl", root).onclick = () => {
       const j = S.journal, L = [];
       L.push(`${JOURNAL.titre.toUpperCase()} — ${C.client.nom}`, `${C.config.cours}, ${C.config.seance}`, "", `Équipe : ${j.agence || S.names[0]}`, `Membres : ${j.membres || ""}`, "");
-      JOURNAL.etapes.forEach((e, i) => { const n = i + 1; L.push(`--- ${e.label} ---`, `Prompt : ${j["p" + n] || ""}`); if (e.changement) L.push(`${JOURNAL.changementLabel} : ${j["c" + n] || ""}`); L.push(""); });
+      JOURNAL.etapes.forEach((e, i) => { const n = i + 1; L.push(`--- ${e.label} ---`, `${e.champ || JOURNAL.champ || "Prompt"} : ${j["p" + n] || ""}`); if (e.changement) L.push(`${JOURNAL.changementLabel} : ${j["c" + n] || ""}`); L.push(""); });
       L.push(`--- ${JOURNAL.critique} ---`, j.crit || "");
       const blob = new Blob([L.join("\n")], { type: "text/plain;charset=utf-8" });
       const a = document.createElement("a"); a.href = URL.createObjectURL(blob);
@@ -656,6 +665,31 @@
     };
     $("#j-clear", root).onclick = () => { if (confirm("Effacer le journal enregistré dans ce navigateur ?")) { S.journal = {}; persist(); $("#cas-body", root).innerHTML = journalHTML(); bindJournal(root); } };
   }
+
+  /* --- Gabarit quiz : un quiz seul (positionnement, révision) --- */
+  RENDER.quiz = (p) => `${head(p, p.lede)}${C[p.data].intro ? `<p style="max-width:75ch;margin:-6px 0 18px;color:var(--muted)">${esc(C[p.data].intro)}</p>` : ""}${quizHTML("quiz-" + p.id)}`;
+  BIND.quiz = (root, p) => mountQuiz($("#quiz-" + p.id, root), C[p.data].questions, { award: !!C[p.data].points, timer: true, awardLabel: "Point pour" });
+
+  /* --- Gabarit fiches : fiches méthode ou consignes, dépliables --- */
+  RENDER.fiches = (p) => {
+    const F = C[p.data];
+    return `${head(p, p.lede)}
+      ${F.intro ? `<p style="max-width:75ch;margin:-6px 0 18px;color:var(--muted)">${esc(F.intro)}</p>` : ""}
+      <div class="fiches">${F.items.map((f, i) => `
+        <article class="fiche ${i === 0 ? "open" : ""}">
+          <button class="fiche-head" aria-expanded="${i === 0}"><span class="sigle">${esc(f.sigle || String(i + 1))}</span><span><strong>${esc(f.titre)}</strong>${f.sous ? `<span class="muted">${esc(f.sous)}</span>` : ""}</span></button>
+          <div class="fiche-body"><div>
+            ${f.points ? `<ul class="fiche-points">${f.points.map((x) => `<li>${Array.isArray(x) ? `<strong>${esc(x[0])}</strong> ${esc(x[1])}` : esc(x)}</li>`).join("")}</ul>` : ""}
+            ${f.exemple ? `<p class="ask">${esc(f.exemple)}</p>` : ""}
+          </div></div>
+        </article>`).join("")}</div>
+      ${F.note ? `<p class="muted" style="margin-top:14px;max-width:80ch">${esc(F.note)}</p>` : ""}
+      ${F.chrono ? `<div class="btn-row" style="margin-top:14px"><button class="btn lamp" data-fchrono="${F.chrono}">Lancer ${F.chrono} min</button></div>` : ""}`;
+  };
+  BIND.fiches = (root) => {
+    $$(".fiche-head", root).forEach((b) => (b.onclick = () => { const f = b.parentElement, o = f.classList.toggle("open"); b.setAttribute("aria-expanded", o); }));
+    const c = $("[data-fchrono]", root); if (c) c.onclick = () => setTimer(+c.dataset.fchrono, true);
+  };
 
   /* --- Gabarit « tri » : classer des situations, puis révéler --- */
   RENDER.tri = (p) => {
@@ -780,12 +814,12 @@
       <div class="res"><span class="type">${esc(r.type)}</span><strong>${esc(r.titre)}</strong>
         ${r.dispo ? `<a class="btn small lamp" href="${esc(r.fichier)}" download>Télécharger</a>` : `<span class="soon">Disponible après la séance</span>`}
       </div>`).join("")}</div>
-    <section class="section"><h2>Les sources des actus</h2>
+    ${(C.actus || []).length ? `<section class="section"><h2>Les sources</h2>
       <ul>${C.actus.map((a) => `<li><a href="${esc(a.src)}" target="_blank" rel="noopener">${esc(a.titre)}</a> <span class="muted">(${esc(a.date)}, ${esc(a.srcNom)})</span></li>`).join("")}</ul>
-    </section>`;
+    </section>` : ""}`;
 
   /* --- Simulateur de pitch (séance 2) --- */
-  RENDER.pitch = () => {
+  RENDER.pitch = (p) => {
     const P = C.pitch;
     return `
     <header class="page-head"><h1>${esc(P.titre || "Simulateur de pitch")}</h1><p class="lede">${esc(P.lede)}</p></header>
@@ -795,10 +829,12 @@
         <ol class="roles" id="p-roles"></ol>
       </div>
       <div class="panel pitch-stage">
+        ${P.phases ? `<div class="phase" id="p-phase">${esc(P.phases[0].label)}</div>` : ""}
         <div class="pitch-clock" id="p-clock">${fmt(P.duree)}</div>
         <div class="pitch-bar"><span id="p-bar"></span></div>
         <div class="btn-row" style="justify-content:center;margin-top:16px"><button class="btn lamp" id="p-go">Lancer le pitch</button><button class="btn" id="p-reset">Recommencer</button><button class="btn" id="p-now">Objection maintenant</button></div>
         <div class="objection" id="p-obj" hidden></div>
+        ${P.cartes ? `<div class="carte-zone"><div class="btn-row" style="justify-content:center"><button class="btn" id="p-draw">${esc(P.cartesBouton || "Tirer la carte du juré")}</button><button class="btn" id="p-show" disabled>Révéler la carte</button></div><div class="carte" id="p-carte" hidden></div></div>` : ""}
       </div>
     </div>
     <p class="source" style="margin-top:14px">${esc(P.origine)}</p>`;
@@ -809,14 +845,27 @@
       const i = +$("#p-agence", root).value, mem = (S.members[i] || []);
       $("#p-roles", root).innerHTML = P.roles.map((r, k) => `<li><strong>${esc(r)}</strong><span>${esc(mem[k % Math.max(1, mem.length)] || "À attribuer")}</span></li>`).join("");
     };
-    const draw = () => { $("#p-clock", root).textContent = fmt(left); $("#p-bar", root).style.width = `${(1 - left / P.duree) * 100}%`; $("#p-clock", root).classList.toggle("hot", left <= 30); };
+    const draw = () => {
+      $("#p-clock", root).textContent = fmt(left); $("#p-bar", root).style.width = `${(1 - left / P.duree) * 100}%`; $("#p-clock", root).classList.toggle("hot", left <= 30);
+      if (P.phases) { let el = P.duree - left, acc = 0, cur = P.phases[P.phases.length - 1]; for (const ph of P.phases) { acc += ph.sec; if (el < acc) { cur = ph; break; } } $("#p-phase", root).textContent = cur.label; }
+    };
+    let carte = null;
+    const dr = $("#p-draw", root), sh = $("#p-show", root);
+    if (dr) dr.onclick = () => {
+      carte = P.cartes[Math.floor(Math.random() * P.cartes.length)];
+      const c = $("#p-carte", root); c.hidden = false; c.className = "carte dos";
+      c.innerHTML = `<span>Carte tirée</span><small>Le juré la lit en silence${carte.consigne ? " : consigne de jeu au dos" : ""}</small>`;
+      c.onclick = () => { if (c.classList.contains("dos") && carte.consigne) { c.classList.toggle("juge"); c.innerHTML = c.classList.contains("juge") ? `<strong>${esc(carte.nom)}</strong><small>${esc(carte.consigne)}</small><em>Touchez pour cacher</em>` : `<span>Carte tirée</span><small>Touchez pour lire la consigne (juré uniquement)</small>`; } };
+      sh.disabled = false;
+    };
+    if (sh) sh.onclick = () => { if (!carte) return; const c = $("#p-carte", root); c.className = "carte face"; c.onclick = null; c.innerHTML = `<span>Profil du client</span><strong>${esc(carte.nom)}</strong><small>${esc(carte.indices || "")}</small>`; };
     const fire = () => {
       if (fired) return; fired = true;
       const i = +$("#p-agence", root).value, mem = (S.members[i] || []).filter(Boolean);
       const who = mem.length ? mem[Math.floor(Math.random() * mem.length)] : P.roles[Math.floor(Math.random() * P.roles.length)];
       const ob = P.objections[Math.floor(Math.random() * P.objections.length)];
       const o = $("#p-obj", root); o.hidden = false;
-      o.innerHTML = `<span class="kicker">Objection du client</span><p>« ${esc(ob)} »</p><span class="who">Répond : <strong>${esc(who)}</strong></span>`;
+      o.innerHTML = `<span class="kicker">${esc(P.objectionTitre || "Objection")}</span><p>${esc(ob)}</p><span class="who">Répond : <strong>${esc(who)}</strong></span>`;
       o.classList.remove("in"); void o.offsetWidth; o.classList.add("in"); chime();
     };
     const tick = () => {

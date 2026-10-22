@@ -1,0 +1,1 @@
+Dépose ici les PDF à télécharger (noms attendus dans content.js, rubrique ressources), puis passe dispo à true.
