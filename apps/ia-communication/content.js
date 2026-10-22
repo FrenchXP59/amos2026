@@ -7,18 +7,21 @@ window.CONTENT = {
 
   /* ---------- Réglages généraux ---------- */
   config: {
+    id: "amos-ia-com-s1",          // identifiant de sauvegarde locale (unique par appli)
     ecole: "AMOS",
-    logo: "assets/logo-amos.png",        // logo officiel repris de ton dépôt Pitchteams
+    logo: "../moteur/assets/logo-amos.png",
     cours: "IA appliquée à la communication",
     classe: "B3 Bachelor marketing, commercial & événementiel sport",
     seance: "Séance 1 sur 2",
     intervenant: "Frédéric Legrand",
     dateSeance: "Lundi 2 novembre 2026, 9h00 – 12h30",
-    // Date affichée selon la classe : ouvrir l'appli avec ?classe=b3a ou ?classe=b3b
-    datesParClasse: {
-      b3b: "Lundi 2 novembre 2026, 9h00 – 12h30",
-      b3a: "Mardi 3 novembre 2026, 13h30 – 17h00"
+    // Adaptation par classe : ouvrir l'appli avec ?classe=b3a ou ?classe=b3b
+    // date affichée, heure de début (les horaires du parcours sont recalculés) et variables de texte
+    classes: {
+      b3b: { date: "Lundi 2 novembre 2026, 9h00 – 12h30", debut: "9:00", variables: { seance2: "jeudi 5 novembre, après-midi" } },
+      b3a: { date: "Mardi 3 novembre 2026, 13h30 – 17h00", debut: "13:30", variables: { seance2: "lundi 23 novembre, matin" } }
     },
+    variables: { seance2: "date à venir" },   // valeur par défaut sans ?classe=
     agences: ["Agence 1", "Agence 2", "Agence 3", "Agence 4"]
   },
 
@@ -34,15 +37,15 @@ window.CONTENT = {
   /* ---------- Le parcours de la séance (horaires = checkpoints) ---------- */
   parcours: [
     { id: "accueil",   heure: "9:00",  duree: 10, titre: "Départ",                     sous: "Agences et brief teaser" },
-    { id: "iahumain",  heure: "9:10",  duree: 15, titre: "IA ou humain ?",             sous: "Le jeu d'ouverture" },
-    { id: "video",     heure: "9:25",  duree: 20, titre: "Vidéo et quiz flash",        sous: "De l'IA qui répond à l'IA qui agit" },
-    { id: "rupture",   heure: "9:45",  duree: 25, titre: "Rupture 2026",               sous: "L'escalier de l'autonomie" },
-    { id: "panorama",  heure: "10:10", duree: 15, titre: "Outils et actus",            sous: "Ce qui a changé cette année" },
-    { id: "prompt",    heure: "10:25", duree: 30, titre: "Prompt engineering",         sous: "Méthode, défis, battle" },
+    { id: "iahumain",  heure: "9:10",  duree: 15, titre: "IA ou humain ?",             sous: "Le jeu d'ouverture", lede: "Six contenus de sport. Pour chacun : IA ou humain ? Votez à main levée, puis révélez. Une agence qui a juste marque un point." },
+    { id: "video",     heure: "9:25",  duree: 20, titre: "Vidéo et quiz flash",        sous: "De l'IA qui répond à l'IA qui agit", lede: "Quatre minutes pour comprendre la rupture de l'année, puis six questions éclair. Chaque bonne réponse rapporte un point à l'agence la plus rapide." },
+    { id: "rupture",   heure: "9:45",  duree: 25, titre: "Rupture 2026",               sous: "L'escalier de l'autonomie", lede: "Jusqu'ici, l'IA répondait. En 2026, elle exécute. La question n'est plus « quel prompt ? » mais « jusqu'où je lui donne la main ? »." },
+    { id: "panorama",  heure: "10:10", duree: 15, titre: "Outils et actus",            sous: "Ce qui a changé cette année", lede: "Les outils changent tous les trois mois. Ce qui reste : savoir choisir selon le besoin, le coût, les droits et la confidentialité." },
+    { id: "prompt",    heure: "10:25", duree: 30, titre: "Prompt engineering",         sous: "Méthode, défis, battle", lede: "Le cœur de la séance. Une méthode simple, une démonstration d'itération, trois défis chronométrés sur vos outils gratuits, puis la battle." },
     { id: "pause",     heure: "10:55", duree: 15, titre: "Pause",                      sous: "Ravitaillement" },
-    { id: "critique",  heure: "11:10", duree: 15, titre: "Regard critique",            sous: "Droit, biais, bad buzz" },
-    { id: "cas",       heure: "11:25", duree: 50, titre: "Fil rouge CITANUIT",         sous: "Partie 1 en agence" },
-    { id: "final",     heure: "12:15", duree: 15, titre: "Battle finale",              sous: "À retenir et suite" }
+    { id: "critique",  heure: "11:10", duree: 15, titre: "Regard critique",            sous: "Droit, biais, bad buzz", lede: "Produire avec l'IA, c'est facile. Savoir ce qu'on a le droit de publier, et ce qui va faire rire tout le réseau, c'est le métier." },
+    { id: "cas",       heure: "11:25", duree: 50, titre: "Fil rouge CITANUIT",         sous: "Partie 1 en agence", lede: "Votre client arrive. Partie 1 aujourd'hui : stratégie et prompts. Partie 2, {seance2} : le mini-kit et le pitch." },
+    { id: "final",     heure: "12:15", duree: 15, titre: "Battle finale",              sous: "À retenir et suite", lede: "Huit questions sur toute la séance. L'agence qui lève la main la première et répond juste prend le point." }
   ],
 
   /* ---------- Jeu « IA ou humain ? » ----------
@@ -106,6 +109,7 @@ window.CONTENT = {
   ],
   marchesOutils: "Marche 4 en 2026 : ChatGPT Work (9 juillet 2026, offres payantes hors Free et Go), Claude Cowork (janvier 2026 sur ordinateur), Codex et Claude Code côté développement.",
 
+  quelleMarcheIntro: "Huit tâches du CITANUIT. Pour chacune, la classe choisit une marche, puis on révèle.",
   quelleMarche: [
     { t: "Trouver 10 idées de slogan pour la course", m: 1, why: "Rien à lire, rien à aller chercher : un simple chat suffit." },
     { t: "Résumer le règlement de course (PDF de 12 pages)", m: 2, why: "Un document à envoyer, une analyse : chat + fichier." },
@@ -269,6 +273,7 @@ window.CONTENT = {
 
   /* ---------- Simulateur de pitch (séance 2), inspiré de Pitchcoach ---------- */
   pitch: {
+    lede: "Deux minutes devant le client CITANUIT. À mi-parcours, une objection tombe, et quelqu'un de l'agence doit y répondre.",
     duree: 120,
     objectionA: 60,
     roles: ["Introduction", "Besoin du client", "Solution", "Bénéfices", "Conclusion et appel à l'action"],
@@ -289,6 +294,10 @@ window.CONTENT = {
   client: {
     nom: "CITANUIT Trail Lille",
     accroche: "La ville s'éteint, les frontales s'allument.",
+    arrivee: "Votre client arrive à {heure:cas}",
+    teaser: "Un trail nocturne de 10 et 21 km au pied de la Citadelle. Quatre agences, un seul budget de communication. D'ici là, faites le plein de méthode.",
+    seance2Kicker: "Séance 2, {seance2}",
+    seance2Titre: "Le client revient",
     avertissement: "Événement et client fictifs, créés pour le cours.",
     fiche: [
       ["Date", "Samedi 18 septembre 2027, départ 20h30"],
@@ -319,7 +328,7 @@ window.CONTENT = {
       { t: "Critique argumentée", d: "Un output de l'IA évalué avec la grille en 6 critères." }
     ],
     etape: "Point d'étape en fin de séance : dépôt du journal et de la plateforme de message. Non noté, mais il entre dans la note finale.",
-    seance2: "Séance 2 (jeudi 5 novembre, après-midi) : mini-kit de communication (affiche, 3 posts, mail sponsor, storyboard vidéo) et pitch devant le client.",
+    seance2: "Séance 2 ({seance2}) : mini-kit de communication (affiche, 3 posts, mail sponsor, storyboard vidéo) et pitch devant le client.",
     bareme: [
       { c: "Journal de prompts et qualité de l'itération", p: 5 },
       { c: "Stratégie : personas et plateforme de message", p: 4 },

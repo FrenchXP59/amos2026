@@ -1,9 +1,8 @@
 /* =========================================================================
-   APPLICATION — moteur (le contenu est dans content.js)
+   MOTEUR COMMUN DES APPLIS DE COURS — chaque cours fournit son index.html et son content.js
    ========================================================================= */
 (function () {
   "use strict";
-  const C = window.CONTENT;
   const $ = (s, r = document) => r.querySelector(s);
   const $$ = (s, r = document) => Array.from(r.querySelectorAll(s));
   const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
@@ -12,7 +11,26 @@
   /* ---------- Stockage local (facultatif, protégé) ---------- */
   let CLASSE = "";
   try { CLASSE = (new URLSearchParams(location.search).get("classe") || "").toLowerCase().replace(/[^a-z0-9]/g, ""); } catch (e) { /* ignoré */ }
-  const KEY = "amos-ia-com-s1" + (CLASSE ? "-" + CLASSE : "");   // une sauvegarde par classe (agences, scores, journal)
+
+  /* ---------- Adaptation à la classe (?classe=b3a) : date, horaires, textes ---------- */
+  const C = (function prepare(raw) {
+    const cfg = raw.config, ov = (cfg.classes && cfg.classes[CLASSE]) || null;
+    if (ov) {
+      if (ov.date) cfg.dateSeance = ov.date;
+      cfg.classe = cfg.classe + ", " + CLASSE.toUpperCase();
+      if (ov.debut) {   // horaires recalculés à partir de l'heure de début et des durées
+        let [h, m] = ov.debut.split(":").map(Number), t = h * 60 + m;
+        raw.parcours.forEach((p) => { p.heure = `${Math.floor(t / 60)}:${String(t % 60).padStart(2, "0")}`; t += p.duree; });
+      }
+    }
+    const vars = Object.assign({}, cfg.variables || {}, (ov && ov.variables) || {});
+    raw.parcours.forEach((p) => (vars["heure:" + p.id] = p.heure.replace(":", "h")));
+    const fin = (() => { const l = raw.parcours[raw.parcours.length - 1]; const [h, m] = l.heure.split(":").map(Number); const t = h * 60 + m + l.duree; return `${Math.floor(t / 60)}h${String(t % 60).padStart(2, "0")}`; })();
+    vars.debut = raw.parcours[0].heure.replace(":", "h"); vars.fin = fin;
+    const json = JSON.stringify(raw).replace(/\{([a-z0-9:_-]+)\}/gi, (s, k) => (k in vars ? String(vars[k]).replace(/"/g, '\\"') : s));
+    return JSON.parse(json);
+  })(window.CONTENT);
+  const KEY = (C.config.id || "amos-cours") + (CLASSE ? "-" + CLASSE : "");   // une sauvegarde par classe (agences, scores, journal)
   const store = {
     load() { try { return JSON.parse(localStorage.getItem(KEY)) || {}; } catch (e) { return {}; } },
     save(s) { try { localStorage.setItem(KEY, JSON.stringify(s)); } catch (e) { /* stockage indisponible */ } }
@@ -29,13 +47,6 @@
   };
   const persist = () => store.save({ theme: S.theme, names: S.names, scores: S.scores, journal: S.journal, roster: S.roster, members: S.members });
 
-  try {
-    const cl = new URLSearchParams(location.search).get("classe");
-    if (cl && C.config.datesParClasse && C.config.datesParClasse[cl]) {
-      C.config.dateSeance = C.config.datesParClasse[cl];
-      C.config.classe = C.config.classe + ", " + cl.toUpperCase();
-    }
-  } catch (e) { /* paramètre ignoré */ }
   const PAGES = C.parcours.map((p) => p.id);
   const EXTRA = ["ressources", "glossaire", "pitch"];
 
@@ -173,8 +184,9 @@
     if (!PAGES.includes(id) && !EXTRA.includes(id)) id = PAGES[0];
     const stage = $("#stage");
     const p = C.parcours.find((x) => x.id === id);
-    stage.innerHTML = `<div class="page">${(RENDER[id] || (() => ""))(p)}</div>`;
-    (BIND[id] || (() => {}))(stage, p);
+    const type = (p && p.type) || id;
+    stage.innerHTML = `<div class="page">${(RENDER[type] || (() => ""))(p)}</div>`;
+    (BIND[type] || (() => {}))(stage, p);
     bindAward(stage);
     stage.scrollTop = 0; window.scrollTo(0, 0);
     renderRail(id);
@@ -261,7 +273,7 @@
     <section class="hero ${S.animated ? "" : "animate"}">
       <h1>${esc(C.config.cours)}</h1>
       <p class="meta">${esc(C.config.dateSeance)}. ${esc(C.config.classe)}. Avec ${esc(C.config.intervenant)}.</p>
-      <svg class="profile" viewBox="0 0 1200 230" role="img" aria-label="Le parcours de la séance, de 9h00 à 12h30, en dix checkpoints">
+      <svg class="profile" viewBox="0 0 1200 230" role="img" aria-label="Le parcours de la séance, de ${C.parcours[0].heure.replace(":", "h")}, en ${C.parcours.length} étapes">
         <defs><radialGradient id="beam" cx="50%" cy="50%" r="50%"><stop offset="0" stop-color="#52A86F" stop-opacity=".6"/><stop offset="1" stop-color="#52A86F" stop-opacity="0"/></radialGradient></defs>
         <path class="ground" d="${pts.area}"/>
         <path class="halo" d="${pts.line}" style="--len:${len}"/>
@@ -272,9 +284,9 @@
     </section>
 
     <div class="client-card" style="margin-top:28px">
-      <span class="kicker">Votre client arrive à 11h25</span>
+      <span class="kicker">${esc(C.client.arrivee)}</span>
       <h2>${esc(C.client.nom)}</h2>
-      <p>${esc(C.client.accroche)} Un trail nocturne de 10 et 21\u00a0km au pied de la Citadelle. Quatre agences, un seul budget de communication. D'ici là, faites le plein de méthode.</p>
+      <p>${esc(C.client.accroche)} ${esc(C.client.teaser)}</p>
     </div>
 
     <section class="section" id="tirage">
@@ -344,7 +356,7 @@
 
   /* --- CP1 IA ou humain --- */
   RENDER.iahumain = (p) => `
-    ${head(p, "Six contenus de sport. Pour chacun : IA ou humain ? Votez à main levée, puis révélez. Une agence qui a juste marque un point.")}
+    ${head(p, p.lede)}
     <div class="slots">
       ${C.iaHumain.map((it, i) => `
       <article class="slot" data-slot="${i}">
@@ -371,14 +383,14 @@
 
   /* --- CP2 Vidéo + quiz flash --- */
   RENDER.video = (p) => `
-    ${head(p, "Quatre minutes pour comprendre la rupture de l'année, puis six questions éclair. Chaque bonne réponse rapporte un point à l'agence la plus rapide.")}
+    ${head(p, p.lede)}
     ${videoHTML(C.videos.s1)}
     <section class="section"><h2>Quiz flash</h2>${quizHTML("quiz-flash")}</section>`;
   BIND.video = (root) => mountQuiz($("#quiz-flash", root), C.quizFlash, { award: true, timer: true, awardLabel: "Agence la plus rapide" });
 
   /* --- CP3 Rupture 2026 --- */
   RENDER.rupture = (p) => `
-    ${head(p, "Jusqu'ici, l'IA répondait. En 2026, elle exécute. La question n'est plus « quel prompt ? » mais « jusqu'où je lui donne la main ? ».")}
+    ${head(p, p.lede)}
     <section>
       <div class="btn-row" style="margin-bottom:14px">
         <button class="btn lamp" id="stair-next">Monter d'une marche</button>
@@ -392,7 +404,7 @@
 
     <section class="section">
       <h2>Quelle marche pour quelle tâche ?</h2>
-      <p class="intro">Huit tâches du CITANUIT. Pour chacune, la classe choisit une marche, puis on révèle.</p>
+      <p class="intro">${esc(C.quelleMarcheIntro)}</p>
       <div class="btn-row" style="margin-bottom:12px"><button class="btn small lamp" id="tasks-reveal">Tout révéler</button><button class="btn small" id="tasks-reset">Recommencer</button></div>
       <div class="tasks">
         ${C.quelleMarche.map((t, i) => `
@@ -444,7 +456,7 @@
 
   /* --- CP4 Panorama et actus --- */
   RENDER.panorama = (p) => `
-    ${head(p, "Les outils changent tous les trois mois. Ce qui reste : savoir choisir selon le besoin, le coût, les droits et la confidentialité.")}
+    ${head(p, p.lede)}
     <div class="tools">${C.panorama.map((r) => `<div class="tool-row"><h3>${esc(r.usage)}</h3><div class="chips">${r.outils.map((o) => `<span class="chip">${esc(o)}</span>`).join("")}</div><span class="note">${esc(r.note)}</span></div>`).join("")}</div>
     <section class="section">
       <h2>Ce qui s'est passé cette année</h2>
@@ -461,7 +473,7 @@
 
   /* --- CP5 Prompt engineering --- */
   RENDER.prompt = (p) => `
-    ${head(p, "Le cœur de la séance. Une méthode simple, une démonstration d'itération, trois défis chronométrés sur vos outils gratuits, puis la battle.")}
+    ${head(p, p.lede)}
     <section>
       <h2 style="font-size:2rem;margin-bottom:6px">Le prompt en 5 blocs</h2>
       <p class="muted" style="margin:0 0 18px;max-width:80ch">${esc(C.blocsNote)}</p>
@@ -516,14 +528,14 @@
   /* --- Pause --- */
   RENDER.pause = (p) => `
     <div class="pause-wrap"><div>
-      <p class="muted" style="font-size:1.3rem;margin:0 0 10px">Ravitaillement. Reprise à 11h10.</p>
+      <p class="muted" style="font-size:1.3rem;margin:0 0 10px">Ravitaillement. Reprise à ${(C.parcours[PAGES.indexOf("pause") + 1] || p).heure.replace(":", "h")}.</p>
       <div class="pause-clock live-clock">${fmt(p.duree * 60)}</div>
       <p class="muted" style="margin-top:14px">Le chrono tourne déjà. Prochaine étape : regard critique.</p>
     </div></div>`;
 
   /* --- CP7 Regard critique --- */
   RENDER.critique = (p) => `
-    ${head(p, "Produire avec l'IA, c'est facile. Savoir ce qu'on a le droit de publier, et ce qui va faire rire tout le réseau, c'est le métier.")}
+    ${head(p, p.lede)}
     <section>
       <h2 style="font-size:2rem;margin-bottom:14px">Vrai ou faux ?</h2>
       <div class="vf">${C.vraiFaux.map((v, i) => `
@@ -563,12 +575,12 @@
     $$("[data-bias]", root).forEach((b) => (b.onclick = () => { const r = $(`[data-biasr="${b.dataset.bias}"]`, root); r.hidden = !r.hidden; }));
   };
 
-  /* --- CP8 Fil rouge CITANUIT --- */
+  /* --- Fil rouge : dossier client --- */
   const CAS_TABS = ["Le client", "Les cibles", "La charte", "Le travail", "Le barème", "Journal de prompts"];
   RENDER.cas = (p) => {
     const c = C.client;
     return `
-    ${head(p, "Votre client arrive. Partie 1 aujourd'hui : stratégie et prompts. Partie 2 jeudi : le mini-kit et le pitch.")}
+    ${head(p, p.lede)}
     <div class="dossier-head">
       <h2>${esc(c.nom)}</h2>
       <p>${esc(c.accroche)}</p>
@@ -639,11 +651,11 @@
 
   /* --- CP9 Battle finale --- */
   RENDER.final = (p) => `
-    ${head(p, "Huit questions sur toute la séance. L'agence qui lève la main la première et répond juste prend le point.")}
+    ${head(p, p.lede)}
     ${quizHTML("quiz-battle")}
     <section class="section"><h2>Le classement</h2><div class="podium" id="podium"></div></section>
     <section class="section"><h2>Ce qu'il faut retenir</h2><ol class="retenir">${C.aRetenir.map((r) => `<li>${esc(r)}</li>`).join("")}</ol></section>
-    <section class="section"><div class="client-card"><span class="kicker">Jeudi 5 novembre</span><h2>Le client revient</h2><p>${esc(C.client.seance2)}</p></div></section>`;
+    <section class="section"><div class="client-card"><span class="kicker">${esc(C.client.seance2Kicker)}</span><h2>${esc(C.client.seance2Titre)}</h2><p>${esc(C.client.seance2)}</p></div></section>`;
   BIND.final = (root) => { mountQuiz($("#quiz-battle", root), C.battle, { award: true, timer: true, awardLabel: "Point pour" }); renderPodium(); };
   function renderPodium() {
     const el = $("#podium"); if (!el) return;
@@ -667,7 +679,7 @@
   RENDER.pitch = () => {
     const P = C.pitch;
     return `
-    <header class="page-head"><h1>Simulateur de pitch</h1><p class="lede">Deux minutes devant le client CITANUIT. À mi-parcours, une objection tombe, et quelqu'un de l'agence doit y répondre.</p></header>
+    <header class="page-head"><h1>Simulateur de pitch</h1><p class="lede">${esc(P.lede)}</p></header>
     <div class="pitch-wrap">
       <div class="panel">
         <div class="field"><label for="p-agence">Agence qui pitche</label><select id="p-agence">${S.names.map((n, i) => `<option value="${i}">${esc(n)}</option>`).join("")}</select></div>
