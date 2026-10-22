@@ -230,9 +230,9 @@ window.CONTENT = {
   ],
 
   ressources: [
-    { titre: "Fiche méthode : le prompt visuel", fichier: "ressources/fiche-prompt-visuel.pdf", type: "PDF", dispo: false },
-    { titre: "Brief du mini-kit et charte CITANUIT", fichier: "ressources/brief-mini-kit.pdf", type: "PDF", dispo: false },
-    { titre: "Checklist de validation d'un visuel IA", fichier: "ressources/checklist-visuel-ia.pdf", type: "PDF", dispo: false }
+    { titre: "Fiche méthode : le prompt visuel", fichier: "ressources/fiche-prompt-visuel.pdf", type: "PDF", dispo: true },
+    { titre: "Brief du mini-kit et charte CITANUIT", fichier: "ressources/brief-mini-kit.pdf", type: "PDF", dispo: true },
+    { titre: "Checklist de validation d'un visuel IA", fichier: "ressources/checklist-visuel-ia.pdf", type: "PDF", dispo: true }
   ],
 
   actus: [

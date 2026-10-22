@@ -195,13 +195,13 @@ window.KN = {
   ],
 
   ressources: [
-    { titre: "Fiches méthode : AIDA, SONCAS, CAB, objections", fichier: "../concours-vente/ressources/fiches-methode.pdf", type: "PDF", dispo: false },
-    { titre: "Sujet du concours et fiche de marge", fichier: "../concours-vente/ressources/sujet-kilometre-nord.pdf", type: "PDF", dispo: false },
-    { titre: "Grille client mystère", fichier: "../concours-vente/ressources/grille-client-mystere.pdf", type: "PDF", dispo: false },
-    { titre: "Grille du jury", fichier: "../concours-vente/ressources/grille-jury.pdf", type: "PDF", dispo: false },
-    { titre: "Grille d'auto-évaluation", fichier: "../concours-vente/ressources/grille-auto-evaluation.pdf", type: "PDF", dispo: false },
-    { titre: "Fiche : traiter les objections", fichier: "../concours-vente/ressources/fiche-objections.pdf", type: "PDF", dispo: false },
-    { titre: "Modèle de note réflexive et d'auto-évaluation", fichier: "../concours-vente/ressources/note-reflexive.pdf", type: "PDF", dispo: false }
+    { titre: "Fiches méthode : AIDA, SONCAS, CAB, objections", fichier: "../concours-vente/ressources/fiches-methode.pdf", type: "PDF", dispo: true },
+    { titre: "Sujet du concours et fiche de marge", fichier: "../concours-vente/ressources/sujet-kilometre-nord.pdf", type: "PDF", dispo: true },
+    { titre: "Grille client mystère", fichier: "../concours-vente/ressources/grille-client-mystere.pdf", type: "PDF", dispo: true },
+    { titre: "Grille du jury", fichier: "../concours-vente/ressources/grille-jury.pdf", type: "PDF", dispo: true },
+    { titre: "Grille d'auto-évaluation", fichier: "../concours-vente/ressources/grille-auto-evaluation.pdf", type: "PDF", dispo: true },
+    { titre: "Fiche : traiter les objections", fichier: "../concours-vente/ressources/fiche-objections.pdf", type: "PDF", dispo: true },
+    { titre: "Modèle de note réflexive et d'auto-évaluation", fichier: "../concours-vente/ressources/note-reflexive.pdf", type: "PDF", dispo: true }
   ],
 
 };

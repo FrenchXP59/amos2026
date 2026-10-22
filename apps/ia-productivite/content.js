@@ -262,10 +262,10 @@ window.CONTENT = {
   ],
 
   ressources: [
-    { titre: "Fiche méthode : la chaîne de prompts", fichier: "ressources/fiche-chaine-prompts.pdf", type: "PDF", dispo: false },
-    { titre: "Dossier Olympique Nordval", fichier: "ressources/dossier-nordval.pdf", type: "PDF", dispo: false },
-    { titre: "Grille d'évaluation et barème", fichier: "ressources/grille-evaluation.pdf", type: "PDF", dispo: false },
-    { titre: "Glossaire de la séance", fichier: "ressources/glossaire.pdf", type: "PDF", dispo: false }
+    { titre: "Fiche méthode : la chaîne de prompts", fichier: "ressources/fiche-chaine-prompts.pdf", type: "PDF", dispo: true },
+    { titre: "Dossier Olympique Nordval", fichier: "ressources/dossier-nordval.pdf", type: "PDF", dispo: true },
+    { titre: "Grille d'évaluation et barème", fichier: "ressources/grille-evaluation.pdf", type: "PDF", dispo: true },
+    { titre: "Glossaire de la séance", fichier: "ressources/glossaire.pdf", type: "PDF", dispo: true }
   ],
 
   /* Les actus de la page Ressources (sources de la séance) */

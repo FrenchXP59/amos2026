@@ -230,8 +230,8 @@ window.CONTENT = {
   ],
 
   ressources: [
-    { titre: "Fiche méthode : la veille augmentée", fichier: "ressources/fiche-veille.pdf", type: "PDF", dispo: false },
-    { titre: "Modèle de flux : déclencheur, actions, filtre, validation", fichier: "ressources/modele-flux.pdf", type: "PDF", dispo: false }
+    { titre: "Fiche méthode : la veille augmentée", fichier: "ressources/fiche-veille.pdf", type: "PDF", dispo: true },
+    { titre: "Modèle de flux : déclencheur, actions, filtre, validation", fichier: "ressources/modele-flux.pdf", type: "PDF", dispo: true }
   ],
 
   actus: [

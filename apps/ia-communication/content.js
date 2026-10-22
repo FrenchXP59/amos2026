@@ -45,8 +45,8 @@ window.CONTENT = {
     { id: "panorama",  heure: "10:10", duree: 15, titre: "Outils et actus",            sous: "Ce qui a changé cette année", lede: "Les outils changent tous les trois mois. Ce qui reste : savoir choisir selon le besoin, le coût, les droits et la confidentialité." },
     { id: "prompt",    heure: "10:25", duree: 30, titre: "Prompt engineering",         sous: "Méthode, défis, battle", lede: "Le cœur de la séance. Une méthode simple, une démonstration d'itération, trois défis chronométrés sur vos outils gratuits, puis la battle." },
     { id: "pause",     heure: "10:55", duree: 15, titre: "Pause",                      sous: "Ravitaillement" },
-    { id: "critique",  heure: "11:10", duree: 15, titre: "Regard critique",            sous: "Droit, biais, bad buzz", lede: "Produire avec l'IA, c'est facile. Savoir ce qu'on a le droit de publier, et ce qui va faire rire tout le réseau, c'est le métier." },
-    { id: "cas",       heure: "11:25", duree: 50, titre: "Fil rouge CITANUIT",         sous: "Partie 1 en agence", lede: "Votre client arrive. Partie 1 aujourd'hui : stratégie et prompts. Partie 2, {seance2} : le mini-kit et le pitch." },
+    { id: "critique",  heure: "11:10", duree: 20, titre: "Regard critique",            sous: "Droit, biais, bad buzz", lede: "Produire avec l'IA, c'est facile. Savoir ce qu'on a le droit de publier, et ce qui va faire rire tout le réseau, c'est le métier." },
+    { id: "cas",       heure: "11:30", duree: 45, titre: "Fil rouge CITANUIT",         sous: "Partie 1 en agence", lede: "Votre client arrive. Partie 1 aujourd'hui : stratégie et prompts. Partie 2, {seance2} : le mini-kit et le pitch." },
     { id: "final",     heure: "12:15", duree: 15, titre: "Battle finale",              sous: "À retenir et suite", lede: "Huit questions sur toute la séance. L'agence qui lève la main la première et répond juste prend le point." }
   ],
 
@@ -109,7 +109,7 @@ window.CONTENT = {
     { n: 3, titre: "Chat + connecteurs",      fait: "Va chercher dans vos outils : mail, Drive, agenda.",                     ex: "Faire le point sur tous les échanges avec le sponsor." },
     { n: 4, titre: "Agent avec accès dossier", fait: "Agit dans vos fichiers, enchaîne les étapes, travaille dans la durée.", ex: "Renommer et classer 1 300 photos de course." }
   ],
-  marchesOutils: "Marche 4 en 2026 : ChatGPT Work (9 juillet 2026, offres payantes hors Free et Go), Claude Cowork (janvier 2026 sur ordinateur), Codex et Claude Code côté développement.",
+  marchesOutils: "Marche 4 en 2026 : ChatGPT Work (9 juillet 2026, offres payantes hors Free et Go), Claude Cowork (janvier 2026 sur ordinateur, offres payantes Pro, Max et Enterprise), Codex et Claude Code côté développement.",
 
   quelleMarcheIntro: "Huit tâches du CITANUIT. Pour chacune, la classe choisit une marche, puis on révèle.",
   quelleMarche: [
@@ -166,7 +166,7 @@ window.CONTENT = {
     {
       date: "Juillet 2026", tag: "Agents",
       titre: "ChatGPT Work et Claude Cowork : l'IA qui exécute",
-      texte: "ChatGPT Work arrive le 9 juillet (offres payantes hors Free et Go). Claude Cowork, lancé en janvier sur ordinateur, passe sur web et mobile le 7 juillet. Sur 1,2 million de sessions Cowork, la création de contenu pèse 16,4 %, le développement 8,7 %.",
+      texte: "ChatGPT Work arrive le 9 juillet (offres payantes hors Free et Go). Claude Cowork, lancé en janvier sur ordinateur pour les offres payantes, passe sur web et mobile le 7 juillet. Sur 1,2 million de sessions Cowork, la création de contenu pèse 16,4 %, le développement 8,7 %.",
       question: "Quelles tâches de votre stage pourriez-vous déléguer à un agent ?",
       src: "https://venturebeat.com/technology/anthropic-brings-claude-cowork-to-mobile-and-web-as-usage-data-shows-most-users-arent-coding", srcNom: "VentureBeat, OpenAI release notes"
     },
@@ -193,10 +193,10 @@ window.CONTENT = {
     },
     {
       date: "19–21 octobre 2026", tag: "Sport business",
-      titre: "Sportel Monaco : de l'expérimentation à l'intégration",
-      texte: "Le salon des médias sportifs consacre ses masterclasses au passage de l'IA testée à l'IA intégrée à grande échelle.",
+      titre: "Sportel Monaco : l'IA au cœur du programme",
+      texte: "Le salon des médias sportifs fait de l'IA un thème majeur : une masterclass sur la stratégie IA des organisations (création de contenus, engagement des fans, monétisation, opérations) et une session sur les résumés vidéo « pilotés par l'humain, accélérés par l'IA », produits quelques minutes après l'action.",
       question: "Où en est un club pro que vous connaissez ?",
-      src: "https://www.sportcal.com/newsletters/preview-sportel-monaco-2026-focused-on-tech-that-is-reshaping-sports-media/", srcNom: "SportCal"
+      src: "https://www.sportcal.com/?p=154073", srcNom: "SportCal, programme publié le 6 octobre 2026"
     }
   ],
 
@@ -324,6 +324,7 @@ window.CONTENT = {
       valeurs: ["Lumière", "Ville", "Collectif"],
       interdits: ["Promesse de performance", "Jargon de coureur", "Visuels de corps stéréotypés"]
     },
+    dureeTravail: 35,
     travail: [
       { t: "Deux personas", d: "Le néo-coureur, plus une cible au choix. Générés avec l'IA puis retravaillés par vous." },
       { t: "Plateforme de message", d: "Une promesse, puis 3 messages clés par cible retenue." },
@@ -386,10 +387,10 @@ window.CONTENT = {
   /* ---------- Ressources à télécharger ----------
      Dépose les fichiers dans le dossier ressources/ puis passe dispo à true. */
   ressources: [
-    { titre: "Fiche méthode : le prompt en 5 blocs", fichier: "ressources/fiche-methode-prompt.pdf", type: "PDF", dispo: false },
-    { titre: "Dossier client CITANUIT", fichier: "ressources/dossier-client-citanuit.pdf", type: "PDF", dispo: false },
-    { titre: "Grille d'évaluation et barème", fichier: "ressources/grille-evaluation.pdf", type: "PDF", dispo: false },
-    { titre: "Glossaire de la séance", fichier: "ressources/glossaire.pdf", type: "PDF", dispo: false },
-    { titre: "Sources et actus de la séance", fichier: "ressources/sources-seance-1.pdf", type: "PDF", dispo: false }
+    { titre: "Fiche méthode : le prompt en 5 blocs", fichier: "ressources/fiche-methode-prompt.pdf", type: "PDF", dispo: true },
+    { titre: "Dossier client CITANUIT", fichier: "ressources/dossier-client-citanuit.pdf", type: "PDF", dispo: true },
+    { titre: "Grille d'évaluation et barème", fichier: "ressources/grille-evaluation.pdf", type: "PDF", dispo: true },
+    { titre: "Glossaire de la séance", fichier: "ressources/glossaire.pdf", type: "PDF", dispo: true },
+    { titre: "Sources et actus de la séance", fichier: "ressources/sources-seance-1.pdf", type: "PDF", dispo: true }
   ]
 };

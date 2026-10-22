@@ -234,9 +234,9 @@
     ]),
 
     ressources: [
-      { titre: "Fiche méthode : modéliser un scénario avec l'IA", fichier: "ressources/fiche-modelisation.pdf", type: "PDF", dispo: false },
-      { titre: "Modèle de charte d'usage de l'IA", fichier: "ressources/modele-charte-ia.pdf", type: "PDF", dispo: false },
-      { titre: "Grille d'évaluation et barème", fichier: "../ia-productivite/ressources/grille-evaluation.pdf", type: "PDF", dispo: false }
+      { titre: "Fiche méthode : modéliser un scénario avec l'IA", fichier: "ressources/fiche-modelisation.pdf", type: "PDF", dispo: true },
+      { titre: "Modèle de charte d'usage de l'IA", fichier: "ressources/modele-charte-ia.pdf", type: "PDF", dispo: true },
+      { titre: "Grille d'évaluation et barème", fichier: "../ia-productivite/ressources/grille-evaluation.pdf", type: "PDF", dispo: true }
     ],
 
     actus: [

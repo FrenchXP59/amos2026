@@ -271,10 +271,10 @@ window.CONTENT = {
   ],
 
   ressources: [
-    { titre: "Fiche méthode : le prompt professionnel", fichier: "ressources/fiche-prompt-pro.pdf", type: "PDF", dispo: false },
-    { titre: "Appel d'offres Lys Padel Open", fichier: "ressources/appel-offres-lys-padel-open.pdf", type: "PDF", dispo: false },
-    { titre: "Grille de participation", fichier: "ressources/grille-participation.pdf", type: "PDF", dispo: false },
-    { titre: "Glossaire de la séance", fichier: "ressources/glossaire.pdf", type: "PDF", dispo: false }
+    { titre: "Fiche méthode : le prompt professionnel", fichier: "ressources/fiche-prompt-pro.pdf", type: "PDF", dispo: true },
+    { titre: "Appel d'offres Lys Padel Open", fichier: "ressources/appel-offres-lys-padel-open.pdf", type: "PDF", dispo: true },
+    { titre: "Grille de participation", fichier: "ressources/grille-participation.pdf", type: "PDF", dispo: true },
+    { titre: "Glossaire de la séance", fichier: "ressources/glossaire.pdf", type: "PDF", dispo: true }
   ],
 
   actus: [

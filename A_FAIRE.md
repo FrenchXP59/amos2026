@@ -23,9 +23,9 @@ Six séances : 4/11 matin, 23/11 après-midi, 24/11 après-midi, 25/11 matin, 27
 - [ ] Mail final à Bertrand avec les documents (sujet, grille, consignes rétrospective, fiche de marge) : jury (Bertrand ? ancien élève ?) toujours à confirmer.
 - [ ] Trancher : note réflexive rédigée pendant la délibération (construit ainsi) ou le matin ; page de notes manuscrites autorisée ; fiches de notes tolérées pendant l'oral.
 - [ ] Qui joue l'acheteur le 27 (proposition : l'ancien élève, avec la carte de profil).
-- [ ] Imprimer les cartes de profil SONCAS si l'acheteur ne lit pas la carte sur l'écran.
 - [ ] Vidéos NotebookLM des séances 2, 3 et 4 (docs NotebookLM du 23, 24 et 25 novembre).
-- [ ] PDF : fiches méthode, sujet et fiche de marge, grille client mystère, grille du jury, grille d'auto-évaluation, fiche objections, consignes de note réflexive.
+- [x] PDF : fiches méthode, sujet et fiche de marge, grille client mystère, grille du jury, grille d'auto-évaluation, fiche objections, consignes de note réflexive.
+- [x] Cartes de l'acheteur à imprimer (pack intervenant, hors dépôt).
 - [ ] Nom « Kilomètre Nord » : recherche web négative, base INPI non consultée.
 
 # Cours M1 : IA et automatisation
@@ -34,7 +34,7 @@ Séances : M1A le 3/11 et le 6/11 (9h-12h30). Évaluation : participation. Fil r
 
 - [x] Appli séance 1 (`apps/ia-automatisation/?classe=m1a`).
 - [ ] **Vidéo NotebookLM n°1** « Du bricolage au métier » : URL dans `content.js`, rubrique `videos.s1.url`.
-- [ ] Préparer le texte de l'audit en PDF (synthèse avec six erreurs volontaires).
+- [x] Texte de l'audit et corrigé en PDF (pack intervenant).
 - [x] Appli séance 2 (`apps/ia-automatisation-s2/?classe=m1a`) : agences et scores conservés.
 - [ ] **Vidéo NotebookLM séance 2** « Veiller et automatiser » : URL dans `apps/ia-automatisation-s2/content.js`.
 - [ ] Préparer la démo Make ou Zapier (flux de veille du lundi) sur ton compte, avec une capture vidéo de secours.
@@ -50,7 +50,7 @@ Séances : M2A le 2/11 et le 25/11, M2B le 4/11 et le 26/11 (13h30-17h). Fil rou
 - [x] Séance 2 (`apps/ia-productivite-s2/?classe=m2a` ou `m2b`) : modélisation en chaîne, audit d'un modèle (7 erreurs), tri des usages, charte IA, comité, grille d'évaluation (page Jury).
 - [ ] Vidéo NotebookLM n°2 « Manager une équipe augmentée » (doc NotebookLM 25 novembre ; la même pour les M2B le 26).
 - [ ] Dire aux cellules d'apporter leur scénario de la séance 1 (le journal n'est repris que sur le même navigateur).
-- [ ] Ressources PDF : fiche méthode chaîne de prompts, dossier Nordval, grille, glossaire, fiche modélisation, modèle de charte IA.
+- [x] Ressources PDF : fiche méthode chaîne de prompts, dossier Nordval, grille, glossaire, fiche modélisation, modèle de charte IA. Textes et corrigés des audits : pack intervenant.
 
 # Premier cours : B3, IA appliquée à la communication
 
@@ -75,24 +75,24 @@ Fil rouge : CITANUIT Trail Lille (événement fictif).
 ## 2. Vérifications de fond (à faire avant de projeter)
 
 - [ ] **Skills dans ChatGPT** : tu les vois sur ton compte Plus, alors que les notes officielles d'OpenAI ne citent qu'Enterprise et Edu (9/07/2026). Noter le menu exact pour la démo et ajuster l'actu « Skills » si besoin.
-- [ ] **Claude Cowork** : vérifier quelles offres y ont accès aujourd'hui (gratuit ou non).
-- [ ] **Claude Code** : confirmer la date de lancement si tu la cites (non vérifiée).
+- [x] **Claude Cowork** : offres payantes seulement (Max le 12/01/2026, Pro le 16/01, Enterprise ; web et mobile le 7/07 en commençant par Max). Source : notes de version Claude. Appli mise à jour.
+- [x] **Claude Code** : annoncé le 24/02/2025 (avec Claude 3.7 Sonnet), disponible pour tous le 22/05/2025 (annonce Claude 4). Sources : anthropic.com/news. Pas de date citée dans l'appli.
 - [ ] **Limites des offres gratuites** (ChatGPT, Claude, Gemini, Le Chat, Copilot) : les revérifier la semaine du cours, elles changent souvent.
 - [ ] **Hypothèse « zip en chat »** : tester qu'on peut envoyer une archive de photos à ChatGPT ou Claude, les faire renommer et récupérer le zip. Si un étudiant pose la question, tu as la réponse.
 - [ ] **Droit d'auteur des contenus 100 % IA en droit français** : non vérifié, volontairement absent de l'appli. À sourcer avant d'en parler.
 - [ ] **Fiche RNCP41995 (bloc 1)** : récupérer l'intitulé exact pour aligner la grille de notation.
 - [ ] **Nom CITANUIT** : recherche web négative, mais base INPI non consultée.
-- [ ] **Sportel Monaco (19-21/10/2026)** : lire les comptes rendus et mettre à jour l'actu correspondante.
+- [x] **Sportel Monaco** : actu réécrite d'après le programme (SportCal, 6/10/2026 : masterclass stratégie IA, résumés vidéo « human-led, AI-accelerated »). Aucun compte rendu post-salon trouvé le 22/10 : à compléter si tu en lis un.
 
 ## 3. Ressources à produire (dossier `apps/ia-communication/ressources/`)
 
-Une fois un fichier déposé, passer `dispo: true` dans `content.js`, rubrique `ressources`.
+Tous les PDF de novembre sont générés par `node outils/pdf/generer.mjs` à partir des applis : modifier l'appli, puis relancer. Le pack intervenant (corrigés d'audit, cartes de l'acheteur) se génère hors du dépôt avec `--intervenant <dossier>`.
 
-- [ ] Fiche méthode : le prompt en 5 blocs (PDF)
-- [ ] Dossier client CITANUIT (PDF)
-- [ ] Grille d'évaluation et barème sur 20 (PDF)
-- [ ] Glossaire de la séance (PDF)
-- [ ] Sources et actus de la séance 1 (PDF)
+- [x] Fiche méthode : le prompt en 5 blocs (PDF)
+- [x] Dossier client CITANUIT (PDF)
+- [x] Grille d'évaluation et barème sur 20 (PDF)
+- [x] Glossaire de la séance (PDF)
+- [x] Sources et actus de la séance 1 (PDF)
 
 ## 4. Séance 2 (5/11 pour B3B, 23/11 pour B3A) : nouvelle partie de l'appli
 
@@ -101,7 +101,7 @@ Une fois un fichier déposé, passer `dispo: true` dans `content.js`, rubrique `
 - [ ] Tester les outils image gratuits (ChatGPT, Gemini, Copilot, Firefly, Canva) la semaine du cours, sur le wifi de l'école.
 - [ ] Préparer la démo de l'intervenant : même consigne dans deux outils, affiche animée, reel de 15 s.
 - [x] Simulateur de pitch (mécanique Pitchcoach) prêt : lien « Pitch » dans l'appli.
-- [ ] Rééquilibrer l'étape « Regard critique » (trop chargée pour 15 min).
+- [x] « Regard critique » (séance 1) passé à 20 min, fil rouge à 45 min (dont 35 de travail).
 - [ ] **Vidéo NotebookLM n°2** (4-5 min), thème proposé : « Cohérence graphique et IA : du brief au kit visuel », suivie d'un débat.
 - [ ] Démo par toi : image (Midjourney, Firefly, Canva), **motion design et montage vidéo IA**, skills (ton skill storyboard).
 - [ ] Atelier mini-kit CITANUIT : affiche, 3 posts, mail sponsor, storyboard vidéo, avec contrôle de cohérence de charte.

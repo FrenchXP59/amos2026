@@ -5,6 +5,7 @@
   "type": "module",
   "scripts": {
     "build": "node outils/build.mjs",
-    "preview": "node outils/build.mjs && python3 -m http.server 8080 --directory dist"
+    "preview": "node outils/build.mjs && python3 -m http.server 8080 --directory dist",
+    "pdf": "node outils/pdf/generer.mjs"
   }
 }
