@@ -1,0 +1,21 @@
+# Netlify : définir la variable d'environnement BOX_CODES (Site settings > Environment variables)
+# avec le contenu de codes.json, sur une seule ligne.
+[build]
+  command = "node outils/build.mjs"
+  publish = "dist"
+
+[build.environment]
+  NODE_VERSION = "20"
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Robots-Tag = "noindex"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+
+# Les fichiers de contenu des classes ne doivent pas être mis en cache trop longtemps
+[[headers]]
+  for = "/data/*"
+  [headers.values]
+    Cache-Control = "public, max-age=300"

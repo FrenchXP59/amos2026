@@ -1,0 +1,10 @@
+{
+  "name": "amos2026",
+  "private": true,
+  "description": "La box IA AMOS : un espace par classe et par année, et les applis interactives des cours.",
+  "type": "module",
+  "scripts": {
+    "build": "node outils/build.mjs",
+    "preview": "node outils/build.mjs && python3 -m http.server 8080 --directory dist"
+  }
+}

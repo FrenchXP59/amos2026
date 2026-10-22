@@ -1,0 +1,6 @@
+# Codes d'accès des classes : jamais dans le dépôt
+codes.json
+# Site généré
+dist/
+.DS_Store
+node_modules/
