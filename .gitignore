@@ -4,3 +4,6 @@ codes.json
 dist/
 .DS_Store
 node_modules/
+
+# Données réservées à l'intervenant (scénarios de l'acheteur...) : jamais dans le dépôt
+prive/

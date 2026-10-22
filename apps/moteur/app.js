@@ -49,6 +49,7 @@
     journal: (KEY_J ? read(KEY_J).journal : saved.journal) || {},
     ordre: pick("ordre") && pick("ordre").length === n ? pick("ordre") : null,
     jury: pick("jury") || {},
+    cartesTirees: saved.cartesTirees || [],
     roster: pick("roster") || [],
     members: pick("members") && pick("members").length === n ? pick("members") : C.config.agences.map(() => []),
     animated: false
@@ -56,8 +57,8 @@
   const persist = () => {
     const equipes = { names: S.names, scores: S.scores, roster: S.roster, members: S.members, ordre: S.ordre, jury: S.jury };
     if (KEY_J) write(KEY_J, Object.assign(read(KEY_J), { journal: S.journal }));   // fusion : ne jamais écraser les équipes stockées sous la même clé
-    if (KEY_EQ === KEY) write(KEY, Object.assign({ theme: S.theme, journal: S.journal }, equipes));
-    else { write(KEY, { theme: S.theme, journal: S.journal }); write(KEY_EQ, Object.assign(read(KEY_EQ), equipes)); }
+    if (KEY_EQ === KEY) write(KEY, Object.assign({ theme: S.theme, journal: S.journal, cartesTirees: S.cartesTirees }, equipes));
+    else { write(KEY, { theme: S.theme, journal: S.journal, cartesTirees: S.cartesTirees }); write(KEY_EQ, Object.assign(read(KEY_EQ), equipes)); }
   };
 
   const PAGES = C.parcours.map((p) => p.id);
@@ -873,7 +874,11 @@
     let carte = null;
     const dr = $("#p-draw", root), sh = $("#p-show", root);
     if (dr) dr.onclick = () => {
-      carte = P.cartes[Math.floor(Math.random() * P.cartes.length)];
+      // Tirage sans remise au sein d'une séance : chaque équipe tombe sur un profil différent
+      let reste = P.cartes.filter((c) => !(S.cartesTirees || []).includes(c.nom));
+      if (!reste.length) { S.cartesTirees = []; reste = P.cartes.slice(); }
+      carte = reste[Math.floor(Math.random() * reste.length)];
+      S.cartesTirees = (S.cartesTirees || []).concat(carte.nom); persist();
       const c = $("#p-carte", root); c.hidden = false; c.className = "carte dos";
       c.innerHTML = `<span>Carte tirée</span><small>Le juré la lit en silence${carte.consigne ? " : consigne de jeu au dos" : ""}</small>`;
       c.onclick = () => { if (c.classList.contains("dos") && carte.consigne) { c.classList.toggle("juge"); c.innerHTML = c.classList.contains("juge") ? `<strong>${esc(carte.nom)}</strong><small>${esc(carte.consigne)}</small><em>Touchez pour cacher</em>` : `<span>Carte tirée</span><small>Touchez pour lire la consigne (juré uniquement)</small>`; } };

@@ -83,14 +83,14 @@ window.KN = {
     bareme: [
       { g: "Soutenance : note collective du jury (14 points)" },
       { c: "Compréhension des besoins de l'enseigne et découverte", p: 3 },
-      { c: "Pitch de 2 minutes : structure AIDA et aisance à l'oral", p: 3 },
+      { c: "Pitch de 2 minutes : structure AIDA et aisance à l'oral (fiches de notes tolérées, mais leur lecture pénalise ce critère)", p: 3 },
       { c: "Négociation : CAB, leviers, concessions maîtrisées", p: 3 },
       { c: "Réponses aux objections", p: 2 },
       { c: "Écoute active : profil SONCAS identifié et adaptation", p: 2 },
       { c: "Cohésion du groupe et complémentarité des rôles", p: 1 },
       { g: "Rétrospective (6 points)" },
       { c: "Compte-rendu d'analyse terrain, collectif", p: 2 },
-      { c: "Note réflexive individuelle, rédigée en classe le jour du concours, sans IA : auto-évaluation et compétences à valoriser sur LinkedIn et le CV", p: 4 }
+      { c: "Note réflexive individuelle, rédigée en classe le matin du concours, sans IA : auto-évaluation et compétences à valoriser sur LinkedIn et le CV", p: 4 }
     ],
     baremeNote: "Note sur 20 : 14 points de soutenance, communs à l'équipe, et 6 points de rétrospective, dont 4 individuels. Soutenance : pitch de 2 minutes, négociation avec réponse aux objections, remise des livrables, sans autre support.",
     journal: {
@@ -146,9 +146,9 @@ window.KN = {
     ]
   },
 
-  /* Note réflexive individuelle (4 points) : préparée en séance 5, rédigée en séance 6 pendant la délibération */
+  /* Note réflexive individuelle (4 points) : rédigée en classe le matin du concours (séance 5), sans IA */
   noteReflexive: {
-    intro: "Individuelle, manuscrite, sans IA ni téléphone : 30 minutes, une page. Une page de notes personnelles préparée en séance 5 est autorisée.",
+    intro: "Individuelle, manuscrite, sans IA ni téléphone : 30 minutes, une page, le matin du concours. Vos documents d'équipe (auto-évaluation, feuille de route) sont autorisés.",
     items: [
       { sigle: "1", titre: "Mon rôle et ma contribution", sous: "Des faits, avec leur date",
         points: ["Mon rôle dans l'équipe et au concours.", "Ce que j'ai fait concrètement : visites terrain, rédaction, pitch, négociation.", "Un exemple daté : « Le 25 novembre, en simulation, j'ai… »"] },
@@ -166,10 +166,10 @@ window.KN = {
 
   jury: {
     titre: "Grille du jury",
-    lede: "Page réservée au jury, à ne pas projeter. Les notes restent dans ce navigateur : exportez-les à la fin.",
+    lede: "Page réservée au jury, à ne pas projeter. Un membre du jury joue l'acheteur, les autres notent. Les notes restent dans ce navigateur : exportez-les à la fin.",
     criteres: [
       { c: "Besoins de l'enseigne et découverte", p: 3 },
-      { c: "Pitch AIDA et aisance à l'oral", p: 3 },
+      { c: "Pitch AIDA et aisance à l'oral (lecture de fiches pénalisée)", p: 3 },
       { c: "Négociation : CAB, leviers, concessions", p: 3 },
       { c: "Réponses aux objections", p: 2 },
       { c: "Écoute active, profil SONCAS repéré", p: 2 },

@@ -7,7 +7,7 @@
 // Nécessite Playwright (Chromium).
 // =========================================================================
 import vm from "node:vm";
-import { readFileSync, mkdirSync, writeFileSync } from "node:fs";
+import { readFileSync, mkdirSync, writeFileSync, existsSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join, dirname } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
@@ -45,7 +45,7 @@ const C = {
   m2s2: load(["ia-productivite/content.js", "ia-productivite-s2/content.js"]),
   b1s1: load(["concours-vente/commun.js", "concours-vente/content.js"], "b1a"),
   b1s4: load(["concours-vente/commun.js", "concours-vente-s4/content.js"], "b1a"),
-  b1s6: load(["concours-vente/commun.js", "concours-vente-s6/content.js"], "b1a")
+  b1s5: load(["concours-vente/commun.js", "concours-vente-s5/content.js"], "b1a")
 };
 
 /* ---------- Petits outils HTML ---------- */
@@ -211,8 +211,8 @@ const DOCS = [
     body: () => { const A = C.b1s4.autoEval; const crit = A.blocs.filter((b) => b.k !== "priorites"); return p(A.intro) + kv([["Équipe", ""], ["Date", ""]]) + table(["Critère", "Note", "Une force", "À travailler"], crit.map((b) => [b.nom, "", "", ""]), { cls: "fill", w: ["26%", "10%", "", ""] }) + h3("Nos 3 priorités d'ici au concours") + lines(4) + p("Exemple : " + crit[1].ex, "muted"); } },
   { app: "concours-vente", f: "fiche-objections.pdf", cours: "Concours de vente", classe: B1, titre: "Traiter une objection", sous: "La méthode en cinq temps et sept techniques",
     body: () => fiches(C.b1s4.techniques.items) + h2("Les objections les plus probables") + ul(C.b1s4.duel.objections) },
-  { app: "concours-vente", f: "note-reflexive.pdf", cours: "Concours de vente", classe: B1, titre: "La note réflexive", sous: "Individuelle, 4 points, rédigée en classe le jour du concours",
-    body: () => p(C.b1s6.noteReflexive.intro.replace("Votre page de notes préparée ce matin est autorisée. Nom, prénom et équipe en haut de la feuille.", "Une page de notes personnelles, préparée le matin, est autorisée.")) + fiches(C.b1s6.noteReflexive.items) + h2("Ma page de notes (à préparer le matin)") + lines(14) }
+  { app: "concours-vente", f: "note-reflexive.pdf", cours: "Concours de vente", classe: B1, titre: "La note réflexive", sous: "Individuelle, 4 points, rédigée en classe le matin du concours, sans IA",
+    body: () => p(C.b1s5.noteReflexive.intro) + fiches(C.b1s5.noteReflexive.items) }
 ];
 
 /* ---------- Pack intervenant (jamais dans le dépôt) ---------- */
@@ -229,6 +229,19 @@ const INTERNE = [
     body: () => p(C.m2s2.audit.consigne) + auditTexte(C.m2s2.audit, false) + h3("Les erreurs que nous avons trouvées") + lines(10) },
   { f: "audit-m2-s2-corrige.pdf", cours: "IA et productivité", classe: M2, titre: "Audit d'un modèle : le corrigé", sous: "Séance 2. L'« étude Statista » est volontairement vague.", body: () => auditCorrige(C.m2s2.audit) }
 ];
+
+/* ---------- Scénarios de l'acheteur (données dans prive/, hors dépôt) ---------- */
+const PRIVE = join(ROOT, "prive", "acheteur.mjs");
+if (existsSync(PRIVE)) {
+  const A = (await import(pathToFileURL(PRIVE).href)).default;
+  INTERNE.unshift({ f: "scenarios-acheteur.pdf", cours: "Concours de vente", classe: B1, titre: "Scénarios de l'acheteur", sous: "Réservé au juré qui joue l'acheteur de Kilomètre Nord",
+    body: () => h2("Votre rôle") + ul(A.role) + h2("Les informations cachées") + p(A.cachees.intro) + ul(A.cachees.items)
+      + h2("Le déroulé, minute par minute") + ul(A.deroule) + h2("La grille de décision") + ul(A.decision) + h2("Les règles d'équité") + ul(A.equite)
+      + `<div class="pb"></div>` + h2("Les cinq profils")
+      + A.profils.map((x) => card(x.nom, "Profil tiré au sort", kv([["Phrases-signal", x.signaux.join(" ")], ["Ce qui vous convainc", x.convainc], ["Ce que vous demandez", x.demande], ["Ce que vous cédez", x.cede], ["Votre objection préférée", x.objection], ["Vous lancez le test si", x.signe]]))).join("")
+      + `<div class="pb"></div>` + h2("Questions du jury après la négociation") + ul(A.questionsJury)
+      + h2("Fiche de suivi de l'acheteur") + table(["Passage", "Profil tiré", "Infos cachées obtenues", "Concessions de l'équipe", "Décision"], [1, 2, 3, 4, 5].map((n) => [String(n), "", "", "", ""]), { cls: "fill", w: ["9%", "14%", "", "", "16%"] }) });
+}
 
 /* ---------- Impression ---------- */
 const args = process.argv.slice(2);

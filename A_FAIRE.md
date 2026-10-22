@@ -21,8 +21,9 @@ Six séances : 4/11 matin, 23/11 après-midi, 24/11 après-midi, 25/11 matin, 27
 - [x] Barème validé : soutenance 14 (collective) + rétrospective 6 (compte-rendu terrain 2, note réflexive individuelle 4).
 - [x] Séances 2 à 6 (`apps/concours-vente-s2` à `-s6`) + sujet commun (`apps/concours-vente/commun.js`), grille du jury, palmarès.
 - [ ] Mail final à Bertrand avec les documents (sujet, grille, consignes rétrospective, fiche de marge) : jury (Bertrand ? ancien élève ?) toujours à confirmer.
-- [ ] Trancher : note réflexive rédigée pendant la délibération (construit ainsi) ou le matin ; page de notes manuscrites autorisée ; fiches de notes tolérées pendant l'oral.
-- [ ] Qui joue l'acheteur le 27 (proposition : l'ancien élève, avec la carte de profil).
+- [x] Décidé le 22/10 : note réflexive rédigée le matin du concours (séance 5, 30 min, sans IA) ; fiches de notes tolérées mais leur lecture pénalise l'aisance à l'oral ; profils tirés sans remise (un par équipe).
+- [x] L'acheteur est joué par un membre du jury : scénarios fournis (pack intervenant, `scenarios-acheteur.pdf` ; données dans `prive/`, hors dépôt).
+- [ ] Choisir le juré qui joue l'acheteur et lui envoyer les scénarios et les cartes quelques jours avant.
 - [ ] Vidéos NotebookLM des séances 2, 3 et 4 (docs NotebookLM du 23, 24 et 25 novembre).
 - [x] PDF : fiches méthode, sujet et fiche de marge, grille client mystère, grille du jury, grille d'auto-évaluation, fiche objections, consignes de note réflexive.
 - [x] Cartes de l'acheteur à imprimer (pack intervenant, hors dépôt).

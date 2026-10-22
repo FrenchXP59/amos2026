@@ -32,13 +32,12 @@ window.CONTENT = {
     { id: "accueil", heure: "13:30", duree: 15, titre: "Le concours", sous: "Accueil des équipes" },
     { id: "passages", type: "tour", data: "passages", heure: "13:45", duree: 100, titre: "Les passages", sous: "15 minutes par équipe",
       lede: "Dans l'ordre tiré ce matin. Le simulateur gère le chrono, le profil caché et l'objection." },
-    { id: "reflexive", type: "fiches", data: "noteReflexive", heure: "15:25", duree: 35, titre: "La note réflexive", sous: "Pendant la délibération",
-      lede: "Le jury délibère ; vous écrivez. 30 minutes, à la main, seul, sans téléphone." },
-    { id: "palmares", type: "palmares", data: "palmares", heure: "16:00", duree: 20, titre: "Le palmarès", sous: "De la cinquième à la première place",
+    { id: "pause", heure: "15:25", duree: 25, titre: "La délibération", sous: "Le jury se retire" },
+    { id: "palmares", type: "palmares", data: "palmares", heure: "15:50", duree: 20, titre: "Le palmarès", sous: "De la cinquième à la première place",
       lede: "Le classement de la soutenance, révélé place par place." },
-    { id: "retours", type: "tour", data: "retours", heure: "16:20", duree: 25, titre: "Les retours du jury", sous: "5 minutes par équipe",
+    { id: "retours", type: "tour", data: "retours", heure: "16:10", duree: 30, titre: "Les retours du jury", sous: "6 minutes par équipe",
       lede: "Une force, un axe de progrès, un conseil pour la suite. Pour chaque équipe." },
-    { id: "bilan", type: "fiches", data: "bilan", heure: "16:45", duree: 15, titre: "Et maintenant ?", sous: "Ce que vous emportez",
+    { id: "bilan", type: "fiches", data: "bilan", heure: "16:40", duree: 20, titre: "Et maintenant ?", sous: "Ce que vous emportez",
       lede: "Six séances, une marque, un acheteur. Voici ce que vous savez faire, et comment le dire." }
   ],
 
@@ -48,7 +47,7 @@ window.CONTENT = {
     minutes: 15,
     simulateur: true,
     consignes: [
-      { t: "Avant", d: "L'équipe entre, remet ses livrables. L'acheteur tire la carte du profil et la lit en silence." },
+      { t: "Avant", d: "L'équipe entre, remet ses livrables. Le juré qui joue l'acheteur tire la carte du profil (sans remise : un profil différent par équipe) et la lit en silence." },
       { t: "Pitch, 2 minutes", d: "Sans support. Le jury ne pose pas de question pendant le pitch." },
       { t: "Négociation, 10 minutes", d: "L'acheteur joue son profil. L'objection imposée tombe vers la 7e minute." },
       { t: "Questions du jury, 3 minutes", d: "Le jury interroge, l'analyste annonce le profil deviné, l'acheteur révèle sa carte." }
@@ -65,8 +64,8 @@ window.CONTENT = {
 
   /* ---------- Retours du jury ---------- */
   retours: {
-    intro: "5 minutes par équipe, dans l'ordre de passage. Le jury s'appuie sur ses observations (page Jury).",
-    minutes: 5,
+    intro: "6 minutes par équipe, dans l'ordre de passage. Le jury s'appuie sur ses observations (page Jury). L'acheteur révèle ce qui l'a convaincu, ou non.",
+    minutes: 6,
     questionsTitre: "La trame des retours",
     questions: [
       "Une force, à garder pour la suite.",
@@ -89,9 +88,6 @@ window.CONTENT = {
   },
 
   methodes: KN.methodes,
-  noteReflexive: Object.assign({}, KN.noteReflexive, {
-    intro: "Individuelle, à la main, sans IA ni téléphone : 30 minutes, une page. Votre page de notes préparée ce matin est autorisée. Nom, prénom et équipe en haut de la feuille."
-  }),
   client: Object.assign({}, KN.client, {
     arrivee: "Séance 6 : le concours",
     teaser: "Six séances de préparation, cinq marques, un acheteur au profil caché. Que la meilleure équipe gagne."
