@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="fr" data-theme="nuit">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>IA et communication, séance 2</title>
+  <meta name="description" content="Application de cours AMOS, B3 : IA appliquée à la communication, séance 2. Mini-kit CITANUIT.">
+  <link rel="stylesheet" href="../moteur/styles.css">
+</head>
+<body>
+  <a class="skip" href="#stage">Aller au contenu</a>
+
+  <header class="topbar">
+    <div class="brand">
+      <img id="logo" alt="AMOS" hidden>
+      <span id="logo-fallback" class="wordmark">AMOS</span>
+      <span class="course-name"><span id="cours-titre"></span><small id="seance-label"></small></span>
+    </div>
+
+    <div class="chrono" id="chrono" aria-live="polite">
+      <button class="icon-btn" id="t-minus" aria-label="Retirer une minute">−1</button>
+      <output id="t-display" class="t-display">00:00</output>
+      <button class="icon-btn" id="t-plus" aria-label="Ajouter une minute">+1</button>
+      <button class="t-play" id="t-play" aria-label="Lancer le chrono">Lancer</button>
+      <button class="icon-btn" id="t-reset" aria-label="Remettre le chrono à la durée de l'étape">↺</button>
+    </div>
+
+    <div class="bibs" id="bibs" aria-label="Scores des agences"></div>
+
+    <div class="top-actions">
+      <button class="icon-btn" id="theme-btn" aria-label="Changer de thème">Jour</button>
+      <button class="icon-btn" id="menu-btn" aria-label="Afficher le parcours" aria-expanded="false">Parcours</button>
+    </div>
+  </header>
+
+  <div class="layout">
+    <nav class="rail" id="rail" aria-label="Parcours de la séance">
+      <ol class="course" id="course"></ol>
+      <div class="rail-extra">
+        <a href="#ressources" data-page="ressources">Ressources</a>
+        <a href="#glossaire" data-page="glossaire">Glossaire</a>
+        <a href="#pitch" data-page="pitch">Pitch</a>
+      </div>
+    </nav>
+
+    <main class="stage" id="stage" tabindex="-1"></main>
+  </div>
+
+  <footer class="stagenav">
+    <button class="nav-btn" id="prev">Étape précédente</button>
+    <span class="progress"><span id="progress-bar"></span></span>
+    <button class="nav-btn primary" id="next">Étape suivante</button>
+  </footer>
+
+  <dialog id="agences-dialog">
+    <form method="dialog" class="dialog-body">
+      <h2>Les agences</h2>
+      <p class="muted">Renommez les agences et ajustez les scores.</p>
+      <div id="agences-edit"></div>
+      <div class="dialog-actions">
+        <button type="button" class="ghost" id="scores-reset">Remettre les scores à zéro</button>
+        <button class="primary-btn">Fermer</button>
+      </div>
+    </form>
+  </dialog>
+
+  <div class="toast" id="toast" role="status"></div>
+
+  <script src="content.js"></script>
+  <script src="../moteur/app.js"></script>
+</body>
+</html>

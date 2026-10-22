@@ -30,22 +30,30 @@
     const json = JSON.stringify(raw).replace(/\{([a-z0-9:_-]+)\}/gi, (s, k) => (k in vars ? String(vars[k]).replace(/"/g, '\\"') : s));
     return JSON.parse(json);
   })(window.CONTENT);
-  const KEY = (C.config.id || "amos-cours") + (CLASSE ? "-" + CLASSE : "");   // une sauvegarde par classe (agences, scores, journal)
-  const store = {
-    load() { try { return JSON.parse(localStorage.getItem(KEY)) || {}; } catch (e) { return {}; } },
-    save(s) { try { localStorage.setItem(KEY, JSON.stringify(s)); } catch (e) { /* stockage indisponible */ } }
-  };
-  const saved = store.load();
+  // Deux sauvegardes par classe : l'appli (journal, thème) et les équipes (noms, membres, scores),
+  // partageables entre les séances d'un même cours grâce à config.idEquipes.
+  const suffixe = CLASSE ? "-" + CLASSE : "";
+  const KEY = (C.config.id || "amos-cours") + suffixe;
+  const KEY_EQ = (C.config.idEquipes || C.config.id || "amos-cours") + suffixe;
+  const read = (k) => { try { return JSON.parse(localStorage.getItem(k)) || {}; } catch (e) { return {}; } };
+  const write = (k, v) => { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) { /* stockage indisponible */ } };
+  const saved = read(KEY), eq = KEY_EQ === KEY ? saved : Object.assign({}, read(KEY_EQ));
+  const pick = (f) => (eq[f] !== undefined ? eq[f] : saved[f]);
+  const n = C.config.agences.length;
   const S = {
     theme: saved.theme || "nuit",
-    names: saved.names && saved.names.length === C.config.agences.length ? saved.names : C.config.agences.slice(),
-    scores: saved.scores && saved.scores.length === C.config.agences.length ? saved.scores : C.config.agences.map(() => 0),
+    names: pick("names") && pick("names").length === n ? pick("names") : C.config.agences.slice(),
+    scores: pick("scores") && pick("scores").length === n ? pick("scores") : C.config.agences.map(() => 0),
     journal: saved.journal || {},
-    roster: saved.roster || [],
-    members: saved.members && saved.members.length === C.config.agences.length ? saved.members : C.config.agences.map(() => []),
+    roster: pick("roster") || [],
+    members: pick("members") && pick("members").length === n ? pick("members") : C.config.agences.map(() => []),
     animated: false
   };
-  const persist = () => store.save({ theme: S.theme, names: S.names, scores: S.scores, journal: S.journal, roster: S.roster, members: S.members });
+  const persist = () => {
+    const equipes = { names: S.names, scores: S.scores, roster: S.roster, members: S.members };
+    if (KEY_EQ === KEY) write(KEY, Object.assign({ theme: S.theme, journal: S.journal }, equipes));
+    else { write(KEY, { theme: S.theme, journal: S.journal }); write(KEY_EQ, Object.assign(read(KEY_EQ), equipes)); }
+  };
 
   const PAGES = C.parcours.map((p) => p.id);
   const EXTRA = ["ressources", "glossaire", "pitch"];
@@ -386,8 +394,13 @@
   RENDER.video = (p) => `
     ${head(p, p.lede)}
     ${videoHTML(C.videos.s1)}
-    <section class="section"><h2>Quiz flash</h2>${quizHTML("quiz-flash")}</section>`;
-  BIND.video = (root) => mountQuiz($("#quiz-flash", root), C.quizFlash, { award: true, timer: true, awardLabel: "Équipe la plus rapide" });
+    ${C.videoDebat
+      ? `<section class="section"><h2>Débat</h2><p class="big-question">${esc(C.videoDebat.question)}</p>${C.videoDebat.relances ? `<ul class="ctx" style="max-width:75ch;margin-bottom:16px">${C.videoDebat.relances.map((r) => `<li>${esc(r)}</li>`).join("")}</ul>` : ""}<button class="btn lamp" data-vdebat="${C.videoDebat.minutes || 8}">Lancer ${C.videoDebat.minutes || 8} min de débat</button></section>`
+      : `<section class="section"><h2>Quiz flash</h2>${quizHTML("quiz-flash")}</section>`}`;
+  BIND.video = (root) => {
+    if (C.videoDebat) { $("[data-vdebat]", root).onclick = (e) => setTimer(+e.target.dataset.vdebat, true); return; }
+    mountQuiz($("#quiz-flash", root), C.quizFlash, { award: true, timer: true, awardLabel: "Équipe la plus rapide" });
+  };
 
   /* --- CP3 Rupture 2026 --- */
   RENDER.rupture = (p) => `

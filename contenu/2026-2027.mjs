@@ -306,13 +306,13 @@ export default {
           "n": 2,
           "date": "2026-11-23",
           "heure": "09:00–12:30",
-          "titre": "Visuels, mini-kit et pitch devant le client",
+          "titre": "Visuels, cohérence de marque, mini-kit et pitch devant le client",
           "video": "",
           "apps": [
             {
-              "outil": "appli-ia-com",
-              "url": "apps/ia-communication/index.html?classe=b3a#pitch",
-              "label": "Simulateur de pitch"
+              "outil": "appli-ia-com-s2",
+              "url": "apps/ia-communication-s2/index.html?classe=b3a",
+              "label": "Appli de la séance"
             }
           ],
           "ressources": []
@@ -345,13 +345,13 @@ export default {
           "n": 2,
           "date": "2026-11-05",
           "heure": "13:30–17:00",
-          "titre": "Visuels, mini-kit et pitch devant le client",
+          "titre": "Visuels, cohérence de marque, mini-kit et pitch devant le client",
           "video": "",
           "apps": [
             {
-              "outil": "appli-ia-com",
-              "url": "apps/ia-communication/index.html?classe=b3b#pitch",
-              "label": "Simulateur de pitch"
+              "outil": "appli-ia-com-s2",
+              "url": "apps/ia-communication-s2/index.html?classe=b3b",
+              "label": "Appli de la séance"
             }
           ],
           "ressources": []

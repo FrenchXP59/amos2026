@@ -87,7 +87,10 @@ Une fois un fichier déposé, passer `dispo: true` dans `content.js`, rubrique `
 
 ## 4. Séance 2 (5/11 pour B3B, 23/11 pour B3A) : nouvelle partie de l'appli
 
-- [ ] Déroulé minuté de la séance 2 (3h30), à valider ensemble.
+- [x] Appli séance 2 (`apps/ia-communication-s2/?classe=b3b` ou `b3a`) : agences et scores de la séance 1 conservés.
+- [ ] **Vidéo NotebookLM séance 2** « Du brief au visuel » : URL dans `apps/ia-communication-s2/content.js`.
+- [ ] Tester les outils image gratuits (ChatGPT, Gemini, Copilot, Firefly, Canva) la semaine du cours, sur le wifi de l'école.
+- [ ] Préparer la démo de l'intervenant : même consigne dans deux outils, affiche animée, reel de 15 s.
 - [x] Simulateur de pitch (mécanique Pitchcoach) prêt : lien « Pitch » dans l'appli.
 - [ ] Rééquilibrer l'étape « Regard critique » (trop chargée pour 15 min).
 - [ ] **Vidéo NotebookLM n°2** (4-5 min), thème proposé : « Cohérence graphique et IA : du brief au kit visuel », suivie d'un débat.
