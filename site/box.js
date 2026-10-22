@@ -56,7 +56,7 @@
   const today = () => { const d = new Date(); return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`; };
   const parts = (iso) => { const d = new Date(iso + "T12:00:00"); return { j: JOURS[d.getDay()], n: d.getDate(), m: MOIS[d.getMonth()], y: d.getFullYear() }; };
   const status = (iso) => (iso < today() ? "past" : iso === today() ? "today" : "future");
-  const hour = (h) => h.replace(/\b0(\d)/g, "$1").replace(/:00/g, "h").replace(/:(\d\d)/g, "h$1").replace("–", " – ");
+  const hour = (h) => h.replace(/(^|–)0(\d)/g, "$1$2").replace(/:00/g, "h").replace(/:(\d\d)/g, "h$1").replace("–", " – ");
 
   /* ---------- Toast et thème ---------- */
   let tT; const toast = (m) => { const t = $("#toast"); t.textContent = m; t.classList.add("show"); clearTimeout(tT); tT = setTimeout(() => t.classList.remove("show"), 1800); };
