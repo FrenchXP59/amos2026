@@ -8,6 +8,7 @@ window.CONTENT = {
   config: {
     id: "amos-concours-vente-s1",
     idJournal: "amos-concours-vente-journal",
+    ambiance: "piste",
     ecole: "AMOS",
     logo: "../moteur/assets/logo-amos.png",
     cours: "Concours de vente",

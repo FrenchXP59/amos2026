@@ -63,7 +63,7 @@
   };
 
   const PAGES = C.parcours.map((p) => p.id);
-  const EXTRA = ["ressources", "glossaire", "pitch", "jury"];
+  const EXTRA = ["ressources", "glossaire", "pitch", "jury", "attente"];
 
   /* ---------- Toast ---------- */
   let toastT;
@@ -77,6 +77,7 @@
     $("#cours-titre").textContent = C.config.cours;
     const dh = $("#agences-dialog h2"); if (dh && C.config.equipes) dh.textContent = "Les " + C.config.equipes;
     if (C.jury && !$('.rail-extra a[data-page="jury"]')) { const a = document.createElement("a"); a.href = "#jury"; a.dataset.page = "jury"; a.textContent = "Jury"; $(".rail-extra").appendChild(a); }
+    if (!$('.rail-extra a[data-page="attente"]')) { const a = document.createElement("a"); a.href = "#attente"; a.dataset.page = "attente"; a.textContent = "Écran d'attente"; $(".rail-extra").prepend(a); }
     $("#seance-label").textContent = `${C.config.seance}, ${C.config.classe}`;
     const img = $("#logo");
     img.onload = () => { img.hidden = false; $("#logo-fallback").hidden = true; };
@@ -284,15 +285,91 @@
 
   /* ---------- Navigation ---------- */
   function go(id) { location.hash = id; }
+  /* --- Ambiance animée par cours (lot 3) : très discrète, seulement aux étapes « respiration » --- */
+  // config.ambiance : "frontales" (CITANUIT), "piste" (Kilomètre Nord), "donnees" (Nordval), "flux" (Lys Padel)
+  const AMB_PAGES = ["accueil", "pause", "cas", "final", "palmares", "attente"];
+  const AMB = { cv: null, raf: 0, on: false, t0: 0 };
+  function ambiance(type) {
+    const mode = C.config.ambiance, veut = !!mode && !CALME && AMB_PAGES.includes(type);
+    if (!veut) { AMB.on = false; cancelAnimationFrame(AMB.raf); if (AMB.cv) AMB.cv.classList.remove("on"); return; }
+    if (!AMB.cv) { AMB.cv = document.createElement("canvas"); AMB.cv.id = "ambiance"; AMB.cv.setAttribute("aria-hidden", "true"); document.body.prepend(AMB.cv); }
+    AMB.cv.classList.add("on");
+    if (AMB.on) return;
+    AMB.on = true; AMB.t0 = performance.now();
+    const cv = AMB.cv, x = cv.getContext("2d");
+    const taille = () => { const d = Math.min(2, window.devicePixelRatio || 1); cv.width = innerWidth * d; cv.height = innerHeight * d; x.setTransform(d, 0, 0, d, 0, 0); };
+    taille(); window.onresize = taille;
+    const css = getComputedStyle(document.documentElement), lamp = css.getPropertyValue("--lamp").trim() || "#52A86F";
+    // graines fixes pour un dessin stable
+    const R = (k) => { const v = Math.sin(k * 999.13) * 43758.5453; return v - Math.floor(v); };
+    let last = 0;
+    const frame = (now) => {
+      if (!AMB.on) return;
+      AMB.raf = requestAnimationFrame(frame);
+      if (document.hidden || now - last < 33) return;   // ~30 images/s suffisent
+      last = now;
+      const t = (now - AMB.t0) / 1000, W = innerWidth, H = innerHeight;
+      x.clearRect(0, 0, W, H);
+      if (mode === "frontales") {   // halos de lampes frontales qui traversent la nuit
+        for (let k = 0; k < 9; k++) {
+          const v = .02 + R(k) * .03, px = ((R(k + 1) + t * v) % 1.2 - .1) * W, py = H * (.25 + .6 * R(k + 2)) + Math.sin(t * .8 + k) * 12;
+          const r = 60 + R(k + 3) * 90, g = x.createRadialGradient(px, py, 0, px, py, r);
+          g.addColorStop(0, "rgba(255, 201, 60, .55)"); g.addColorStop(1, "rgba(255, 201, 60, 0)");
+          x.fillStyle = g; x.beginPath(); x.arc(px, py, r, 0, 6.29); x.fill();
+        }
+      } else if (mode === "piste") {   // couloirs d'une piste, pointillés qui courent
+        x.lineWidth = 2; x.strokeStyle = lamp;
+        for (let k = 0; k < 6; k++) {
+          x.setLineDash([22, 26]); x.lineDashOffset = -t * (40 + k * 8);
+          x.beginPath();
+          for (let px = -20; px <= W + 20; px += 20) { const py = H * .55 + k * 34 + Math.sin(px / 260 + k * .3) * 40; px < 0 ? x.moveTo(px, py) : x.lineTo(px, py); }
+          x.stroke();
+        }
+        x.setLineDash([]);
+      } else if (mode === "donnees") {   // barres et courbe de données qui respirent
+        const n = 28, bw = W / n;
+        x.fillStyle = lamp;
+        for (let k = 0; k < n; k++) { const h = (.15 + .35 * (.5 + .5 * Math.sin(t * .6 + k * .5 + R(k) * 3))) * H * .45; x.fillRect(k * bw + bw * .3, H - h, bw * .4, h); }
+        x.strokeStyle = "#FFC93C"; x.lineWidth = 2; x.beginPath();
+        for (let k = 0; k <= n; k++) { const py = H * .45 - Math.sin(t * .4 + k * .35) * H * .08 - k * 3; k ? x.lineTo(k * bw, py) : x.moveTo(0, py); }
+        x.stroke();
+      } else if (mode === "flux") {   // nœuds reliés, impulsions qui circulent (automatisation)
+        const nodes = Array.from({ length: 12 }, (_, k) => [W * (.06 + .88 * R(k + 10)), H * (.12 + .78 * R(k + 30))]);
+        x.strokeStyle = lamp; x.lineWidth = 1.5; x.fillStyle = lamp;
+        for (let k = 0; k < nodes.length - 1; k++) {
+          const [a, b] = [nodes[k], nodes[(k * 5 + 3) % nodes.length]];
+          x.beginPath(); x.moveTo(a[0], a[1]); x.lineTo(b[0], b[1]); x.stroke();
+          const q = (t * .18 + R(k + 50)) % 1; x.beginPath(); x.arc(a[0] + (b[0] - a[0]) * q, a[1] + (b[1] - a[1]) * q, 4, 0, 6.29); x.fill();
+        }
+        nodes.forEach(([px, py], k) => { x.beginPath(); x.arc(px, py, 6 + 2 * Math.sin(t + k), 0, 6.29); x.fill(); });
+      }
+    };
+    AMB.raf = requestAnimationFrame(frame);
+  }
+
+  let lastIdx = null, rideauVu = false, attTimer = null;
   function route() {
     let id = location.hash.slice(1) || PAGES[0];
-    if (!PAGES.includes(id) && !EXTRA.includes(id)) id = PAGES[0];
+    if (!PAGES.includes(id) && !EXTRA.includes(id)) id = PAGES[0];
+    clearInterval(attTimer); $$("body > .attente").forEach((x) => x.remove());
+    const idx0 = PAGES.indexOf(id), first = lastIdx === null;
+    const dir = idx0 >= 0 && lastIdx !== null && lastIdx >= 0 ? (idx0 >= lastIdx ? "next" : "prev") : "next";
+    lastIdx = idx0;
+    if (!first && !CALME && document.startViewTransition) {
+      document.documentElement.dataset.dir = dir;
+      try { document.startViewTransition(() => afficher(id)); return; } catch (e) { /* repli */ }
+    }
+    afficher(id);
+  }
+  function afficher(id) {
     const stage = $("#stage");
     const p = C.parcours.find((x) => x.id === id);
     const type = (p && p.type) || id;
     stage.innerHTML = `<div class="page">${(RENDER[type] || (() => ""))(p)}</div>`;
     (BIND[type] || (() => {}))(stage, p);
     bindAward(stage);
+    if (type === "cas" && !rideauVu) { rideauVu = true; setTimeout(rideau, 250); }
+    ambiance(type);
     stage.scrollTop = 0; window.scrollTo(0, 0);
     renderRail(id);
     $("#rail").classList.remove("open");
@@ -698,6 +775,7 @@
       <h2>${esc(c.nom)}</h2>
       <p>${esc(c.accroche)}</p>
       <p class="warn">${esc(c.avertissement)}</p>
+      <button class="btn small rideau-btn" data-rideau>Rejouer l'arrivée du client</button>
     </div>
     <section class="section">
       <div class="tabs" role="tablist">${CAS_TABS.map((t, i) => `<button class="tab" role="tab" aria-selected="${i === 0}" data-ct="${i}">${t}</button>`).join("")}</div>
@@ -705,6 +783,7 @@
     </section>`;
   };
   BIND.cas = (root) => {
+    const rb = $("[data-rideau]", root); if (rb) rb.onclick = rideau;
     const show = (i) => {
       $$("[data-ct]", root).forEach((t) => t.setAttribute("aria-selected", +t.dataset.ct === i));
       $("#cas-body", root).innerHTML = CAS[i]();
@@ -1217,6 +1296,71 @@
     $("#pal-reset", root).onclick = () => { shown = 0; draw(); };
     draw();
   };
+
+  /* --- Lever de rideau : le client arrive en salle --- */
+  function rideau() {
+    if (CALME || $(".rideau")) return;
+    const c = C.client, nom = [...c.nom];
+    const ov = document.createElement("div"); ov.className = "rideau"; ov.setAttribute("role", "dialog"); ov.setAttribute("aria-label", `Votre client : ${c.nom}`);
+    ov.innerHTML = `<div class="rideau-in"><span class="kicker">Votre client</span>
+      <h2>${(() => { let i = 0; return c.nom.split(" ").map((w) => `<span class="mot">${[...w].map((ch) => `<span class="l" style="--i:${i++}">${esc(ch)}</span>`).join("")}</span>`).join(" "); })()}</h2>
+      <p style="--d:${0.5 + nom.length * 0.06}s">${esc(c.accroche)}</p>
+      <small style="--d:${1.2 + nom.length * 0.06}s">${esc(c.avertissement || "")}</small></div>`;
+    document.body.appendChild(ov);
+    nom.forEach((ch, i) => { if (ch !== " ") bip(420 + i * 22, .05, .07, "triangle", .45 + i * .06); });
+    bip(1046, .4, .12, "sine", .6 + nom.length * .06);
+    let fini = false;
+    const fermer = () => { if (fini) return; fini = true; ov.classList.add("out"); setTimeout(() => ov.remove(), 650); };
+    ov.onclick = fermer; document.addEventListener("keydown", fermer, { once: true });
+    setTimeout(fermer, 5200 + nom.length * 60);
+  }
+
+  /* --- Écran d'attente (avant la séance) et générique --- */
+  function debutAujourdhui() {
+    const [h, m] = C.parcours[0].heure.split(":").map(Number), d = new Date(); d.setHours(h, m, 0, 0); return d;
+  }
+  RENDER.attente = () => {
+    const pts = profilePoints();
+    return `<div class="attente">
+      <svg class="attente-trace" viewBox="0 0 1200 230" aria-hidden="true"><path d="${pts.line}" style="--len:1400"/></svg>
+      <div class="attente-in">
+        <img src="${esc(C.config.logo)}" alt="AMOS" class="attente-logo">
+        <span class="kicker">${esc(C.config.seance)}</span>
+        <h1>${esc(C.config.cours)}</h1>
+        <p class="attente-classe">${esc(C.config.classe)}</p>
+        <p class="attente-date">${esc(C.config.dateSeance)}. Avec ${esc(C.config.intervenant)}.</p>
+        <div class="attente-clock" id="att-clock">--:--</div>
+        <p class="attente-label" id="att-label"></p>
+        <div class="btn-row" style="justify-content:center"><button class="btn lamp" id="att-go">Lancer le générique</button><button class="btn" id="att-quit">Aller au départ</button></div>
+      </div></div>`;
+  };
+  BIND.attente = (root) => {
+    const maj = () => {
+      const ms = debutAujourdhui() - Date.now(), clock = $("#att-clock"), lab = $("#att-label");
+      if (!clock) return clearInterval(attTimer);
+      if (ms > 0 && ms < 6 * 3600e3) { const t = Math.ceil(ms / 1000), h = Math.floor(t / 3600); clock.textContent = h ? `${h}:${fmt(t % 3600)}` : fmt(t); lab.textContent = `Début à ${C.parcours[0].heure.replace(":", "h")}`; }
+      else { clock.textContent = C.parcours[0].heure.replace(":", "h"); lab.textContent = ms <= 0 ? "C'est l'heure" : "Début de la séance"; }
+    };
+    const ov = $(".attente", root); document.body.appendChild(ov);   // plein écran, au-dessus du bandeau
+    maj(); attTimer = setInterval(maj, 1000);
+    $("#att-go").onclick = generique;
+    $("#att-quit").onclick = () => go(PAGES[0]);
+  };
+  function generique() {
+    if (CALME) return go(PAGES[0]);
+    clearInterval(attTimer);
+    const g = document.createElement("div"); g.className = "generique";
+    g.innerHTML = `<img src="${esc(C.config.logo)}" alt="" class="g-logo">
+      <h1 class="g-titre">${esc(C.config.cours)}</h1>
+      <p class="g-classe">${esc(C.config.classe)}</p>
+      <p class="g-go">${esc(C.config.seance)}, c'est parti</p>`;
+    document.body.appendChild(g);
+    [0, .15, .3].forEach((w, i) => bip(392 * Math.pow(1.26, i), .18, .12, "triangle", w));
+    bip(523, .2, .14, "triangle", 2.2); bip(659, .2, .14, "triangle", 2.35); bip(784, .5, .16, "triangle", 2.5);
+    let fini = false;
+    const fin = () => { if (fini) return; fini = true; g.classList.add("out"); go(PAGES[0]); setTimeout(() => g.remove(), 700); };
+    g.onclick = fin; setTimeout(fin, 4600);
+  }
 
   /* --- Glossaire --- */
   RENDER.glossaire = () => `

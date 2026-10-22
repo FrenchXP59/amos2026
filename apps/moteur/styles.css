@@ -685,6 +685,72 @@ p.rolling, p.landed { display: block; }
 /* Confettis */
 canvas.confetti { position: fixed; inset: 0; width: 100vw; height: 100vh; z-index: 58; pointer-events: none; }
 
+
+/* ---------- Motion design (lot 2) ---------- */
+/* Transitions entre étapes : seule la scène glisse, le bandeau et le parcours restent fixes */
+.stage { view-transition-name: scene; }
+::view-transition-old(root), ::view-transition-new(root) { animation: none; }
+::view-transition-old(scene) { animation: sceneOut .18s cubic-bezier(.4, 0, 1, 1) both; }
+::view-transition-new(scene) { animation: sceneIn .4s .1s cubic-bezier(0, 0, .2, 1) both; }
+[data-dir="prev"]::view-transition-old(scene) { animation-name: sceneOutBack; }
+[data-dir="prev"]::view-transition-new(scene) { animation-name: sceneInBack; }
+@keyframes sceneOut { to { opacity: 0; transform: translateX(-40px); } }
+@keyframes sceneIn { from { opacity: 0; transform: translateX(60px); } }
+@keyframes sceneOutBack { to { opacity: 0; transform: translateX(40px); } }
+@keyframes sceneInBack { from { opacity: 0; transform: translateX(-60px); } }
+
+/* Lever de rideau du client */
+.rideau { position: fixed; inset: 0; z-index: 90; display: grid; place-items: center; cursor: pointer; text-align: center; padding: 24px;
+  background: radial-gradient(ellipse at 50% 60%, #1C2F52 0%, #0B1512 70%); color: #F4F7FB; animation: fadeIn .35s ease both; }
+.rideau-in { max-width: 1100px; }
+.rideau .kicker { color: #FFC93C; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; opacity: 0; animation: fadeUp .5s .1s ease forwards; }
+.rideau h2 { font: 900 clamp(3rem, 9vw, 8rem)/.95 var(--font-display); text-transform: uppercase; margin: 14px 0 18px; letter-spacing: .01em; }
+.rideau h2 .mot { display: inline-block; white-space: nowrap; }
+.rideau h2 .l { display: inline-block; opacity: 0; transform: translateY(40px) scale(.8); animation: lettre .5s calc(.4s + var(--i) * 60ms) cubic-bezier(.2, 1.4, .4, 1) forwards; }
+.rideau p { font-size: clamp(1.2rem, 2.4vw, 1.8rem); margin: 0 auto; max-width: 40ch; opacity: 0; animation: fadeUp .6s var(--d) ease forwards; }
+.rideau small { display: block; margin-top: 22px; color: #9DB3AA; opacity: 0; animation: fadeUp .6s var(--d) ease forwards; }
+.rideau.out { animation: rideauOut .6s ease forwards; }
+@keyframes lettre { to { opacity: 1; transform: none; } }
+@keyframes fadeUp { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+@keyframes fadeIn { from { opacity: 0; } }
+@keyframes rideauOut { to { opacity: 0; transform: scale(1.06); } }
+.rideau-btn { margin-top: 14px; position: relative; z-index: 1; }
+
+/* Écran d'attente */
+.attente { position: fixed; inset: 0; z-index: 80; display: grid; place-items: center; text-align: center; padding: 24px; overflow: hidden;
+  background: radial-gradient(ellipse at 50% 120%, rgba(82, 168, 111, .28), transparent 60%), var(--bg); }
+.attente-in { position: relative; z-index: 1; display: grid; gap: 6px; justify-items: center; }
+.attente-logo { height: 54px; background: #fff; padding: 8px 12px; border-radius: 8px; margin-bottom: 18px; animation: fadeUp .8s ease both; }
+.attente .kicker { color: var(--lamp-ink); font-weight: 700; letter-spacing: .14em; text-transform: uppercase; }
+.attente h1 { font: 900 clamp(3rem, 9vw, 7.5rem)/.92 var(--font-display); text-transform: uppercase; margin: 6px 0; animation: fadeUp .8s .15s ease both; }
+.attente-classe, .attente-date { margin: 0; color: var(--muted); font-size: 1.1rem; }
+.attente-clock { font: 900 clamp(4.5rem, 14vw, 11rem)/1 var(--font-display); font-variant-numeric: tabular-nums; margin-top: 22px; color: var(--ink); animation: respire 4s ease-in-out infinite; }
+.attente-label { margin: 0 0 22px; color: var(--muted); text-transform: uppercase; letter-spacing: .1em; }
+@keyframes respire { 50% { text-shadow: 0 0 50px var(--glow); } }
+.attente-trace { position: absolute; left: 0; right: 0; bottom: 6vh; width: 100%; height: 26vh; opacity: .55; }
+.attente-trace path { fill: none; stroke: var(--lamp); stroke-width: 3; stroke-linecap: round; stroke-dasharray: var(--len); stroke-dashoffset: var(--len); animation: trace 6s ease-in-out infinite; }
+@keyframes trace { 0% { stroke-dashoffset: var(--len); } 50% { stroke-dashoffset: 0; } 100% { stroke-dashoffset: calc(var(--len) * -1); } }
+
+/* Générique de début de séance */
+.generique { position: fixed; inset: 0; z-index: 95; display: grid; place-items: center; align-content: center; gap: 10px; text-align: center; background: #0B1512; color: #EEF5F1; cursor: pointer; overflow: hidden; }
+.g-logo { height: 70px; background: #fff; padding: 10px 14px; border-radius: 10px; animation: gLogo 1.3s cubic-bezier(.2, 1.3, .4, 1) both; }
+.g-titre { font: 900 clamp(3rem, 10vw, 8.5rem)/.9 var(--font-display); text-transform: uppercase; margin: 10px 0 0; padding: .14em .05em 0; clip-path: inset(-30% 100% -30% 0); animation: gWipe 1s 1s cubic-bezier(.7, 0, .2, 1) forwards; }
+.g-classe { margin: 0; color: #9DB3AA; font-size: 1.2rem; opacity: 0; animation: fadeUp .6s 1.9s ease forwards; }
+.g-go { margin: 18px 0 0; font: 900 clamp(1.6rem, 3.5vw, 2.6rem) var(--font-display); text-transform: uppercase; color: #6FC489; opacity: 0; animation: gGo .7s 2.6s cubic-bezier(.2, 1.4, .4, 1) forwards; }
+.generique::after { content: ""; position: absolute; left: 0; bottom: 0; height: 6px; width: 100%; background: #52A86F; transform-origin: left; animation: gBar 4.4s linear forwards; }
+.generique.out { animation: rideauOut .65s ease forwards; }
+@keyframes gLogo { 0% { opacity: 0; transform: scale(.4) rotate(-6deg); } 100% { opacity: 1; transform: none; } }
+@keyframes gWipe { to { clip-path: inset(-30% 0 -30% 0); } }
+@keyframes gGo { from { opacity: 0; transform: scale(1.6); } to { opacity: 1; transform: none; } }
+@keyframes gBar { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+
+
+/* ---------- Motion design (lot 3) : ambiances par cours ---------- */
+#ambiance { position: fixed; inset: 0; width: 100vw; height: 100vh; z-index: 0; pointer-events: none; opacity: 0; transition: opacity 1.2s ease; }
+#ambiance.on { opacity: .1; }
+[data-theme="jour"] #ambiance.on { opacity: .14; }
+.layout { position: relative; z-index: 1; }
+
 /* ---------- Responsive ---------- */
 @media (max-width: 1100px) {
   .grid-3, .slots, .facts, .agences-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }

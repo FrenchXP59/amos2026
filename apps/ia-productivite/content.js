@@ -7,6 +7,7 @@ window.CONTENT = {
 
   config: {
     id: "amos-ia-productivite-s1",
+    ambiance: "donnees",
     ecole: "AMOS",
     logo: "../moteur/assets/logo-amos.png",
     cours: "IA et productivité",

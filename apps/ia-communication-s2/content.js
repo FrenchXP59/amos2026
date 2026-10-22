@@ -9,6 +9,7 @@ window.CONTENT = {
   config: {
     id: "amos-ia-com-s2",
     idEquipes: "amos-ia-com-s1",
+    ambiance: "frontales",
     ecole: "AMOS",
     logo: "../moteur/assets/logo-amos.png",
     cours: "IA appliquée à la communication",

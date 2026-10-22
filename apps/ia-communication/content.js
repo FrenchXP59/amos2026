@@ -8,6 +8,7 @@ window.CONTENT = {
   /* ---------- Réglages généraux ---------- */
   config: {
     id: "amos-ia-com-s1",          // identifiant de sauvegarde locale (unique par appli)
+    ambiance: "frontales",
     ecole: "AMOS",
     logo: "../moteur/assets/logo-amos.png",
     cours: "IA appliquée à la communication",

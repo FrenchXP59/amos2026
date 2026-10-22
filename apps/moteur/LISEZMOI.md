@@ -18,3 +18,14 @@ Une appli de cours = un dossier dans `apps/` avec seulement :
 5. Ouvrir l'appli avec `?classe=m2a` : date, horaires du parcours et sauvegarde s'adaptent à la classe.
 
 Toute amélioration du moteur profite à tous les cours : tester chaque appli après une modification.
+
+## Motion design (moteur commun)
+
+- **Tirages en machine à sous** : objection et personne désignée (simulateur), carte du profil battue, ordre de passage, duel des objections.
+- **Points volants** : chaque bouton « +1 » envoie le point jusqu'au dossard de l'équipe.
+- **Compte à rebours géant** sur les 10 dernières secondes du chrono et du simulateur.
+- **Cérémonies** : palmarès (roulement de tambour, compteur, fanfare, confettis) et bouton « Révéler le vainqueur » en battle finale.
+- **Transitions** entre étapes (glissement selon le sens), **lever de rideau** du client à la première ouverture du dossier (bouton pour le rejouer).
+- **Écran d'attente** (lien dans le menu) avec compte à rebours jusqu'au début, puis **générique** de 5 secondes.
+- **Ambiance** de fond par cours (`config.ambiance` : `frontales`, `piste`, `donnees`, `flux`), visible seulement à l'accueil, à la pause, au dossier client, au palmarès et à la battle finale.
+- Bouton **Son/Muet** en haut à droite. Si l'ordinateur demande de réduire les animations, les effets sont coupés.

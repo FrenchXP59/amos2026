@@ -114,7 +114,8 @@ Tous les PDF de novembre sont générés par `node outils/pdf/generer.mjs` à pa
 - [ ] **Mode étudiant** : version sans les commandes du formateur (chrono, scores), à ouvrir aux étudiants après la séance.
 - [ ] **Dépôt du travail en ligne** : aujourd'hui le journal se télécharge en .txt. Option : base Supabase pour recevoir les dépôts et afficher les scores en direct (attention au RGPD sur les données des étudiants).
 - [ ] **Vote en direct sur téléphone** pour « IA ou humain ? » et la prompt battle (QR code au tableau).
-- [ ] **Animations motion design supplémentaires** : transitions entre étapes, révélation animée du podium, intro du client CITANUIT.
+- [x] **Motion design** (22/10) : lots 1 à 3 faits dans le moteur commun (voir `apps/moteur/LISEZMOI.md`). À tester en salle : son, projecteur, fluidité sur le PC de l'école.
+- [ ] Retrouver le skill motion design de Claude Code (`~/.claude/skills`, à copier dans Documents) pour aligner le style.
 - [ ] Réutiliser le moteur pour les autres cours du planning (M1 IA et automatisation, M2 IA et productivité, B1 Concours de vente).
 
 ## 6. Ce qu'on peut récupérer de tes applis existantes (GitHub)
