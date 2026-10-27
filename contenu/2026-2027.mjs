@@ -426,7 +426,7 @@ export default {
           "date": "2026-11-02",
           "heure": "13:30–17:00",
           "titre": "Frontière irrégulière, chaînes de prompts, diagnostic et scénarios",
-          "video": "",
+          "video": "https://youtu.be/mBw2X9lwEA4",
           "apps": [
             {
               "outil": "appli-ia-productivite",
@@ -465,7 +465,7 @@ export default {
           "date": "2026-11-04",
           "heure": "13:30–17:00",
           "titre": "Frontière irrégulière, chaînes de prompts, diagnostic et scénarios",
-          "video": "",
+          "video": "https://youtu.be/mBw2X9lwEA4",
           "apps": [
             {
               "outil": "appli-ia-productivite",

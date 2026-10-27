@@ -26,7 +26,7 @@ window.CONTENT = {
   },
 
   videos: {
-    s1: { titre: "Le manager augmenté : orchestrer l'IA pour décider", duree: "4 à 5 min", url: "" }
+    s1: { titre: "Le manager augmenté : orchestrer l'IA pour décider", duree: "4 à 5 min", url: "https://youtu.be/mBw2X9lwEA4" }
   },
 
   parcours: [
