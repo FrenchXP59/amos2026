@@ -43,7 +43,7 @@ Séances : M1A le 3/11 et le 6/11 (9h-12h30). Évaluation : participation. Fil r
 # Cours M2 : IA et productivité
 
 Séances : M2A le 2/11 et le 25/11, M2B le 4/11 et le 26/11 (13h30-17h). Fil rouge : Olympique Nordval (club fictif de Ligue 2).
-- [~] **Vidéo NotebookLM n°1** « Le manager augmenté » : https://youtu.be/mBw2X9lwEA4, intégrée dans l'appli et la box (27/10). **Reste : quiz à aligner (SRT reçu = celui de la vidéo B3) et durée à corriger.**
+- [x] **Vidéo NotebookLM n°1** « Le manager augmenté » (4 min) : https://youtu.be/mBw2X9lwEA4, intégrée dans l'appli et la box (27/10). Quiz aligné sur la vidéo (6 questions + 1 bonus).
 - [ ] **Vidéo NotebookLM n°1** « Le manager augmenté : orchestrer l'IA pour décider » : URL dans `content.js`, rubrique `videos.s1.url`.
 - [ ] Tester la chaîne de prompts de bout en bout sur un outil gratuit avec la fiche Nordval (vérifier que 7 à 8 min suffisent).
 - [ ] Imprimer ou projeter le texte de l'audit : les étudiants doivent pouvoir le lire en cellule (le prévoir aussi en PDF).

@@ -26,7 +26,7 @@ window.CONTENT = {
   },
 
   videos: {
-    s1: { titre: "Le manager augmenté : orchestrer l'IA pour décider", duree: "4 à 5 min", url: "https://youtu.be/mBw2X9lwEA4" }
+    s1: { titre: "Le manager augmenté : orchestrer l'IA pour décider", duree: "4 min", url: "https://youtu.be/mBw2X9lwEA4" }
   },
 
   parcours: [
@@ -34,7 +34,7 @@ window.CONTENT = {
     { id: "frontiere", type: "tri", data: "frontiere", heure: "13:40", duree: 20, titre: "La frontière irrégulière", sous: "Où l'IA aide, où elle piège",
       lede: "Avant de déléguer à l'IA, un manager doit savoir où elle est fiable. Huit tâches du club : l'IA vous aide, ou elle vous piège ?" },
     { id: "video",    heure: "14:00", duree: 20, titre: "Vidéo et quiz flash",  sous: "Le manager augmenté",
-      lede: "Cinq minutes sur le changement de posture : de l'utilisateur qui produit au manager qui orchestre. Puis six questions éclair." },
+      lede: "Quatre minutes sur le changement de posture : de l'utilisateur qui produit au manager qui décide. Puis six questions éclair et une question bonus." },
     { id: "chaine", type: "chaine", data: "chaine", heure: "14:20", duree: 40, titre: "Chaînes de prompts", sous: "Raisonner en étapes",
       lede: "Un seul prompt pour une décision stratégique, c'est une réponse fragile. Une chaîne de quatre étapes, c'est un raisonnement que vous contrôlez." },
     { id: "pause",    heure: "15:00", duree: 15, titre: "Pause",                sous: "Mi-temps" },
@@ -73,12 +73,27 @@ window.CONTENT = {
 
   /* ---------- Quiz flash après la vidéo ---------- */
   quizFlash: [
-    { q: "Dans l'étude Harvard et BCG, sur une tâche hors frontière, les utilisateurs de l'IA…", options: ["Allaient deux fois plus vite", "Avaient 19 % de chances en moins de trouver la bonne réponse", "Ne voyaient aucune différence", "Refusaient d'utiliser l'IA"], bonne: 1, explication: "Source : HBS Working Paper 24-013 (2023). L'IA rassure… et trompe, hors de son terrain." },
-    { q: "Une chaîne de prompts, c'est…", options: ["Un prompt très long", "Le même prompt envoyé à plusieurs IA", "Un raisonnement découpé en étapes, chaque sortie nourrissant la suivante", "Un abonnement à plusieurs outils"], bonne: 2, explication: "Diagnostic, options, contre-analyse, recommandation : on contrôle chaque maillon." },
-    { q: "Un collaborateur vous rend une étude de marché faite avec l'IA. Premier réflexe ?", options: ["La transmettre telle quelle", "Lui demander la méthode et les sources", "La refaire soi-même", "La faire relire par une autre IA uniquement"], bonne: 1, explication: "Manager l'IA, c'est exiger la traçabilité : d'où viennent les chiffres, qu'est-ce qui a été vérifié." },
-    { q: "À quoi sert l'étape de « contre-analyse » ?", options: ["À traduire la recommandation", "À faire attaquer sa propre recommandation pour en trouver les failles", "À raccourcir le texte", "À ajouter des émojis"], bonne: 1, explication: "On demande à l'IA de jouer le DAF sceptique : c'est le « red team » du manager." },
-    { q: "Depuis le 2 août 2026, l'article 50 de l'AI Act impose…", options: ["L'interdiction de l'IA en entreprise", "Des obligations de transparence sur les contenus générés et les chatbots", "Un permis pour utiliser ChatGPT", "Rien, il est reporté à 2028"], bonne: 1, explication: "C'est le « haut risque » qui est reporté (2 décembre 2027), pas l'article 50." },
-    { q: "ChatGPT Work, lancé en juillet 2026, c'est…", options: ["Un réseau social professionnel", "Un agent pour des tâches longues : recherche, fichiers, documents, tâches programmées", "Une version gratuite de ChatGPT", "Un outil réservé aux développeurs"], bonne: 1, explication: "Source : notes de version OpenAI, 9 juillet 2026. Offres payantes hors Free et Go." }
+    { q: "Dans l'étude Harvard et BCG (2023), sur une tâche hors du terrain fiable de l'IA, la justesse des réponses des consultants…", options: ["Progressait de 25 %", "Chutait de 19 points de pourcentage", "Ne changeait pas", "Doublait"], bonne: 1,
+      explication: "C'est la « frontière technologique irrégulière » : selon la tâche, l'IA aide beaucoup… ou fait se tromper avec assurance.",
+      complement: "Source : Dell'Acqua et al., HBS Working Paper 24-013, 2023. En anglais : « jagged technological frontier »." },
+    { q: "Une chaîne de prompts en quatre étapes, dans l'ordre…", options: ["Recommandation, options, diagnostic, contre-analyse", "Diagnostic, options, contre-analyse, recommandation", "Options, diagnostic, recommandation, contre-analyse", "Diagnostic, recommandation, options, contre-analyse"], bonne: 1,
+      explication: "Chaque sortie nourrit l'étape suivante. Le diagnostic sépare les faits vérifiés des hypothèses.",
+      complement: "Vous la construisez juste après, à 14h20, sur le cas Nordval." },
+    { q: "Pourquoi vérifier entre chaque étape de la chaîne ?", options: ["Pour gagner du temps", "Parce qu'une petite erreur au diagnostic contamine toute la chaîne", "Parce que l'IA l'exige", "Ce n'est pas utile si le prompt est bon"], bonne: 1,
+      explication: "La règle d'or de la vidéo : on contrôle chaque maillon avant de passer au suivant.",
+      complement: "C'est aussi là que se joue votre valeur ajoutée de manager : l'IA produit, vous validez." },
+    { q: "À quoi sert l'étape de contre-analyse ?", options: ["À traduire la recommandation", "À faire jouer à l'IA un directeur financier sceptique qui attaque vos scénarios", "À raccourcir le texte", "À choisir le scénario le moins cher"], bonne: 1,
+      explication: "On stress-teste la solidité et les risques de ses propres propositions avant le comité.",
+      complement: "Les anglo-saxons parlent de « red team » : une équipe chargée de trouver les failles." },
+    { q: "Un collaborateur dépose un rapport stratégique généré par l'IA, superbe et plein de chiffres. Premier réflexe ?", options: ["Le transmettre au comité", "Exiger les sources et la méthode, et creuser les hypothèses", "Le refaire soi-même", "Le faire relire par une autre IA uniquement"], bonne: 1,
+      explication: "Un chiffre ultra précis sans source n'est pas une preuve. La forme ne garantit jamais le fond.",
+      complement: "Vous le vivrez à 15h15 : l'audit d'une étude qui contient des erreurs volontaires." },
+    { q: "Depuis août 2026, l'article 50 de l'AI Act impose…", options: ["L'interdiction de l'IA en entreprise", "Une obligation de transparence pour certaines interactions avec l'IA et certains contenus générés", "Un permis pour utiliser ChatGPT", "Rien, il est reporté à 2028"], bonne: 1,
+      explication: "Exemples : savoir qu'on parle à un chatbot, signaler un contenu réaliste généré par l'IA (2 août 2026).",
+      complement: "Plus l'outil est autonome (ChatGPT Work exécute des missions en plusieurs étapes), plus la responsabilité du manager qui l'orchestre augmente." },
+    { bonus: true, q: "Sur les tâches bien adaptées à l'IA, les consultants de l'étude allaient environ…", options: ["5 % plus vite", "25 % plus vite, avec une meilleure qualité", "2 fois plus vite, mais moins bien", "Aussi vite qu'avant"], bonne: 1,
+      explication: "Environ 25 % plus vite, et un travail jugé de meilleure qualité : le vrai gain, mais seulement sur le bon terrain.",
+      complement: "758 consultants du BCG. L'étude mesure aussi 12 % de tâches réalisées en plus et une qualité supérieure de plus de 40 %." }
   ],
 
   /* ---------- Chaîne de prompts ---------- */
