@@ -67,7 +67,7 @@ Fil rouge : CITANUIT Trail Lille (événement fictif).
 
 - [x] **Logo AMOS** : fichier repris de ton dépôt Pitchteams (`public/logo-amos.png`, 887×140, fond transparent). Un SVG officiel serait encore mieux.
 - [x] **Palette AMOS (verts du site, validée)** : vert du logo #008B57 (lu dans le fichier). Verts secondaires #2C675B et #52A86F relevés sur une capture d'écran, donc approximatifs. À confirmer avec la charte (variables en haut de `apps/ia-communication/styles.css`).
-- [ ] **Vidéo NotebookLM de la séance 1** (4-5 min), thème « 2026 : de l'IA qui répond à l'IA qui agit ». Coller l'URL (YouTube non répertorié, Drive ou .mp4) dans `content.js`, rubrique `videos.s1.url`.
+- [x] **Vidéo de la séance 1** « De l'IA passive à l'IA active » (3 min) : https://youtu.be/GjL48ZArdU0, intégrée dans l'appli et la box (27/10). Quiz aligné sur la vidéo.
 - [ ] **Jeu « IA ou humain ? »** : préparer 6 contenus (4 visuels, 2 textes), moitié générés par IA, moitié humains. Les déposer dans `apps/ia-communication/assets/` et renseigner `src` et `reponse` dans `content.js`, rubrique `iaHumain`. Les réponses actuelles sont des exemples à corriger.
 - [ ] **Déploiement** : l'appli est publiée avec la box (Netlify, depuis ce dépôt).
 - [ ] **Test en salle** : projection en thème Nuit puis Jour, son du chrono, wifi.

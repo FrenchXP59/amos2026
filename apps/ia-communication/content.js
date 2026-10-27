@@ -33,7 +33,7 @@ window.CONTENT = {
     s1: {
       titre: "De l'IA passive à l'IA active",
       duree: "3 min",
-      url: ""   // ex. "https://www.youtube.com/watch?v=XXXX" ou "https://drive.google.com/file/d/XXXX/view"
+      url: "https://youtu.be/GjL48ZArdU0"
     }
   },
 

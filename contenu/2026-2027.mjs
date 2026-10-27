@@ -309,7 +309,7 @@ export default {
           "date": "2026-11-03",
           "heure": "13:30–17:00",
           "titre": "Panorama, agents et prompt engineering",
-          "video": "",
+          "video": "https://youtu.be/GjL48ZArdU0",
           "apps": [
             {
               "outil": "appli-ia-com",
@@ -348,7 +348,7 @@ export default {
           "date": "2026-11-02",
           "heure": "09:00–12:30",
           "titre": "Panorama, agents et prompt engineering",
-          "video": "",
+          "video": "https://youtu.be/GjL48ZArdU0",
           "apps": [
             {
               "outil": "appli-ia-com",
