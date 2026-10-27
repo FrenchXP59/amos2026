@@ -137,3 +137,7 @@ Tous les PDF de novembre sont générés par `node outils/pdf/generer.mjs` à pa
 - [ ] Vidéos NotebookLM : une par séance, revue avec ton skill storyboard.
 - [ ] Appli ou module **Concours de vente (B1A)**, du 4 au 27/11.
 - [ ] Appli **IA et productivité (M2A, M2B)** et **IA et automatisation (M1A)**, à partir du 2/11.
+
+## 8. Idées en attente
+
+- [ ] **Campus 3D d'accès aux cours** (inspiré de la démo FLOW 2026) : couche facultative par-dessus la box, avec accès direct toujours visible et repli mobile. Mis de côté le 27/10, à reprendre après les vidéos. Variante légère : plan 2,5D cliquable. Niveau d'effort conseillé : élevé (conception en très élevé).
