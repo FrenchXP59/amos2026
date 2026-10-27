@@ -407,18 +407,19 @@
       const q = qs[k], rev = picked[k]?.rev;
       root.innerHTML = `
         <div class="quiz-top">
-          <div class="quiz-dots">${qs.map((_, i) => `<button class="${i === k ? "on" : ""}" data-q="${i}" aria-label="Question ${i + 1}">${i + 1}</button>`).join("")}</div>
+          <div class="quiz-dots">${qs.map((qq, i) => `<button class="${i === k ? "on" : ""} ${qq.bonus ? "bonus-dot" : ""}" data-q="${i}" aria-label="Question ${i + 1}">${i + 1}</button>`).join("")}</div>
           <div class="btn-row">
             ${opts.timer ? `<button class="btn small" data-qt>Chrono 30 s</button>` : ""}
             <button class="btn small lamp" data-rev>${rev ? "Masquer la réponse" : "Révéler la réponse"}</button>
             <button class="btn small" data-nx ${k >= qs.length - 1 ? "disabled" : ""}>Question suivante</button>
           </div>
         </div>
-        <p class="quiz-q">${esc(q.q)}</p>
+        <p class="quiz-q">${q.bonus ? `<span class="bonus">Question bonus</span>` : ""}${esc(q.q)}</p>
         <div class="options ${rev ? "revealed" : ""}">
           ${q.options.map((o, i) => `<button class="opt ${i === q.bonne ? "good" : ""} ${picked[k]?.p === i ? "picked" : ""}" data-o="${i}"><span class="letter">${LETTERS[i]}</span><span>${esc(o)}</span></button>`).join("")}
         </div>
         ${rev && q.explication ? `<p class="explain">${esc(q.explication)}</p>` : ""}
+        ${rev && q.complement ? `<div class="complement"><strong>Pour aller plus loin</strong><span>${esc(q.complement)}</span></div>` : ""}
         ${opts.award ? awardRow(opts.awardLabel || "Bonne réponse") : ""}`;
       $$("[data-q]", root).forEach((b) => (b.onclick = () => { k = +b.dataset.q; draw(); }));
       $$("[data-o]", root).forEach((b) => (b.onclick = () => { picked[k] = { ...(picked[k] || {}), p: +b.dataset.o }; draw(); }));

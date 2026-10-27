@@ -16,13 +16,13 @@ window.CONTENT = {
     seance: "Séance 1 sur 2",
     intervenant: "Frédéric Legrand",
     dateSeance: "Lundi 2 novembre 2026, 9h00 – 12h30",
-    // Adaptation par classe : ouvrir l'appli avec ?classe=b3a ou ?classe=b3b
+    // Adaptation par classe : ouvrir l'appli avec ?classe=b3a ou ?classe=b3b
     // date affichée, heure de début (les horaires du parcours sont recalculés) et variables de texte
     classes: {
       b3b: { date: "Lundi 2 novembre 2026, 9h00 – 12h30", debut: "9:00", variables: { seance2: "jeudi 5 novembre, après-midi" } },
       b3a: { date: "Mardi 3 novembre 2026, 13h30 – 17h00", debut: "13:30", variables: { seance2: "lundi 23 novembre, matin" } }
     },
-    variables: { seance2: "date à venir" },   // valeur par défaut sans ?classe=
+    variables: { seance2: "date à venir" },   // valeur par défaut sans ?classe=
     agences: ["Agence 1", "Agence 2", "Agence 3", "Agence 4"],
     equipes: "agences",
     tirageNote: "Mêmes agences jusqu'au pitch de la séance 2."
@@ -31,8 +31,8 @@ window.CONTENT = {
   /* ---------- Vidéos NotebookLM (colle l'URL YouTube, Drive ou .mp4) ---------- */
   videos: {
     s1: {
-      titre: "2026 : de l'IA qui répond à l'IA qui agit",
-      duree: "4 à 5 min",
+      titre: "De l'IA passive à l'IA active",
+      duree: "3 min",
       url: ""   // ex. "https://www.youtube.com/watch?v=XXXX" ou "https://drive.google.com/file/d/XXXX/view"
     }
   },
@@ -41,13 +41,13 @@ window.CONTENT = {
   parcours: [
     { id: "accueil",   heure: "9:00",  duree: 10, titre: "Départ",                     sous: "Agences et brief teaser" },
     { id: "iahumain",  heure: "9:10",  duree: 15, titre: "IA ou humain ?",             sous: "Le jeu d'ouverture", lede: "Six contenus de sport. Pour chacun : IA ou humain ? Votez à main levée, puis révélez. Une agence qui a juste marque un point." },
-    { id: "video",     heure: "9:25",  duree: 20, titre: "Vidéo et quiz flash",        sous: "De l'IA qui répond à l'IA qui agit", lede: "Quatre minutes pour comprendre la rupture de l'année, puis six questions éclair. Chaque bonne réponse rapporte un point à l'agence la plus rapide." },
+    { id: "video",     heure: "9:25",  duree: 20, titre: "Vidéo et quiz flash",        sous: "De l'IA qui répond à l'IA qui agit", lede: "Trois minutes pour comprendre la rupture de l'année, puis six questions éclair et une question bonus. Chaque bonne réponse rapporte un point à l'agence la plus rapide." },
     { id: "rupture",   heure: "9:45",  duree: 25, titre: "Rupture 2026",               sous: "L'escalier de l'autonomie", lede: "Jusqu'ici, l'IA répondait. En 2026, elle exécute. La question n'est plus « quel prompt ? » mais « jusqu'où je lui donne la main ? »." },
     { id: "panorama",  heure: "10:10", duree: 15, titre: "Outils et actus",            sous: "Ce qui a changé cette année", lede: "Les outils changent tous les trois mois. Ce qui reste : savoir choisir selon le besoin, le coût, les droits et la confidentialité." },
     { id: "prompt",    heure: "10:25", duree: 30, titre: "Prompt engineering",         sous: "Méthode, défis, battle", lede: "Le cœur de la séance. Une méthode simple, une démonstration d'itération, trois défis chronométrés sur vos outils gratuits, puis la battle." },
     { id: "pause",     heure: "10:55", duree: 15, titre: "Pause",                      sous: "Ravitaillement" },
     { id: "critique",  heure: "11:10", duree: 20, titre: "Regard critique",            sous: "Droit, biais, bad buzz", lede: "Produire avec l'IA, c'est facile. Savoir ce qu'on a le droit de publier, et ce qui va faire rire tout le réseau, c'est le métier." },
-    { id: "cas",       heure: "11:30", duree: 45, titre: "Fil rouge CITANUIT",         sous: "Partie 1 en agence", lede: "Votre client arrive. Partie 1 aujourd'hui : stratégie et prompts. Partie 2, {seance2} : le mini-kit et le pitch." },
+    { id: "cas",       heure: "11:30", duree: 45, titre: "Fil rouge CITANUIT",         sous: "Partie 1 en agence", lede: "Votre client arrive. Partie 1 aujourd'hui : stratégie et prompts. Partie 2, {seance2} : le mini-kit et le pitch." },
     { id: "final",     heure: "12:15", duree: 15, titre: "Battle finale",              sous: "À retenir et suite", lede: "Huit questions sur toute la séance. L'agence qui lève la main la première et répond juste prend le point." }
   ],
 
@@ -64,43 +64,28 @@ window.CONTENT = {
   ],
 
   /* ---------- Quiz flash après la vidéo ---------- */
+  /* Quiz aligné sur la vidéo « De l'IA passive à l'IA active » (version de Fred, 27/10/2026).
+     bonus: true = question hors vidéo ; complement = ce que l'intervenant ajoute à l'oral. */
   quizFlash: [
-    {
-      q: "Une « hallucination » d'IA, c'est…",
-      options: ["Un bug qui fait planter l'outil", "Une réponse fausse donnée avec assurance", "Une image générée trop colorée", "Une réponse refusée par l'IA"],
-      bonne: 1,
-      explication: "Le modèle produit un texte plausible, pas forcément vrai. D'où la règle : toute date, tout chiffre, tout nom se vérifie."
-    },
-    {
-      q: "Quelle est la différence entre un assistant et un agent ?",
-      options: ["Aucune, c'est du marketing", "L'agent est forcément payant", "L'assistant répond, l'agent exécute une tâche en plusieurs étapes", "L'agent ne fonctionne que pour coder"],
-      bonne: 2,
-      explication: "Un agent enchaîne des actions (chercher, ouvrir des fichiers, produire un livrable) et vous demande de valider les étapes importantes."
-    },
-    {
-      q: "Un « skill », c'est…",
-      options: ["Un abonnement premium", "Une compétence réutilisable : instructions, exemples, parfois du code, que l'IA charge pour une tâche", "Un prompt de plus de 1 000 mots", "Un plugin de navigateur"],
-      bonne: 1,
-      explication: "On écrit une fois la bonne méthode (ex. « rédiger un communiqué au format du club ») et l'IA la réapplique à chaque fois."
-    },
-    {
-      q: "Sur Claude, les skills sont disponibles…",
-      options: ["Uniquement en entreprise", "Uniquement en offre Max", "Y compris en version gratuite, avec l'exécution de code activée", "Pas en Europe"],
-      bonne: 2,
-      explication: "Source : centre d'aide Claude, « Use skills in Claude » (Free, Pro, Max, Team, Enterprise)."
-    },
-    {
-      q: "En ChatGPT gratuit, combien de fichiers peut-on importer par jour ?",
-      options: ["3", "10", "20", "Illimité"],
-      bonne: 0,
-      explication: "Source : OpenAI, File Uploads FAQ. Sur Claude : jusqu'à 20 fichiers par conversation."
-    },
-    {
-      q: "LLM signifie…",
-      options: ["Live Learning Machine", "Large Language Model", "Logiciel de Langage Mixte", "Low Latency Model"],
-      bonne: 1,
-      explication: "Grand modèle de langage : il prédit la suite d'un texte, token par token, à partir de ce qu'il a appris."
-    }
+    { q: "LLM signifie…", options: ["Large Language Model", "Logiciel de Langage Multiple", "Learning Logic Machine", "Long Language Memory"], bonne: 0,
+      explication: "Un grand modèle de langage : il génère du texte à partir de ce qu'il a appris et du contexte qu'on lui donne.",
+      complement: "ChatGPT, Claude, Gemini, Le Chat ou Copilot reposent tous sur un LLM." },
+    { q: "Une « hallucination » d'IA, c'est…", options: ["Un bug qui fait planter l'outil", "Une information inventée ou une erreur donnée avec aplomb", "Une image trop colorée", "Une réponse refusée par l'IA"], bonne: 1,
+      explication: "Une réponse convaincante n'est pas forcément vraie. D'où la règle : chaque date, chaque chiffre se vérifie." },
+    { q: "Pour le CITANUIT, quelle est la différence entre un assistant et un agent ?", options: ["Aucune, c'est le même outil", "L'assistant rédige un texte ; l'agent s'organise et exécute toute une mission", "L'agent est gratuit, l'assistant payant", "L'assistant fait les visuels, l'agent les textes"], bonne: 1,
+      explication: "L'assistant répond : un post. L'agent enchaîne : il analyse le brief, prépare trois publications, propose les visuels et range le tout dans un dossier.",
+      complement: "Exemples d'agents en 2026 : ChatGPT Work, lancé le 9 juillet 2026, et Claude Cowork." },
+    { q: "Un skill, c'est…", options: ["Un abonnement premium", "Un mode d'emploi réutilisable : ton, règles, formats, contrôles qualité", "Un plugin de réseau social", "Une note attribuée à l'IA"], bonne: 1,
+      explication: "On formalise une fois la méthode, l'agent la réapplique : cohérence et temps gagné.",
+      complement: "Sur Claude, les skills sont disponibles sur toutes les offres, y compris gratuite, avec l'exécution de code activée." },
+    { q: "Sur l'escalier de l'autonomie, la troisième marche, ce sont…", options: ["Les fichiers", "Les connecteurs vers des applications autorisées", "Le chat", "L'agent"], bonne: 1,
+      explication: "Chat, puis fichiers, puis connecteurs (mail, stockage, agenda), puis l'agent qui combine les trois.",
+      complement: "Le chat seul a des limites d'import de fichiers, qui changent souvent selon les offres : l'agent, lui, travaille directement dans un dossier." },
+    { q: "Plus l'agent agit seul…", options: ["Moins il faut vérifier", "Plus la validation humaine est indispensable", "Plus il devient responsable du résultat", "Plus il coûte cher"], bonne: 1,
+      explication: "On gère les accès, on vérifie les choix et les droits à l'image, on approuve. L'humain reste responsable du résultat." },
+    { q: "Avant de confier les 1 300 photos du CITANUIT à un agent, on…", options: ["Lui donne accès à tout l'ordinateur", "Travaille dans un dossier dédié, avec une sauvegarde", "Supprime les originaux pour gagner de la place", "Le laisse publier directement"], bonne: 1, bonus: true,
+      explication: "Un dossier dédié plutôt que tout l'ordinateur, une sauvegarde avant toute action en masse, une validation avant de publier.",
+      complement: "Jamais de données personnelles sensibles (liste des inscrits, certificats médicaux) dans un outil non validé." }
   ],
 
   /* ---------- Rupture 2026 : l'escalier de l'autonomie ---------- */

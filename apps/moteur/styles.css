@@ -751,6 +751,13 @@ canvas.confetti { position: fixed; inset: 0; width: 100vw; height: 100vh; z-inde
 [data-theme="jour"] #ambiance.on { opacity: .14; }
 .layout { position: relative; z-index: 1; }
 
+/* ---------- Quiz : questions bonus et compléments de l'intervenant ---------- */
+.bonus { display: inline-block; margin-right: 10px; padding: 2px 10px; border-radius: 999px; background: #FFC93C; color: #14213D; font: 800 .95rem/1.4 var(--font-display); text-transform: uppercase; letter-spacing: .05em; vertical-align: middle; }
+.quiz-dots .bonus-dot { border-color: #FFC93C; }
+.complement { margin-top: 12px; border-left: 4px solid #FFC93C; background: rgba(255, 201, 60, .08); padding: 10px 14px; border-radius: 0 var(--r-s) var(--r-s) 0; display: grid; gap: 4px; max-width: 80ch; }
+.complement strong { font: 800 1rem var(--font-display); text-transform: uppercase; letter-spacing: .05em; color: #FFC93C; }
+[data-theme="jour"] .complement strong { color: #9A6B00; }
+
 /* ---------- Responsive ---------- */
 @media (max-width: 1100px) {
   .grid-3, .slots, .facts, .agences-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
