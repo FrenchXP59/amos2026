@@ -25,7 +25,7 @@ window.CONTENT = {
   },
 
   videos: {
-    s1: { titre: "Du bricolage au métier : l'usage professionnel de l'IA", duree: "4 à 5 min", url: "" }
+    s1: { titre: "Du bricolage au métier : l'usage professionnel de l'IA", duree: "4 à 5 min", url: "https://youtu.be/gCxYxXawdcM" }
   },
 
   parcours: [

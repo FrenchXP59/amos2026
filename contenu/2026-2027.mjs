@@ -387,7 +387,7 @@ export default {
           "date": "2026-11-03",
           "heure": "09:00–12:30",
           "titre": "Usage pro des LLM, prompt engineering, audit et 4 livrables d'agence",
-          "video": "",
+          "video": "https://youtu.be/gCxYxXawdcM",
           "apps": [
             {
               "outil": "appli-ia-automatisation",
