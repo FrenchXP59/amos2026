@@ -2,7 +2,7 @@
 
 Un espace par classe et par année pour les cours IA de Frédéric Legrand à AMOS Sport Business School : séances datées, vidéos NotebookLM, applis interactives et documents.
 
-Site statique, aucune dépendance. Seul le build (Node 20) est nécessaire.
+Site statique avec une introduction HORIZON AI facultative en Three.js. Node 22 et `npm ci` sont nécessaires au build ; aucun serveur applicatif supplémentaire n’est requis sur Netlify.
 
 ## Organisation
 
@@ -10,12 +10,13 @@ Site statique, aucune dépendance. Seul le build (Node 20) est nécessaire.
 |---|---|
 | `contenu/2026-2027.mjs` | **Le contenu de l'année** : cours (repris des syllabus), applis, classes, séances. C'est le fichier à modifier au quotidien. |
 | `apps/` | Les applis interactives des cours (une par cours). `apps/ia-communication/` : B3, IA appliquée à la communication. |
+| `convention/` | Introduction 3D, avatars, badge AMOS et parcours facultatif. |
 | `site/` | La box elle-même (accueil, page de classe, styles, logo, polices). |
 | `ressources/` | Les PDF à télécharger (à créer, un sous-dossier par classe conseillé). |
 | `outils/build.mjs` | Génère le site publié dans `dist/`. |
 | `codes.json` | Les codes des classes. **Jamais versionné** (voir `codes.exemple.json`). |
 
-Adresses : `…/#/` (année courante), `…/#/2026-2027/b3b` (une classe, à mettre en QR code).
+Adresses : `…/` (introduction facultative), `…/convention/` (visite), `…/#/` (année courante), `…/#/2026-2027/b3b` (une classe, à mettre en QR code).
 
 ## Accès par code
 
@@ -27,10 +28,25 @@ Adresses : `…/#/` (année courante), `…/#/2026-2027/b3b` (une classe, à met
 ## Travailler en local
 
 ```bash
-cp codes.exemple.json codes.json   # puis mettre les vrais codes
+npm ci
+cp codes.exemple.json codes.json   # codes de démonstration uniquement, fichier ignoré
 npm run build                      # génère dist/
-open dist/index.html               # ou : npm run preview → http://localhost:8080
+npm run preview                    # http://127.0.0.1:8080
+npm test
 ```
+
+Pour les codes personnels, utiliser `BOX_CODES` depuis un fichier extérieur au dépôt ou la variable Netlify existante. Aucun code personnel ne doit être ajouté aux sources. Le mode `file://` n’est plus pris en charge : utiliser le serveur de prévisualisation.
+
+## Introduction HORIZON AI
+
+- L’adresse d’entrée sans fragment ouvre la convention. Les liens existants vers une année ou une classe restent directs.
+- L’accès direct, disponible dès l’accueil, fonctionne sans charger le moteur 3D.
+- Le plan et les portes reprennent les vrais intitulés depuis le catalogue de la box.
+- Le code validé dans la convention ouvre la page de classe dans la box, sans seconde saisie.
+- Le menu « Convention 3D » permet le retour depuis la box.
+- Le choix de privilégier l’accès direct est conservé sur cet appareil.
+
+Voir [INTEGRATION-HORIZON.md](INTEGRATION-HORIZON.md) pour les changements, vérifications et limites.
 
 ## Ajouter du contenu à une séance
 

@@ -5,7 +5,14 @@
   "type": "module",
   "scripts": {
     "build": "node outils/build.mjs",
-    "preview": "node outils/build.mjs && python3 -m http.server 8080 --directory dist",
-    "pdf": "node outils/pdf/generer.mjs"
+    "preview": "node outils/preview.mjs",
+    "pdf": "node outils/pdf/generer.mjs",
+    "test": "node --test tests/*.test.mjs"
+  },
+  "dependencies": {
+    "three": "0.180.0"
+  },
+  "devDependencies": {
+    "vite": "6.3.6"
   }
 }

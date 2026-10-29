@@ -1,3 +1,4 @@
+import {unlockClass,loadClass} from "./access.mjs";
 /* =========================================================================
    LA BOX IA — moteur.
    Routes : #/                → année courante
@@ -9,7 +10,6 @@
 (function () {
   "use strict";
   const IDX = window.__BOX_ANNEES || { annees: [], courante: null };
-  const SEL = "amos-box|";
   const $ = (s, r = document) => r.querySelector(s);
   const $$ = (s, r = document) => Array.from(r.querySelectorAll(s));
   const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
@@ -17,7 +17,7 @@
   /* ---------- Stockage local protégé ---------- */
   const KEY = "amos-box";
   const load = () => { try { return JSON.parse(localStorage.getItem(KEY)) || {}; } catch (e) { return {}; } };
-  const st = load(); st.codes = st.codes || {};
+  const st = load(); st.codes = st.codes || {}; st.grants = st.grants || {};
   const save = () => { try { localStorage.setItem(KEY, JSON.stringify(st)); } catch (e) { /* indisponible */ } };
 
   /* ---------- Chargement de scripts (fonctionne aussi en local, sans serveur) ---------- */
@@ -35,19 +35,13 @@
     await loadScript(`data/${annee}/public.js`);
     return window.__BOX_PUBLIC[annee];
   }
-  async function sha256(txt) {
-    const buf = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(txt));
-    return Array.from(new Uint8Array(buf)).map((b) => b.toString(16).padStart(2, "0")).join("");
-  }
   const classes = {};
   async function getClasse(annee, k, code) {
-    const id = (await sha256(`${SEL}${annee}|${code.trim().toUpperCase()}`)).slice(0, 40);
-    window.__BOX_CLASSE = null;
-    await loadScript(`data/${annee}/${id}.js`);
-    const c = window.__BOX_CLASSE;
-    if (!c || c.k !== k || c.annee !== annee) throw new Error("mauvaise classe");
-    classes[`${annee}/${k}`] = c;
-    return c;
+    const {content, id} = await unlockClass(annee, k, code);
+    const key = `${annee}/${k}`;
+    classes[key] = content; st.grants[key] = id;
+    delete st.codes[key]; save();
+    return content;
   }
 
   /* ---------- Dates ---------- */
@@ -113,7 +107,7 @@
       if (!v) return;
       try {
         await getClasse(P.annee, k, v);
-        st.codes[`${P.annee}/${k}`] = v; save(); route(true);
+        inp.value = ""; route(true);
       } catch (err) {
         inp.classList.remove("bad"); void inp.offsetWidth; inp.classList.add("bad");
         $("#err").textContent = window.crypto && crypto.subtle ? "Code incorrect. Il est donné en début de séance." : "Ce navigateur ne peut pas vérifier le code. Ouvrez la box en https.";
@@ -175,6 +169,10 @@
     const [, a, k] = (location.hash.match(/^#\/([\d-]+)?\/?([a-z0-9]+)?/) || []);
     const annee = IDX.annees.includes(a) ? a : IDX.courante;
     renderYears(annee);
+    const convention = new URL('convention/', location.href);
+    if (annee) convention.searchParams.set('annee', annee);
+    if (k) convention.searchParams.set('classe', k);
+    $('#convention-link').href = convention.href;
     if (!annee) { main.innerHTML = `<p class="muted">Aucune année publiée.</p>`; return; }
     let P;
     try { P = await getPublic(annee); } catch (e) { main.innerHTML = `<p class="muted">Données de l'année ${esc(annee)} introuvables.</p>`; return; }
@@ -184,13 +182,17 @@
     else {
       const key = `${annee}/${k}`;
       let C = classes[key];
+      if (!C && st.grants[key]) {
+        try { C = await loadClass(annee, k, st.grants[key]); classes[key] = C; }
+        catch { delete st.grants[key]; save(); }
+      }
       if (!C && st.codes[key]) { try { C = await getClasse(annee, k, st.codes[key]); } catch (e) { delete st.codes[key]; save(); } }
       document.title = `${P.classes[k].label}, la box IA`;
       if (!C) { main.innerHTML = lockView(P, k); bindLock(P, k); }
       else {
         main.innerHTML = classView(P, k, C, justOpened === true);
         $$("[data-goto]").forEach((b) => (b.onclick = () => { const t = document.getElementById(b.dataset.goto); if (t) t.scrollIntoView({ behavior: "smooth", block: "start" }); }));
-        $("#lock-btn").onclick = () => { delete st.codes[key]; delete classes[key]; save(); toast("Classe verrouillée sur cet appareil"); route(); };
+        $("#lock-btn").onclick = () => { delete st.codes[key]; delete st.grants[key]; delete classes[key]; save(); toast("Classe verrouillée sur cet appareil"); route(); };
       }
     }
     if (justOpened !== true) window.scrollTo(0, 0);
