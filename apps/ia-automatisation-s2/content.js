@@ -26,18 +26,18 @@ window.CONTENT = {
   },
 
   videos: {
-    s1: { titre: "Veiller et automatiser : déléguer sans perdre le contrôle", duree: "4 à 5 min", url: "" }
+    s1: { titre: "Veiller et automatiser : déléguer sans perdre le contrôle", duree: "3 min 30", url: "https://youtu.be/dcd2VXDSHlM" }
   },
   videoDebat: {
     question: "Faut-il automatiser tout ce qui peut l'être ?",
-    relances: ["Quelles tâches de votre stage reviennent chaque semaine à l'identique ?", "Qui est responsable quand un flux automatique envoie une erreur à 500 personnes ?", "Qu'est-ce qu'on perd quand plus personne ne lit la veille en entier ?"],
+    relances: ["La vidéo propose trois niveaux : automatisation directe, validation humaine, précautions renforcées. Existe-t-il des tâches qu'on ne devrait jamais automatiser ?", "Quelles tâches de votre stage reviennent chaque semaine à l'identique ?", "Qui est responsable quand un flux automatique envoie une erreur à 500 personnes ?", "Qu'est-ce qu'on perd quand plus personne ne lit la veille en entier ?"],
     minutes: 8
   },
 
   parcours: [
     { id: "accueil", heure: "9:00", duree: 10, titre: "Retour des agences", sous: "La soutenance est aujourd'hui" },
     { id: "video", heure: "9:10", duree: 20, titre: "Vidéo et débat", sous: "Déléguer sans perdre le contrôle",
-      lede: "Cinq minutes sur la veille assistée et l'automatisation, puis un débat : faut-il automatiser tout ce qui peut l'être ?" },
+      lede: "Trois minutes et demie sur la veille assistée et l'automatisation, puis un débat : faut-il automatiser tout ce qui peut l'être ?" },
     { id: "veille", type: "fiches", data: "veille", heure: "9:30", duree: 25, titre: "La veille augmentée", sous: "Chercher, trier, restituer",
       lede: "L'IA lit plus vite que vous. Elle invente aussi des sources. Une méthode de veille, puis un défi de 10 minutes sur le marché du Lys Padel Open." },
     { id: "automatisable", type: "tri", data: "automatisable", heure: "9:55", duree: 15, titre: "Automatisable ?", sous: "Avec ou sans humain",

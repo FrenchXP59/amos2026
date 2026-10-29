@@ -37,7 +37,7 @@ Séances : M1A le 3/11 et le 6/11 (9h-12h30). Évaluation : participation. Fil r
 - [x] **Vidéo NotebookLM n°1** « Du bricolage au métier » (4 min) : https://youtu.be/gCxYxXawdcM, intégrée dans l'appli et la box (29/10). Quiz aligné sur la vidéo (6 questions + 1 bonus).
 - [x] Texte de l'audit et corrigé en PDF (pack intervenant).
 - [x] Appli séance 2 (`apps/ia-automatisation-s2/?classe=m1a`) : agences et scores conservés.
-- [ ] **Vidéo NotebookLM séance 2** « Veiller et automatiser » : URL dans `apps/ia-automatisation-s2/content.js`.
+- [x] **Vidéo NotebookLM séance 2** « Veiller et automatiser » (3 min 30) : https://youtu.be/dcd2VXDSHlM, intégrée dans l'appli et la box (29/10). Débat : relance ajoutée sur les trois niveaux de contrôle de la vidéo.
 - [ ] Préparer la démo Make ou Zapier (flux de veille du lundi) sur ton compte, avec une capture vidéo de secours.
 
 # Cours M2 : IA et productivité

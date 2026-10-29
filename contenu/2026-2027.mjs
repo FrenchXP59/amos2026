@@ -405,7 +405,8 @@ export default {
           "date": "2026-11-06",
           "heure": "09:00–12:30",
           "titre": "Veille augmentée, flux no-code et soutenance de l'appel d'offres",
-          "video": "",
+          "video": "https://youtu.be/dcd2VXDSHlM",
+          "videoSuite": "debat",
           "apps": [
             {
               "outil": "appli-ia-auto-s2",
