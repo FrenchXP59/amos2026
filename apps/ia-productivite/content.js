@@ -65,7 +65,7 @@ window.CONTENT = {
       { chiffre: "758", texte: "travailleurs du savoir, étude menée avec le Boston Consulting Group" },
       { chiffre: "+12,2 %", texte: "de tâches réalisées avec l'IA, sur les tâches dans la frontière" },
       { chiffre: "25,1 % plus rapides", texte: "et une qualité nettement supérieure, dans la frontière" },
-      { chiffre: "19 % de chances en moins", texte: "de trouver la bonne réponse avec l'IA, sur une tâche hors frontière" }
+      { chiffre: "−19 points", texte: "de réponses justes avec l'IA, sur une tâche hors frontière" }
     ],
     faitsNote: "La frontière est irrégulière : deux tâches qui semblent proches peuvent tomber de part et d'autre. Le risque n'est pas l'IA qui échoue, c'est l'IA qui se trompe avec assurance.",
     source: { url: "https://www.hbs.edu/faculty/Pages/item.aspx?num=64700", nom: "Dell'Acqua, Mollick et al., HBS Working Paper 24-013, septembre 2023" }
@@ -243,7 +243,7 @@ window.CONTENT = {
 
   /* ---------- Battle finale ---------- */
   battle: [
-    { q: "Hors de la frontière, selon l'étude Harvard et BCG, l'IA…", options: ["Fait gagner 40 % de temps", "Fait baisser de 19 % les chances de bonne réponse", "Est sans effet", "Est interdite"], bonne: 1 },
+    { q: "Hors de la frontière, selon l'étude Harvard et BCG, l'IA…", options: ["Fait gagner 40 % de temps", "Fait perdre 19 points de réponses justes", "Est sans effet", "Est interdite"], bonne: 1 },
     { q: "Quelle étape d'une chaîne fait attaquer la recommandation ?", options: ["Le diagnostic", "Les options", "La contre-analyse", "La synthèse"], bonne: 2 },
     { q: "Qui diffuse la Ligue 2 jusqu'en 2029 ?", options: ["DAZN", "Ligue 1+", "beIN SPORTS", "Canal+ seul"], bonne: 2 },
     { q: "4 200 abonnés à 180 € rapportent…", options: ["1,2 M€", "756 000 €", "420 000 €", "1,8 M€"], bonne: 1 },
