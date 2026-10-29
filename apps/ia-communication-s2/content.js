@@ -27,22 +27,22 @@ window.CONTENT = {
   },
 
   videos: {
-    s1: { titre: "Du brief au visuel : l'IA au service d'une identité", duree: "4 à 5 min", url: "" }
+    s1: { titre: "Du brief au visuel : l'IA au service d'une identité", duree: "4 min 30", url: "https://youtu.be/N_iGyGNkVQQ" }
   },
   videoDebat: {
-    question: "L'IA va-t-elle remplacer le graphiste de l'agence ?",
-    relances: ["Qu'est-ce que l'IA fait mieux, plus vite, moins cher ?", "Qu'est-ce qu'elle ne sait pas faire : une identité, un parti pris, une validation ?", "Quel métier ferez-vous dans une agence en 2028 ?"],
+    question: "L'IA peut créer des images en quelques secondes. Peut-elle remplacer la créativité, le regard et les choix d'un graphiste ?",
+    relances: ["Dix agences, la même IA, le même événement : pourquoi obtient-on dix affiches interchangeables ?", "Chamonix 2023 : polémique et visibilité massive. Une campagne qui fait parler est-elle une campagne efficace ?", "Coupe du monde 2026 : des visuels créatifs salués, des pubs de soda jugées sans âme. Qu'est-ce qui fait la différence ?", "Quel métier ferez-vous dans une agence en 2028 ?"],
     minutes: 8
   },
 
   parcours: [
     { id: "accueil", heure: "13:30", duree: 10, titre: "Le client revient", sous: "Agences et brief du jour" },
     { id: "video", heure: "13:40", duree: 20, titre: "Vidéo et débat", sous: "Du brief au visuel",
-      lede: "Cinq minutes sur la création visuelle avec l'IA, puis un débat : le graphiste a-t-il encore un avenir ?" },
+      lede: "Quatre minutes et demie sur la création visuelle avec l'IA, puis un débat : l'IA peut-elle remplacer le regard d'un graphiste ?" },
     { id: "outils", type: "fiches", data: "outilsVisuels", heure: "14:00", duree: 25, titre: "Image, vidéo, motion", sous: "Démonstration",
       lede: "Ce que les outils savent faire en 2026, en démonstration : image, retouche, mise en page, vidéo et motion design." },
     { id: "prompt", heure: "14:25", duree: 35, titre: "Le prompt visuel", sous: "Décrire une image",
-      lede: "Un visuel se décrit comme un plan de photographe : sujet, style, composition, lumière, contraintes. Trois défis, puis la battle visuelle." },
+      lede: "Un visuel se décrit comme un plan de photographe : sujet, style, composition, lumière, couleurs, format. Trois défis, puis la battle visuelle." },
     { id: "pause", heure: "15:00", duree: 15, titre: "Pause", sous: "Ravitaillement" },
     { id: "coherence", type: "tri", data: "coherence", heure: "15:15", duree: 15, titre: "Cohérence de marque", sous: "Conforme ou à corriger ?",
       lede: "L'IA produit vite, mais pas forcément dans la charte. Huit visuels générés pour le CITANUIT : on les garde ou on les corrige ?" },
@@ -78,8 +78,9 @@ window.CONTENT = {
     { k: "sujet", nom: "Sujet", aide: "Qui, quoi, où ?", ex: "Un groupe de coureurs de tous âges, de nuit, sur les pavés du Vieux-Lille, lampes frontales allumées." },
     { k: "style", nom: "Style", aide: "Photo, illustration, rendu.", ex: "Photographie de reportage sportif, réaliste, légère profondeur de champ." },
     { k: "composition", nom: "Composition", aide: "Cadrage, point de vue, place du texte.", ex: "Plan large en légère contre-plongée, coureurs à gauche, espace libre en haut à droite pour le titre." },
-    { k: "lumiere", nom: "Lumière et couleurs", aide: "La charte en images.", ex: "Nuit bleu profond (#14213D), halos jaune chaud des frontales (#FFC93C), reflets sur les pavés." },
-    { k: "contraintes", nom: "Contraintes", aide: "Ce qu'on ne veut pas, le format.", ex: "Format 4:5. Aucun texte dans l'image, aucun logo de marque, pas de visage reconnaissable au premier plan." }
+    { k: "lumiere", nom: "Lumière", aide: "D'où vient la lumière, quelle ambiance.", ex: "Nuit profonde, éclairage uniquement par les halos des lampes frontales, reflets sur les pavés mouillés." },
+    { k: "couleurs", nom: "Couleurs", aide: "La palette de la charte.", ex: "Bleu nuit (#14213D), jaune frontale (#FFC93C), brique (#B5452B), gris pavé (#8A8F98)." },
+    { k: "format", nom: "Format et interdits", aide: "Le ratio de la plateforme, ce qu'on ne veut pas.", ex: "Format 4:5 pour un post Instagram. Aucun texte dans l'image, aucun logo de marque, pas de visage reconnaissable au premier plan." }
   ],
   blocsNote: "Même logique qu'en séance 1 : rien d'implicite. Pour une image, le format et ce qu'on ne veut pas comptent autant que le sujet.",
   iterations: [
@@ -209,7 +210,7 @@ window.CONTENT = {
   ],
 
   aRetenir: [
-    "Un visuel se prompte comme un plan photo : sujet, style, composition, lumière, contraintes.",
+    "Un visuel se prompte comme un plan photo : sujet, style, composition, lumière, couleurs, format.",
     "Le texte ne va jamais dans l'image : on l'ajoute en mise en page.",
     "La charte se vérifie à chaque visuel : couleurs, ton, interdits.",
     "L'IA a des biais visuels : âges, genres, corps. On les corrige.",
@@ -218,7 +219,7 @@ window.CONTENT = {
   ],
 
   glossaire: [
-    ["Prompt visuel", "Description d'une image : sujet, style, composition, lumière, contraintes."],
+    ["Prompt visuel", "Description d'une image : sujet, style, composition, lumière, couleurs, format."],
     ["Prompt négatif", "Ce qu'on ne veut pas voir dans l'image."],
     ["Ratio", "Proportion d'une image : 1:1, 4:5 (post), 9:16 (story), 16:9 (vidéo horizontale)."],
     ["Charte graphique", "Règles visuelles d'une marque : couleurs, typographies, ton, interdits."],

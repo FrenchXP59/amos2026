@@ -156,7 +156,7 @@
     const p = parts(s.date), stt = status(s.date);
     const apps = (s.apps || []).map((a) => `<a class="item" href="${esc(a.url)}" target="_blank" rel="noopener"><span class="k">Appli</span><span>${esc(a.label)}</span></a>`);
     const res = (s.ressources || []).map((r) => `<a class="item" href="${esc(r.url)}" download><span class="k">${esc(r.type || "PDF")}</span><span>${esc(r.titre)}</span></a>`);
-    const quiz = s.video && (s.apps || [])[0] ? [`<a class="item" href="${esc(s.apps[0].url.split("#")[0])}#video" target="_blank" rel="noopener"><span class="k">Quiz</span><span>Quiz de la vidéo</span></a>`] : [];
+    const quiz = s.video && (s.apps || [])[0] ? [`<a class="item" href="${esc(s.apps[0].url.split("#")[0])}#video" target="_blank" rel="noopener"><span class="k">${s.videoSuite ? "Débat" : "Quiz"}</span><span>${s.videoSuite ? "Débat de la vidéo" : "Quiz de la vidéo"}</span></a>`] : [];
     const items = quiz.concat(apps, res);
     return `<li class="seance ${stt}" id="s-${cid}-${s.n}">
       <div class="when"><b>${p.n}</b><span>${p.j} ${p.m}</span></div>

@@ -98,7 +98,7 @@ Tous les PDF de novembre sont générés par `node outils/pdf/generer.mjs` à pa
 ## 4. Séance 2 (5/11 pour B3B, 23/11 pour B3A) : nouvelle partie de l'appli
 
 - [x] Appli séance 2 (`apps/ia-communication-s2/?classe=b3b` ou `b3a`) : agences et scores de la séance 1 conservés.
-- [ ] **Vidéo NotebookLM séance 2** « Du brief au visuel » : URL dans `apps/ia-communication-s2/content.js`.
+- [x] **Vidéo NotebookLM séance 2** « Du brief au visuel » (4 min 30) : https://youtu.be/N_iGyGNkVQQ, intégrée dans l'appli et la box (29/10). Question du débat reprise de la vidéo ; prompt visuel passé à 6 blocs comme dans la vidéo (appli et PDF).
 - [ ] Tester les outils image gratuits (ChatGPT, Gemini, Copilot, Firefly, Canva) la semaine du cours, sur le wifi de l'école.
 - [ ] Préparer la démo de l'intervenant : même consigne dans deux outils, affiche animée, reel de 15 s.
 - [x] Simulateur de pitch (mécanique Pitchcoach) prêt : lien « Pitch » dans l'appli.

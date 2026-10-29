@@ -325,7 +325,8 @@ export default {
           "date": "2026-11-23",
           "heure": "09:00–12:30",
           "titre": "Visuels, cohérence de marque, mini-kit et pitch devant le client",
-          "video": "",
+          "video": "https://youtu.be/N_iGyGNkVQQ",
+          "videoSuite": "debat",
           "apps": [
             {
               "outil": "appli-ia-com-s2",
@@ -364,7 +365,8 @@ export default {
           "date": "2026-11-05",
           "heure": "13:30–17:00",
           "titre": "Visuels, cohérence de marque, mini-kit et pitch devant le client",
-          "video": "",
+          "video": "https://youtu.be/N_iGyGNkVQQ",
+          "videoSuite": "debat",
           "apps": [
             {
               "outil": "appli-ia-com-s2",

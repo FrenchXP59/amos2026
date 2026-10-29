@@ -67,7 +67,7 @@ const bareme = (rows, noteTxt) => {
   return table(["Critère", "Points"], rows.map((b) => (b.g ? { cls: "grp", cells: [b.g, ""] } : [b.c, String(b.p)])).concat([{ cls: "tot", cells: ["Total", String(tot)] }]), { w: ["", "70px"], cls: "bareme" }) + note(noteTxt);
 };
 const glossaire = (g) => table(["Terme", "Définition"], g.map(([t, d]) => [t, d]), { w: ["28%", ""] });
-const prompts5 = (Cx) => h2("Le prompt en 5 blocs") + p(Cx.blocsNote) + table(["Bloc", "La question à se poser", "Exemple"], Cx.blocs.map((b) => [b.nom, b.aide, b.ex]), { w: ["14%", "28%", ""] })
+const prompts5 = (Cx) => h2(`Le prompt en ${Cx.blocs.length} blocs`) + p(Cx.blocsNote) + table(["Bloc", "La question à se poser", "Exemple"], Cx.blocs.map((b) => [b.nom, b.aide, b.ex]), { w: ["14%", "28%", ""] })
   + h2("Le premier jet n'est jamais le livrable") + table(["Version", "Prompt", "Ce qui ne va pas"], Cx.iterations.map((i) => [i.v, i.prompt, i.probleme]), { w: ["10%", "45%", ""] })
   + h2("Cinq techniques d'itération") + ul(Cx.techniques.map((t) => [t.t + " :", t.d]));
 const chaine = (K) => p(K.intro) + table(["Étape", "Rôle", "Prompt type"], K.etapes.map((e, i) => [`${i + 1}. ${e.titre}`, e.role, e.prompt]), { w: ["14%", "22%", ""] }) + p(K.note, "muted")
@@ -153,7 +153,7 @@ const DOCS = [
   { app: "ia-communication", f: "sources-seance-1.pdf", cours: "IA appliquée à la communication", classe: B3, titre: "Sources et actus", sous: "Ce qui a changé en 2026, avec les sources",
     body: () => C.b3s1.actus.map((a) => card(`${a.date} · ${a.titre}`, a.tag, `${p(a.texte)}<p class="muted">Source : ${esc(a.srcNom || "")} — ${esc(a.src)}</p>`)).join("") },
   /* --- B3, séance 2 --- */
-  { app: "ia-communication-s2", f: "fiche-prompt-visuel.pdf", cours: "IA appliquée à la communication", classe: B3, titre: "Le prompt visuel", sous: "Fiche méthode, séance 2",
+  { app: "ia-communication-s2", f: "fiche-prompt-visuel.pdf", cours: "IA appliquée à la communication", classe: B3, titre: "Le prompt visuel en 6 blocs", sous: "Fiche méthode, séance 2",
     body: () => prompts5(C.b3s2) + h2("Les outils") + fiches(C.b3s2.outilsVisuels.items) },
   { app: "ia-communication-s2", f: "brief-mini-kit.pdf", cours: "IA appliquée à la communication", classe: B3, titre: "Brief du mini-kit CITANUIT", sous: "Ce que le client attend en fin de séance 2",
     body: () => { const c = C.b3s2.client; return note(c.avertissement) + h2("Le brief") + kv(c.fiche) + h2("Les livrables") + table(["Livrable", "Attendu"], c.travail.map((w) => [w.t, w.d]), { w: ["24%", ""] }) + h2("La charte") + charteBlock(c.charte) + h2("Les cibles") + cibles(c.cibles) + h2("La grille") + bareme(c.bareme, c.baremeNote); } },
