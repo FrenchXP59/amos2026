@@ -22,15 +22,18 @@ let completed=new Set();
 let world=null,selectedGroup='B1A',avatar='male',visitor='Visiteur',activeView='landing',nearest=null,position={x:0,z:17.5,angle:Math.PI},mapSelection='B1',quizIndex=0,quizScore=0,quizAnswered=false,audio=null,audioGain=null,soundOn=false,loading=false,guideActive=false;
 let quality='auto',reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;
 const store={get(k){try{return localStorage.getItem(k);}catch{return null;}},set(k,v){try{localStorage.setItem(k,v);}catch{}}};
-selectedGroup=GROUPS.some(g=>g.id===store.get('horizon-group'))?store.get('horizon-group'):'B1A';
+const savedGroup=store.get('horizon-group');
+selectedGroup=GROUPS.some(g=>g.id===savedGroup)?savedGroup:'B1A';
+let groupChosen=GROUPS.some(g=>g.id===savedGroup);
 const requestedGroup=new URLSearchParams(location.search).get('classe')?.toUpperCase();
-if(GROUPS.some(g=>g.id===requestedGroup))selectedGroup=requestedGroup;
+if(GROUPS.some(g=>g.id===requestedGroup)){selectedGroup=requestedGroup;groupChosen=true;}
 const groupOptions=()=>GROUPS.map(g=>`<option value="${g.id}" ${g.id===selectedGroup?'selected':''}>${g.id} · ${getRoom(g.roomId).level}</option>`).join('');
 $('#app').innerHTML=`
 <div id="landing" class="landing">
   <header class="landing-header"><a href="#" class="brand" aria-label="HORIZON AI, accueil">${logo}</a><div class="header-right"><span class="eyebrow desktop">UNE EXPÉRIENCE HORIZON DUO</span><span class="amos-pill">AMOS <span>ÉTUDIANTS</span></span></div></header>
   <main class="welcome-grid">
     <section class="welcome-copy"><div class="edition"><span class="live-dot"></span> LA CONVENTION DE L’INTELLIGENCE ARTIFICIELLE</div><h1>Entrez dans<br>les <em>possibles.</em></h1><p class="intro">Un lieu pour explorer l’IA, échanger des idées<br class="desktop"> et retrouver votre conférence.</p>
+    <div class="welcome-class"><label for="welcomeGroup">Votre classe AMOS</label><select id="welcomeGroup" required><option value="" ${groupChosen?'':'selected'} disabled>Choisissez votre classe</option>${GROUPS.map(g=>`<option value="${g.id}" ${groupChosen&&g.id===selectedGroup?'selected':''}>${g.id} · ${getRoom(g.roomId).level}</option>`).join('')}</select><p>Votre classe détermine votre badge et votre salle de conférence.</p></div>
     <div class="welcome-actions"><button id="explore" class="button primary">Explorer la convention ${icon('arrow')}</button><button class="button outline" data-action="access">Accéder directement à mon cours ${icon('door')}</button></div>
     <div class="welcome-note"><span class="little-orbit">↗</span><p>Votre parcours, à votre rythme.<br><span>La visite est facultative. Vos cours restent à un clic.</span></p></div>
     <div class="host-line"><span class="host-mark">FL</span><span>Bienvenue, je suis <strong>Frédéric Legrand.</strong><br><small>Retrouvons-nous au stand Horizon Duo.</small></span></div></section>
@@ -57,8 +60,10 @@ function showModal(html,{wide=false,eyebrow='HORIZON AI'}={}){previewGeneration+
 function closeModal(){$('#modal').close();}
 $('#closeModal').onclick=closeModal;$('#modal').addEventListener('close',()=>{previewGeneration++;disposeAvatarPreviews?.();disposeAvatarPreviews=null;if(activeView==='world')world?.pause(false);});
 $('#modal').addEventListener('click',e=>{if(e.target===$('#modal')){const r=$('#modal').getBoundingClientRect();if(e.clientX<r.left||e.clientX>r.right||e.clientY<r.top||e.clientY>r.bottom)closeModal();}});
-function setGroup(value){selectedGroup=value;completed=readMissions(sessionStore,value);renderMissions();world?.setBadge(completed.has('badge'),value);store.set('horizon-group',value);const r=getRoom(value.slice(0,2));$('#destinationTitle').textContent=`${value} · Salle ${r.name}`;}
-setGroup(selectedGroup);
+function setGroup(value,{persist=true}={}){selectedGroup=value;if(persist)groupChosen=true;completed=readMissions(sessionStore,value);renderMissions();world?.setBadge(completed.has('badge'),value);if(persist)store.set('horizon-group',value);const welcomeGroup=$('#welcomeGroup');if(welcomeGroup&&groupChosen)welcomeGroup.value=value;const r=getRoom(value.slice(0,2));$('#destinationTitle').textContent=`${value} · Salle ${r.name}`;}
+setGroup(selectedGroup,{persist:false});
+$('#welcomeGroup').onchange=e=>setGroup(e.target.value);
+function requireWelcomeGroup(){const select=$('#welcomeGroup');if(groupChosen&&select.value)return true;select.reportValidity();select.focus();return false;}
 function renderMissions(){
   const panel=$('#missionPanel');if(!panel)return;
   const open=panel.querySelector('details')?.open??(innerWidth>700);
@@ -138,8 +143,8 @@ function settings(){showModal(`<h2>Une visite à votre mesure.</h2><label>Qualit
 function stopSound(){soundOn=false;if(audioGain&&audio)audioGain.gain.setTargetAtTime(0,audio.currentTime,.2);$$('[data-action="sound"]').forEach(el=>{el.setAttribute('aria-pressed','false');el.setAttribute('aria-label','Activer le son');});}
 function toggleSound(){if(soundOn){stopSound();toast('Ambiance sonore désactivée.');return;}if(!audio){audio=new (window.AudioContext||window.webkitAudioContext)();audioGain=audio.createGain();audioGain.gain.value=0;audioGain.connect(audio.destination);for(const freq of [130.81,196,261.63]){const o=audio.createOscillator();o.type='sine';o.frequency.value=freq;const gain=audio.createGain();gain.gain.value=.12;o.connect(gain);gain.connect(audioGain);o.start();}const buffer=audio.createBuffer(1,audio.sampleRate*4,audio.sampleRate),data=buffer.getChannelData(0);for(let i=0;i<data.length;i++)data[i]=(Math.random()*2-1)*.03;const source=audio.createBufferSource();source.buffer=buffer;source.loop=true;const filter=audio.createBiquadFilter();filter.frequency.value=400;source.connect(filter);filter.connect(audioGain);source.start();}audio.resume();audioGain.gain.setTargetAtTime(.045,audio.currentTime,.4);soundOn=true;$$('[data-action="sound"]').forEach(el=>{el.setAttribute('aria-pressed','true');el.setAttribute('aria-label','Désactiver le son');});toast('Ambiance sonore activée.');}
 function interact(){if(!nearest)return;const n=nearest;if(n.type==='room')openAccess(n.id);else if(n.type==='theme')openTheme(n.id);else if(n.type==='welcome')badge();else if(n.type==='duo')duo();else if(n.type==='cafe')cafe();else if(n.type==='quiz')quiz();else openMap();}
-$('#interact').onclick=interact;$('#explore').onclick=preparation;$('#guideButton').onclick=()=>{const r=getRoom(selectedGroup.slice(0,2));world?.guide(r.doorX,r.doorZ);guideActive=true;toast(`Suivez le chemin turquoise jusqu’à la salle ${r.name}.`);};
-document.addEventListener('click',e=>{const a=e.target.closest('[data-action]')?.dataset.action;if(!a)return;({access:()=>openAccess(),map:openMap,home,badge,help,settings,sound:toggleSound,exploreAgain:()=>enterWorld()})[a]?.();});
+$('#interact').onclick=interact;$('#explore').onclick=()=>{if(requireWelcomeGroup())preparation();};$('#guideButton').onclick=()=>{const r=getRoom(selectedGroup.slice(0,2));world?.guide(r.doorX,r.doorZ);guideActive=true;toast(`Suivez le chemin turquoise jusqu’à la salle ${r.name}.`);};
+document.addEventListener('click',e=>{const a=e.target.closest('[data-action]')?.dataset.action;if(!a)return;if(a==='access'&&activeView==='landing'&&!requireWelcomeGroup())return;({access:()=>openAccess(),map:openMap,home,badge,help,settings,sound:toggleSound,exploreAgain:()=>enterWorld()})[a]?.();});
 window.addEventListener('keydown',e=>{if($('#modal').open||activeView!=='world'||/INPUT|SELECT|TEXTAREA/.test(document.activeElement?.tagName))return;if(e.key.toLowerCase()==='e')interact();if(e.key.toLowerCase()==='m')openMap();if(e.key.toLowerCase()==='h')help();});
 const joy=$('#joystick'),knob=$('#joystickKnob');let joyActive=false;
 function moveJoy(e){if(!joyActive)return;const r=joy.getBoundingClientRect(),dx=e.clientX-r.left-r.width/2,dy=e.clientY-r.top-r.height/2,dist=Math.hypot(dx,dy),limit=34,scale=Math.min(1,limit/(dist||1));knob.style.transform=`translate(${dx*scale}px,${dy*scale}px)`;world?.setTouch(dx*scale/limit,dy*scale/limit);}
