@@ -28,12 +28,12 @@ window.CONTENT = {
     tirageNote: "Constituées en séance 1, elles restent les mêmes jusqu'au concours. Pour corriger un nom ou un membre : séance 1, ou clic sur les scores."
   },
 
-  videos: { s1: { titre: "Écouter avant de vendre", duree: "4 à 5 min", url: "" } },
+  videos: { s1: { titre: "Écouter avant de vendre", duree: "3 min 30", url: "https://youtu.be/95pIYkMuaRw" } },
 
   parcours: [
     { id: "accueil", heure: "13:30", duree: 10, titre: "Retour en piste", sous: "Les équipes, la séance" },
     { id: "video", heure: "13:40", duree: 15, titre: "Écouter avant de vendre", sous: "Vidéo et quiz flash",
-      lede: "Quatre minutes sur l'écoute, le terrain et la reformulation, puis quatre questions. L'équipe la plus rapide prend le point." },
+      lede: "Trois minutes et demie sur l'écoute, le terrain et la reformulation, puis quatre questions et une question bonus. L'équipe la plus rapide prend le point." },
     { id: "restitution", type: "tour", data: "restitution", heure: "13:55", duree: 35, titre: "Le terrain parle", sous: "Restitution, 5 min par équipe",
       lede: "Ce que vous avez vu, entendu et compris dans les magasins. Pas de diaporama : on raconte des faits." },
     { id: "besoins", type: "tri", data: "triBesoins", heure: "14:30", duree: 20, titre: "Des faits aux besoins", sous: "Les 4 besoins de l'enseigne",
@@ -53,10 +53,21 @@ window.CONTENT = {
 
   /* ---------- Vidéo + quiz flash (aligné sur la note de cadrage NotebookLM du 23 novembre) ---------- */
   quizFlash: [
-    { q: "Pendant la découverte, qui doit parler le plus ?", options: ["Le vendeur", "Le client", "Autant l'un que l'autre", "Le jury"], bonne: 1, explication: "La découverte sert à faire parler le client : c'est lui qui détient l'information sur ses besoins." },
-    { q: "Une visite en client mystère sert à…", options: ["Piéger un vendeur", "Évaluer l'expérience réelle d'un client", "Obtenir une remise", "Recruter un vendeur"], bonne: 1, explication: "On vit le parcours d'un vrai client, avec une grille, pour observer ce qui marche et ce qui bloque." },
-    { q: "Une observation terrain utile, c'est…", options: ["Une impression générale", "Un fait précis : où, quand, quoi", "Un avis sur le vendeur", "Une photo du vendeur"], bonne: 1, explication: "Un fait précis se vérifie et s'exploite ; une impression se discute." },
-    { q: "Reformuler, c'est…", options: ["Répéter mot pour mot", "Redire avec ses mots ce que le client a dit, pour vérifier", "Résumer son argumentaire", "Contredire poliment"], bonne: 1, explication: "La reformulation montre qu'on a écouté et vérifie qu'on a bien compris avant d'argumenter." }
+    { q: "Le but d'une visite en client mystère ?", options: ["Piéger le vendeur", "Observer et évaluer l'expérience client, de façon neutre et sans a priori", "Obtenir une remise", "Juger la personnalité du vendeur"], bonne: 1,
+      explication: "On observe toute l'expérience, avec un scénario commun en cinq étapes, pour pouvoir comparer.",
+      complement: "Vos observations de terrain sont mises en commun à {heure:restitution}." },
+    { q: "Laquelle de ces notes est une observation factuelle ?", options: ["« Ce magasin est nul »", "« Le vendeur avait l'air pressé »", "« Trois marques occupent presque tout le rayon chaussures »", "« L'ambiance est sympa »"], bonne: 2,
+      explication: "Un fait se documente : quoi, où, quand. Le reste est une impression.",
+      complement: "Des faits, on tire une hypothèse commerciale. Elle ne devient réelle qu'une fois vérifiée face au client : c'est l'exercice de {heure:besoins}." },
+    { q: "Quel type de question faut-il éviter pendant la découverte ?", options: ["La question ouverte", "La question fermée", "La question orientée", "La reformulation"], bonne: 2,
+      explication: "La question orientée met les mots dans la bouche du client et fausse la découverte.",
+      complement: "La question ouverte fait parler, la question fermée vérifie un détail. Vous vous entraînez à les trier à {heure:questions}." },
+    { q: "« Si je résume, vous cherchez une marque différenciante, mais vous voulez limiter le risque de stock, c'est bien cela ? » C'est…", options: ["Une question orientée", "Une reformulation", "Un argument", "Une objection"], bonne: 1,
+      explication: "On résume avec ses mots, puis on fait valider : écouter, reformuler, valider l'accord.",
+      complement: "Reformuler, ce n'est pas répéter mot pour mot. Vous préparez votre découverte de Kilomètre Nord à {heure:decouverte}." },
+    { bonus: true, q: "Les cinq étapes du scénario de visite, dans l'ordre ?", options: ["Accueil, argumentation, découverte, conclusion, objections", "Accueil, découverte, argumentation, traitement des objections, conclusion", "Découverte, accueil, objections, argumentation, conclusion", "Argumentation, découverte, accueil, objections, conclusion"], bonne: 1,
+      explication: "La découverte vient avant l'argumentation : on ne vend pas avant d'avoir compris.",
+      complement: "Les cinq rôles de votre passage au concours suivent la même logique : accroche, découverte, argumentation, négociation, conclusion." }
   ],
 
   /* ---------- Restitution terrain ---------- */

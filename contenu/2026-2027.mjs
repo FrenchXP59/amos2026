@@ -175,7 +175,7 @@ export default {
           "date": "2026-11-23",
           "heure": "13:30–17:00",
           "titre": "Restitution terrain et besoins de l'enseigne",
-          "video": "",
+          "video": "https://youtu.be/95pIYkMuaRw",
           "apps": [
             {
               "outil": "appli-concours",
