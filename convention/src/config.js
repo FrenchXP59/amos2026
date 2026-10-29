@@ -1,4 +1,4 @@
-// Les cinq conférences ci-dessous sont des exemples, pas le programme officiel AMOS.
+// Salles alignées sur les cours AMOS 2026-2027 ; les titres réels sont relus dans la box au chargement.
 export const SETTINGS = {
   event: 'HORIZON AI', host: 'Frédéric Legrand', mode: 'remote',
   // En production : mode: 'remote' et endpoint HTTPS de votre application.
@@ -7,19 +7,20 @@ export const SETTINGS = {
   allowedCourseOrigins: [],
 };
 export const ROOMS = [
-  {id:'B1',level:'Bachelor 1',name:'Turing',title:'Premiers pas avec l’IA',subtitle:'Comprendre, essayer, prendre du recul.',color:'#368b96',x:-24,z:14,doorX:-19.3,doorZ:14,lesson:'Une IA générative propose un résultat à partir de régularités apprises. Elle peut aider à explorer des idées, mais ses réponses doivent être vérifiées.',task:'Imaginez un événement sportif étudiant. Formulez une demande à une IA en précisant le public, l’objectif et trois contraintes.'},
-  {id:'B2',level:'Bachelor 2',name:'Lovelace',title:'Créer avec l’IA',subtitle:'De l’idée au contenu qui fait sens.',color:'#b4688e',x:-24,z:-1,doorX:-19.3,doorZ:-1,lesson:'Un bon brief donne un objectif, un public, un format et des critères de réussite. La création assistée gagne en qualité grâce aux itérations et à la vérification humaine.',task:'Rédigez le brief d’une campagne de communication pour un club sportif. Définissez les critères qui permettront de choisir une proposition.'},
-  {id:'B3',level:'Bachelor 3',name:'Shannon',title:'Automatiser avec méthode',subtitle:'Relier les outils, garder le contrôle.',color:'#c18b43',x:-24,z:-16,doorX:-19.3,doorZ:-16,lesson:'Une automatisation associe un déclencheur, des actions et des contrôles. Les exceptions doivent être prévues avant sa mise en service.',task:'Décrivez le traitement d’une inscription à un événement : déclencheur, données, actions et contrôle humain.'},
-  {id:'M1',level:'Master 1',name:'Hopper',title:'Piloter un projet IA',subtitle:'Transformer un besoin en projet utile.',color:'#637ac0',x:24,z:0,doorX:19.3,doorZ:0,lesson:'Un projet IA commence par un problème précis et un résultat mesurable. Un prototype permet de tester les hypothèses avant d’élargir l’usage.',task:'Choisissez un problème d’organisation d’un événement sportif. Définissez un indicateur de réussite et une limite à ne pas dépasser.'},
-  {id:'M2',level:'Master 2',name:'Curie',title:'IA, stratégie & responsabilité',subtitle:'Décider avec discernement.',color:'#578675',x:24,z:-16,doorX:19.3,doorZ:-16,lesson:'La valeur d’un projet IA dépend de son utilité, de la fiabilité de ses résultats, de son coût et de la maîtrise des risques pour les personnes concernées.',task:'Préparez une recommandation sur l’usage de l’IA dans une organisation sportive : valeur attendue, risques et conditions de déploiement.'},
+  {id:'B1',level:'Bachelor 1',name:'Turing',title:'Concours de vente · Fondamentaux de l’IA',subtitle:'Écouter, convaincre, puis découvrir l’IA.',color:'#368b96',x:-24,z:14,doorX:-19.3,doorZ:14},
+  {id:'B2',level:'Bachelor 2',name:'Lovelace',title:'IA et marketing',subtitle:'Cibler, créer, mesurer avec l’IA.',color:'#b4688e',x:-24,z:-1,doorX:-19.3,doorZ:-1},
+  {id:'B3',level:'Bachelor 3',name:'Shannon',title:'IA appliquée à la communication',subtitle:'Du brief au contenu, avec une IA qui agit sous contrôle.',color:'#c18b43',x:-24,z:-16,doorX:-19.3,doorZ:-16},
+  {id:'M1',level:'Master 1',name:'Hopper',title:'IA et automatisation',subtitle:'Veiller, automatiser, garder la main.',color:'#637ac0',x:24,z:0,doorX:19.3,doorZ:0},
+  {id:'M2',level:'Master 2',name:'Curie',title:'IA et productivité',subtitle:'Décider avec l’IA, manager une équipe augmentée.',color:'#578675',x:24,z:-16,doorX:19.3,doorZ:-16},
 ];
+// Un stand par niveau, placé face à la salle de ce niveau ; le stand « IA responsable » concerne toutes les classes.
 export const THEMES = [
-  {id:'agents',label:'Agents IA',title:'L’IA qui agit',file:'01-ia-qui-agit',color:'#35c6dc',x:-11,z:10,body:'Des assistants capables d’enchaîner des actions : rechercher, organiser et préparer. Un objectif clair et une validation humaine gardent le travail sous contrôle.'},
-  {id:'auto',label:'Automatisation',title:'Des idées aux actions',file:'02-automatisation',color:'#e6a545',x:11,z:10,body:'Relier les outils pour simplifier les tâches répétitives. Commencez par un processus court, vérifiable et facile à interrompre.'},
-  {id:'humain',label:'Humain + IA',title:'L’intelligence se partage',file:'03-humain-plus-ia',color:'#d6b66d',x:-11,z:-1,body:'La machine propose, l’humain met en contexte. Curiosité, jugement et connaissance du terrain restent au cœur du travail.'},
-  {id:'creation',label:'Création de contenu',title:'Ouvrir les possibles',file:'04-creation-contenu',color:'#d779ae',x:11,z:-1,body:'Explorer une idée, varier les formats et améliorer un brouillon. La qualité vient d’un brief précis et d’un regard éditorial.'},
-  {id:'responsable',label:'IA responsable',title:'Innover avec discernement',file:'05-ia-responsable',color:'#59b9a1',x:-11,z:-12,body:'Vérifier les sources, limiter les données partagées et s’interroger sur les biais. Une réponse convaincante n’est pas toujours une réponse juste.'},
-  {id:'travail',label:'Travail augmenté',title:'Plus de place pour l’essentiel',file:'06-travail-augmente',color:'#e79c59',x:11,z:-12,body:'Réserver les tâches automatisables aux outils et consacrer davantage de temps à la relation, à la création et aux décisions.'},
+  {id:'humain',level:'B1',label:'Humain + IA',title:'L’intelligence se partage',file:'03-humain-plus-ia',color:'#368b96',x:-11,z:10,body:'Avant l’outil, il y a l’écoute : comprendre un client, convaincre, puis découvrir ce que l’IA change. La machine propose, l’humain met en contexte.'},
+  {id:'creation',level:'B2',label:'Création de contenu',title:'Ouvrir les possibles',file:'04-creation-contenu',color:'#b4688e',x:-11,z:-1,body:'Cibler, varier les formats, améliorer un brouillon : l’IA accélère le marketing, la qualité vient d’un brief précis et d’un regard éditorial.'},
+  {id:'agents',level:'B3',label:'Agents IA',title:'L’IA qui agit',file:'01-ia-qui-agit',color:'#c18b43',x:-11,z:-12,body:'Des assistants capables d’enchaîner des actions : analyser un brief, préparer des publications, ranger des fichiers. Un objectif clair et une validation humaine gardent le travail sous contrôle.'},
+  {id:'auto',level:'M1',label:'Automatisation',title:'Des idées aux actions',file:'02-automatisation',color:'#637ac0',x:11,z:-1,body:'Veiller, relier les outils, simplifier les tâches répétitives. Commencez par un flux court, vérifiable et facile à interrompre, avec une validation avant tout envoi au client.'},
+  {id:'travail',level:'M2',label:'Travail augmenté',title:'Plus de place pour l’essentiel',file:'06-travail-augmente',color:'#578675',x:11,z:-12,body:'Confier à l’IA ce qui peut l’être, garder pour soi le jugement et la décision. Manager une équipe augmentée, c’est aussi fixer ses règles d’usage.'},
+  {id:'responsable',level:null,label:'IA responsable',title:'Innover avec discernement',file:'05-ia-responsable',color:'#59b9a1',x:11,z:10,body:'Vérifier les sources, limiter les données partagées, s’interroger sur les biais. Une réponse convaincante n’est pas toujours une réponse juste. Pour toutes les classes.'},
 ];
 export const PLACES = [
   {id:'welcome',label:'Accueil & badges',x:0,z:24},

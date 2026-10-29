@@ -130,7 +130,7 @@ export async function createConvention(container,{onProgress,onPosition,onIntera
     box(6.6,.18,.36,t.x,3.58,t.z-1.8,palette.white);
     box(6.4,.04,.3,t.x,3.45,t.z-1.6,new THREE.MeshStandardMaterial({color:t.color,emissive:t.color,emissiveIntensity:.35}));
     if(textures[i]){const screen=new THREE.Mesh(new THREE.PlaneGeometry(4.9,4.9*9/16),new THREE.MeshBasicMaterial({map:textures[i]}));screen.position.set(t.x,1.94,t.z-1.67);scene.add(screen);}
-    label(`${String(i+1).padStart(2,'0')}  /  ${t.label.toUpperCase()}`,6.2,.58,t.x,4.2,t.z-1.75,{font:60,bg:'#eeeee6',color:'#16373d'});
+    label(`${String(i+1).padStart(2,'0')}  /  ${t.label.toUpperCase()}`,6.2,.58,t.x,4.2,t.z-1.75,{font:60,bg:'#eeeee6',color:'#16373d',sub:t.level?`${t.level}  ·  ${(ROOMS.find(r=>r.id===t.level)||{}).level||''}`.toUpperCase():'TOUTES LES CLASSES'});
     box(3.4,.97,.7,t.x,.49,frontZ,palette.white,true);box(3.5,.06,.8,t.x,1.01,frontZ,palette.wood);
     label(t.label,2.9,.5,t.x,.6,frontZ+.36,{font:66,bg:'#eeeee6',color:'#16373d'});
     box(.65,.05,.4,t.x-.6,1.1,frontZ,palette.metal).rotation.x=-.35;
