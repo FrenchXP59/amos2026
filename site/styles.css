@@ -149,3 +149,6 @@ details.obj li { margin: 4px 0; }
   .lock form { flex-direction: column; align-items: center; }
 }
 @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; } }
+
+.convention-link{text-decoration:none;white-space:nowrap;font-size:.85rem}.top{flex-wrap:wrap}.convention-link:focus-visible{outline:3px solid currentColor;outline-offset:4px}
+@media(max-width:600px){.convention-link{font-size:.75rem;padding:8px}.top{gap:8px}}

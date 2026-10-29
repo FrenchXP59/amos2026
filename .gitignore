@@ -7,3 +7,7 @@ node_modules/
 
 # Données réservées à l'intervenant (scénarios de l'acheteur...) : jamais dans le dépôt
 prive/
+
+# Variables locales : jamais versionnées
+.env
+.env.*
