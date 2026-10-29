@@ -25,7 +25,7 @@ window.CONTENT = {
   },
 
   videos: {
-    s1: { titre: "Du bricolage au métier : l'usage professionnel de l'IA", duree: "4 à 5 min", url: "https://youtu.be/gCxYxXawdcM" }
+    s1: { titre: "Du bricolage au métier : l'usage professionnel de l'IA", duree: "4 min", url: "https://youtu.be/gCxYxXawdcM" }
   },
 
   parcours: [
@@ -33,8 +33,8 @@ window.CONTENT = {
     { id: "amateur", type: "tri", data: "amateurPro", heure: "9:10", duree: 15, titre: "Amateur ou pro ?", sous: "Deux façons d'utiliser l'IA",
       lede: "Tout le monde utilise l'IA. La différence entre un amateur et un professionnel tient à quelques réflexes. Les reconnaissez-vous ?" },
     { id: "video", heure: "9:25", duree: 20, titre: "Vidéo et quiz flash", sous: "Du bricolage au métier",
-      lede: "Cinq minutes sur ce qui distingue un usage professionnel de l'IA, puis six questions éclair." },
-    { id: "prompt", heure: "9:45", duree: 35, titre: "Prompt engineering", sous: "Rôle, contexte, contraintes, format",
+      lede: "Quatre minutes sur ce qui distingue un usage professionnel de l'IA, puis six questions éclair et une question bonus." },
+    { id: "prompt", heure: "9:45", duree: 35, titre: "Prompt engineering", sous: "Rôle, contexte, tâche, format, contraintes",
       lede: "La méthode qui transforme une réponse moyenne en livrable. Un constructeur de prompt, une démonstration d'itération, trois défis, puis la battle." },
     { id: "pause", heure: "10:20", duree: 15, titre: "Pause", sous: "Changement de côté" },
     { id: "audit", type: "audit", data: "audit", heure: "10:35", duree: 20, titre: "Vérifier une synthèse", sous: "Six erreurs à trouver",
@@ -65,12 +65,27 @@ window.CONTENT = {
 
   /* ---------- Quiz flash après la vidéo ---------- */
   quizFlash: [
-    { q: "Une « hallucination » d'IA, c'est…", options: ["Un bug qui fait planter l'outil", "Une réponse fausse donnée avec assurance", "Une image trop colorée", "Un refus de répondre"], bonne: 1, explication: "Le modèle produit du plausible, pas forcément du vrai. D'où la vérification systématique." },
-    { q: "Quels éléments rendent un prompt professionnel ?", options: ["La politesse", "Le rôle, le contexte, les contraintes et le format", "La longueur", "Les majuscules"], bonne: 1, explication: "C'est le cœur du syllabus : rôle, contexte, contrainte, format, puis itération." },
-    { q: "Que faire du premier jet de l'IA ?", options: ["Le livrer", "L'itérer : préciser, corriger, demander une auto-critique", "Le jeter", "Le traduire"], bonne: 1, explication: "Le premier jet est une matière première, pas un livrable." },
-    { q: "Peut-on coller la base clients du tournoi dans un chatbot gratuit ?", options: ["Oui, c'est plus rapide", "Oui, si on supprime les prénoms", "Non : données personnelles, RGPD", "Oui, si le chatbot est français"], bonne: 2, explication: "Les données personnelles n'ont rien à faire dans un outil non validé par l'organisation." },
-    { q: "Un skill, c'est…", options: ["Un abonnement premium", "Une compétence réutilisable : instructions, exemples, parfois du code", "Un prompt très long", "Une extension de navigateur"], bonne: 1, explication: "Sur Claude, les skills sont accessibles y compris en gratuit, avec l'exécution de code activée (centre d'aide Claude)." },
-    { q: "Une synthèse qualitative bien écrite par l'IA est…", options: ["Forcément juste", "À vérifier : chiffres, citations, généralisations", "Plus fiable qu'un humain", "Inutile"], bonne: 1, explication: "C'est l'exercice d'audit de la séance : un texte fluide peut contenir des erreurs." }
+    { q: "Une hallucination d'IA, c'est…", options: ["Un bug qui fait planter l'outil", "Une information fausse donnée avec un aplomb total", "Une image trop colorée", "Un refus de répondre"], bonne: 1,
+      explication: "Un rapport ultra convaincant, plein de chiffres précis… sortis de nulle part.",
+      complement: "Le modèle produit du plausible, pas forcément du vrai : la fluidité du texte ne dit rien de sa justesse." },
+    { q: "La règle d'or face à un chiffre donné par l'IA ?", options: ["Le citer s'il est précis", "Ce n'est jamais une preuve en soi : on le vérifie auprès d'une source fiable", "Demander à l'IA s'il est juste", "L'arrondir"], bonne: 1,
+      explication: "C'est cette rigueur qui sépare le bricoleur de l'expert.",
+      complement: "Vous l'appliquerez à {heure:audit} : une synthèse à vérifier, avec des erreurs cachées." },
+    { q: "Lequel de ces éléments ne fait pas partie des cinq blocs d'un prompt pro ?", options: ["La tâche", "Le format", "La politesse", "Les contraintes"], bonne: 2,
+      explication: "Les cinq blocs : rôle, contexte, tâche, format, contraintes.",
+      complement: "Ce n'est pas une règle technique ni une formule magique, mais un cadre pour piloter la qualité. Vous le pratiquez à {heure:prompt}." },
+    { q: "Un prompt a bien marché après plusieurs allers-retours. Le réflexe pro ?", options: ["Le supprimer", "Le sauvegarder comme gabarit, puis en faire un skill", "Le publier sur les réseaux", "Recommencer de zéro la prochaine fois"], bonne: 1,
+      explication: "Itération, gabarit, puis skill : un package d'instructions, d'exemples et de scripts que toute l'équipe réutilise.",
+      complement: "Le skill est un actif de l'agence : c'est la capitalisation de son expérience." },
+    { q: "Une hallucination passe inaperçue dans la synthèse des retours clients. Conséquence ?", options: ["Aucune, elle sera corrigée plus tard", "Elle contamine le brief créatif puis le plan de contenu, sans qu'on la voie", "L'IA la signale automatiquement", "Elle ne touche que la synthèse"], bonne: 1,
+      explication: "Dans une chaîne de livrables, chaque document nourrit le suivant : on vérifie à chaque étape.",
+      complement: "Vous construisez cette chaîne à {heure:chaine} : synthèse, brief, plan de contenu, réponse à l'appel d'offres." },
+    { q: "Le RGPD et l'IA, c'est…", options: ["Une interdiction générale d'utiliser l'IA", "Des règles strictes : pas de vrai fichier client dans un chatbot public non autorisé", "Rien, tant que l'outil est gratuit", "Une règle qui ne vise que les grandes entreprises"], bonne: 1,
+      explication: "On privilégie des données fictives, anonymisées, ou un outil d'IA validé par l'organisation.",
+      complement: "Attention : retirer les noms ne suffit pas toujours. Des données seulement pseudonymisées restent des données personnelles (CNIL)." },
+    { bonus: true, q: "Quel est le montant du contrat que l'agence veut décrocher au Lys Padel Open ?", options: ["4 000 €", "15 000 €", "40 000 €", "400 000 €"], bonne: 2,
+      explication: "40 000 € HT : c'est l'appel d'offres du fil rouge de la séance.",
+      complement: "La réponse prend forme à {heure:cas}, en agence." }
   ],
 
   /* ---------- Prompt engineering (gabarit « prompt ») ---------- */

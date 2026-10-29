@@ -34,7 +34,7 @@ Six séances : 4/11 matin, 23/11 après-midi, 24/11 après-midi, 25/11 matin, 27
 Séances : M1A le 3/11 et le 6/11 (9h-12h30). Évaluation : participation. Fil rouge : appel d'offres du Lys Padel Open (tournoi fictif).
 
 - [x] Appli séance 1 (`apps/ia-automatisation/?classe=m1a`).
-- [ ] **Vidéo NotebookLM n°1** « Du bricolage au métier » : URL dans `content.js`, rubrique `videos.s1.url`.
+- [x] **Vidéo NotebookLM n°1** « Du bricolage au métier » (4 min) : https://youtu.be/gCxYxXawdcM, intégrée dans l'appli et la box (29/10). Quiz aligné sur la vidéo (6 questions + 1 bonus).
 - [x] Texte de l'audit et corrigé en PDF (pack intervenant).
 - [x] Appli séance 2 (`apps/ia-automatisation-s2/?classe=m1a`) : agences et scores conservés.
 - [ ] **Vidéo NotebookLM séance 2** « Veiller et automatiser » : URL dans `apps/ia-automatisation-s2/content.js`.
@@ -43,8 +43,8 @@ Séances : M1A le 3/11 et le 6/11 (9h-12h30). Évaluation : participation. Fil r
 # Cours M2 : IA et productivité
 
 Séances : M2A le 2/11 et le 25/11, M2B le 4/11 et le 26/11 (13h30-17h). Fil rouge : Olympique Nordval (club fictif de Ligue 2).
+
 - [x] **Vidéo NotebookLM n°1** « Le manager augmenté » (4 min) : https://youtu.be/mBw2X9lwEA4, intégrée dans l'appli et la box (27/10). Quiz aligné sur la vidéo (6 questions + 1 bonus).
-- [ ] **Vidéo NotebookLM n°1** « Le manager augmenté : orchestrer l'IA pour décider » : URL dans `content.js`, rubrique `videos.s1.url`.
 - [ ] Tester la chaîne de prompts de bout en bout sur un outil gratuit avec la fiche Nordval (vérifier que 7 à 8 min suffisent).
 - [ ] Imprimer ou projeter le texte de l'audit : les étudiants doivent pouvoir le lire en cellule (le prévoir aussi en PDF).
 - [ ] L'étude « Deloitte 2026 » de l'audit est **volontairement inventée** (erreur n°6) : ne pas la reprendre ailleurs.
