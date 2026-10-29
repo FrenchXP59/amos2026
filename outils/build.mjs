@@ -5,11 +5,12 @@
 // Les codes des classes viennent, dans l'ordre :
 //   1. de la variable d'environnement BOX_CODES (sur Netlify)
 //   2. du fichier local codes.json (jamais versionné, voir codes.exemple.json)
-// Format : { "2026-2027": { "b3b": "GZM72E", ... } }
+// Format : { "2026-2027": { "b3b": "EXEMPLE_NON_VALIDE", ... } }
 //
 // Chaque classe reçoit un fichier de contenu nommé d'après l'empreinte de son
 // code : sans le code, impossible de deviner l'adresse du fichier.
 // =========================================================================
+import {buildConvention} from "./build-convention.mjs";
 import { createHash } from "node:crypto";
 import { cpSync, existsSync, mkdirSync, readFileSync, readdirSync, rmSync, writeFileSync } from "node:fs";
 import { dirname, join } from "node:path";
@@ -64,12 +65,17 @@ for (const annee of annees) {
     };
     // Privé : tout le contenu de la classe
     const priv = { annee, k, cours, outils, seances };
+    writeFileSync(join(out, `${fileId(annee, code)}.json`), JSON.stringify(priv));
     writeFileSync(join(out, `${fileId(annee, code)}.js`), `window.__BOX_CLASSE = ${JSON.stringify(priv)};\n`);
   }
+  writeFileSync(join(out, "public.json"), JSON.stringify(pub));
   writeFileSync(join(out, "public.js"), `window.__BOX_PUBLIC = window.__BOX_PUBLIC || {};\nwindow.__BOX_PUBLIC[${JSON.stringify(annee)}] = ${JSON.stringify(pub)};\n`);
   index.annees.push(annee);
   console.log(`✓ ${annee} : ${Object.keys(D.classes).length} classes`);
 }
 index.courante = index.annees[index.annees.length - 1];
+writeFileSync(join(DIST, "data", "annees.json"), JSON.stringify(index));
 writeFileSync(join(DIST, "data", "annees.js"), `window.__BOX_ANNEES = ${JSON.stringify(index)};\n`);
 console.log(`✓ Site généré dans dist/ (année courante : ${index.courante})`);
+
+await buildConvention();
