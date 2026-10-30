@@ -20,3 +20,5 @@ dialog:has(#entryForm){max-width:790px}.entry-identity{display:grid;grid-templat
 .welcome-class{max-width:430px;margin-top:24px}.welcome-class label{display:block;margin-bottom:8px;font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase}.welcome-class select{width:100%;min-height:48px;padding:10px 14px;border:1px solid #aabbb0;border-radius:7px;background:#fff;color:#173b40;font:inherit}.welcome-class p{margin:7px 0 0;color:#667b71;font-size:11px;line-height:1.4}.welcome-class+.welcome-actions{margin-top:18px}
 
 @media(min-width:701px){.hall-title{left:34px;top:94px;width:238px;padding:12px 16px;border-radius:10px;background:#f7f8f1e8;backdrop-filter:blur(12px);box-shadow:0 5px 25px #16343b0a;text-shadow:none}.hall-title h2{font-size:28px;margin:4px 0}.mission-panel{top:226px}}
+
+.camera-controls{display:flex;align-items:center;gap:2px;border-right:1px solid #cad6cb;padding-right:8px;margin-right:6px}.camera-controls span{font-size:9px;letter-spacing:.08em;color:#526c65}.camera-controls .icon-button{font-size:23px;line-height:1}@media(max-width:700px){.camera-controls{padding-right:3px;margin-right:2px}.camera-controls span{display:none}}

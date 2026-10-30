@@ -158,8 +158,12 @@ export async function createConvention(container,{onProgress,onPosition,onIntera
   const barista=person(27.8,18,{coat:'#b6a07a'});barista.group.rotation.y=-Math.PI/2;actors.push(barista);
   interactions.push({id:'cafe',x:25,z:18,label:'Prendre un café',type:'cafe'});
   // Short game kiosk.
-  box(4.4,.025,4.3,12,.025,24,palette.soft);box(2.6,1,.8,12,.5,25,palette.navy,true);box(2.4,1.7,.13,12,2.1,25,palette.navy);
-  label('LE DÉFI IA',2.3,1.5,12,2.1,24.91,{rotate:Math.PI,font:130,sub:'3 QUESTIONS · 1 MINUTE'});plant(15,25,1.1);
+  box(4.4,.025,4.3,12,.025,24,palette.soft);box(2.6,1,.8,12,.5,25,palette.navy,true);
+  const quizScreen=box(2.4,1.7,.13,12,2.1,25,palette.navy);cameraMeshes.push(quizScreen);
+  label('LE DÉFI IA',2.3,1.5,12,2.1,24.91,{rotate:Math.PI,font:130,sub:'3 QUESTIONS · 1 MINUTE'});
+  label('LE DÉFI IA',2.3,1.5,12,2.1,25.09,{font:130,sub:'3 QUESTIONS · 1 MINUTE'});
+  label('DÉFI IA',3.8,.65,12,3.65,24.9,{rotate:Math.PI,font:115,sub:'APPROCHEZ ET APPUYEZ SUR E'});
+  label('DÉFI IA',3.8,.65,12,3.65,25.1,{font:115,sub:'APPROCHEZ ET APPUYEZ SUR E'});plant(15,25,1.1);
   interactions.push({id:'quiz',x:12,z:23,label:'Relever le défi IA',type:'quiz'});
   // Lounges fill the quieter edges.
   for(const x of [-25,25]){if(x>0)continue;box(3,.4,.95,x,.35,25,palette.soft,true);box(3,.6,.15,x,.85,25.45,palette.soft);table(x,23.3,.65);plant(x-2,26,1.2);}
@@ -197,7 +201,7 @@ export async function createConvention(container,{onProgress,onPosition,onIntera
   scene.updateMatrixWorld(true);
   const movingRoots=new Set([...actors.map(a=>a.group),player.group,ring]);
   const batches=new Map();
-  scene.traverse(o=>{if(!o.isMesh||o.isSkinnedMesh||Array.isArray(o.material))return;for(let p=o;p;p=p.parent)if(movingRoots.has(p))return;const key=`${o.material.uuid}-${o.castShadow}-${o.receiveShadow}`;if(!batches.has(key))batches.set(key,[]);batches.get(key).push(o);});
+  scene.traverse(o=>{if(!o.isMesh||o.isSkinnedMesh||Array.isArray(o.material)||cameraMeshes.includes(o))return;for(let p=o;p;p=p.parent)if(movingRoots.has(p))return;const key=`${o.material.uuid}-${o.castShadow}-${o.receiveShadow}`;if(!batches.has(key))batches.set(key,[]);batches.get(key).push(o);});
   for(const meshes of batches.values()){if(meshes.length<3)continue;const pieces=meshes.map(m=>m.geometry.clone().applyMatrix4(m.matrixWorld));const geometry=mergeGeometries(pieces,false);pieces.forEach(g=>g.dispose());if(!geometry)continue;const merged=new THREE.Mesh(geometry,meshes[0].material);merged.castShadow=meshes[0].castShadow;merged.receiveShadow=meshes[0].receiveShadow;meshes.forEach(m=>m.removeFromParent());scene.add(merged);}
   const guideGroup=new THREE.Group();scene.add(guideGroup);let guideTarget=null,guidePath=[];
   const guideMaterial=new THREE.MeshBasicMaterial({color:'#329995'}),guideGeo=new THREE.CircleGeometry(.095,10);
@@ -242,6 +246,7 @@ export async function createConvention(container,{onProgress,onPosition,onIntera
   function tick(now){
     if(disposed)return;const elapsed=(now-lastTime)/1000||.016;const dt=Math.min(.05,elapsed);lastTime=now;
     if(!paused&&!document.hidden){
+      yaw+=((keys.has('l')?1:0)-(keys.has('j')?1:0))*dt*1.8;
       let forward=(keys.has('z')||keys.has('w')||keys.has('arrowup')?1:0)-(keys.has('s')||keys.has('arrowdown')?1:0)-touch.y;
       let right=(keys.has('d')||keys.has('arrowright')?1:0)-(keys.has('q')||keys.has('a')||keys.has('arrowleft')?1:0)+touch.x;
       const norm=Math.max(1,Math.hypot(forward,right));forward/=norm;right/=norm;const speed=keys.has('shift')?5:2.9;
@@ -287,9 +292,10 @@ export async function createConvention(container,{onProgress,onPosition,onIntera
     interact:()=>nearest,
     getPosition:()=>({x:player.group.position.x,z:player.group.position.z}),
     setTouch:(x,y)=>{touch.x=x;touch.y=y;},
+    rotateCamera:amount=>{yaw+=amount;},
     pause:value=>{paused=value;blur();if(!value)lastTime=performance.now();},
     guide:(x,z)=>{guideTarget={x,z};updateGuide();},
-    teleport:(x,z)=>{const p=findFreePosition(x,z,obstacles,bodiesFor(player),player.radius);if(!p)return;player.group.position.set(p.x,0,p.z);yaw=0;cameraReady=false;blur();if(guideTarget)updateGuide();},
+    teleport:(x,z,viewYaw=0)=>{const p=findFreePosition(x,z,obstacles,bodiesFor(player),player.radius);if(!p)return;player.group.position.set(p.x,0,p.z);yaw=viewYaw;if(viewYaw===Math.PI)player.group.rotation.y=0;cameraReady=false;blur();if(guideTarget)updateGuide();},
     setBadge:(visible,nextGroup)=>{if(!wornBadge)return;wornBadge.parent.visible=visible;if(nextGroup&&nextGroup!==groupId){groupId=nextGroup;wornBadge.material.map?.dispose();wornBadge.material.map=badgeTexture(badgeImage,groupId);}},
     coffee:()=>{coffeeUntil=performance.now()+2500;},
     setReducedMotion:value=>{reducedMotion=value;},
