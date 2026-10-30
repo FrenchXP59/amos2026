@@ -223,7 +223,7 @@
     jury: {
       titre: "Grille d'évaluation",
       lede: "Page réservée à l'intervenant, à ne pas projeter. Les notes restent dans ce navigateur : exportez-les à la fin.",
-      criteres: S1.client.bareme.map((b) => ({ c: b.c, p: b.p })),
+      criteres: S1.client.bareme.filter((b) => b.c).map((b) => ({ c: b.c, p: b.p })),
       note: "Note unique sur 20. Le comité se note pendant le passage ; les autres critères se complètent après lecture des livrables."
     },
 

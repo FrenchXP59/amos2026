@@ -160,13 +160,16 @@ window.CONTENT = {
     etape: "Avant de pitcher, chaque agence passe sa checklist : charte, exactitude, biais, droits, mention de l'IA. Un kit non vérifié perd des points.",
     seance2: "Fin du module. Le journal des deux séances et le mini-kit sont déposés pour la note finale.",
     bareme: [
+      { g: "Note d'équipe, par agence (18 points)" },
       { c: "Journal de prompts et qualité de l'itération (séances 1 et 2)", p: 5 },
-      { c: "Stratégie : personas et plateforme de message (séance 1)", p: 4 },
-      { c: "Mini-kit : qualité et adaptation aux cibles", p: 5 },
+      { c: "Stratégie : personas et plateforme de message (séance 1)", p: 3 },
+      { c: "Mini-kit : qualité et adaptation aux cibles", p: 4 },
       { c: "Cohérence graphique et respect du brief", p: 3 },
-      { c: "Regard critique et conformité (mention IA, droits, RGPD)", p: 3 }
+      { c: "Regard critique et conformité (mention IA, droits, RGPD)", p: 3 },
+      { g: "Participation individuelle (2 points)" },
+      { c: "Participation individuelle : implication, prise de parole, contribution au travail d'équipe", p: 2 }
     ],
-    baremeNote: "Note unique sur 20, attribuée à la fin de cette séance.",
+    baremeNote: "Note sur 20 attribuée à la fin de cette séance : 18 points communs à l'agence, 2 points de participation individuelle.",
     journal: {
       titre: "Journal de la séance 2",
       champ: "Notre prompt",

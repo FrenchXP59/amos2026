@@ -335,13 +335,16 @@ window.CONTENT = {
     etape: "Point d'étape en fin de séance : dépôt du journal et de la plateforme de message. Non noté, mais il entre dans la note finale.",
     seance2: "Séance 2 ({seance2}) : mini-kit de communication (affiche, 3 posts, mail sponsor, storyboard vidéo) et pitch devant le client.",
     bareme: [
+      { g: "Note d'équipe, par agence (18 points)" },
       { c: "Journal de prompts et qualité de l'itération", p: 5 },
-      { c: "Stratégie : personas et plateforme de message", p: 4 },
-      { c: "Mini-kit : qualité et adaptation aux cibles", p: 5 },
+      { c: "Stratégie : personas et plateforme de message", p: 3 },
+      { c: "Mini-kit : qualité et adaptation aux cibles", p: 4 },
       { c: "Cohérence graphique et respect du brief", p: 3 },
-      { c: "Regard critique et conformité (mention IA, droits, RGPD)", p: 3 }
+      { c: "Regard critique et conformité (mention IA, droits, RGPD)", p: 3 },
+      { g: "Participation individuelle (2 points)" },
+      { c: "Participation individuelle : implication, prise de parole, contribution au travail d'équipe", p: 2 }
     ],
-    baremeNote: "Note unique sur 20 attribuée à la fin de la séance 2. Barème proposé, ajustable."
+    baremeNote: "Note sur 20 attribuée à la fin de la séance 2 : 18 points communs à l'agence, 2 points de participation individuelle."
   },
 
   /* ---------- Battle finale ---------- */

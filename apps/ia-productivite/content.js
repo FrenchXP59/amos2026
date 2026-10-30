@@ -203,13 +203,16 @@ window.CONTENT = {
     etape: "Point d'étape en fin de séance : dépôt du diagnostic, des scénarios et du journal. Non noté, mais il entre dans la note finale.",
     seance2: "Séance 2 ({seance2}) : recommandation finale, charte d'usage de l'IA pour l'équipe marketing du club, puis présentation au comité de direction avec questions.",
     bareme: [
-      { c: "Diagnostic et fiabilité : sources, faits et hypothèses séparés", p: 4 },
+      { g: "Note d'équipe, par cellule (18 points)" },
+      { c: "Diagnostic et fiabilité : sources, faits et hypothèses séparés", p: 3 },
       { c: "Qualité des scénarios et de la recommandation", p: 5 },
-      { c: "Chaîne de prompts et esprit critique (journal, audit)", p: 4 },
+      { c: "Chaîne de prompts et esprit critique (journal, audit)", p: 3 },
       { c: "Charte d'usage de l'IA pour l'équipe", p: 4 },
-      { c: "Présentation au comité et réponses aux questions", p: 3 }
+      { c: "Présentation au comité et réponses aux questions", p: 3 },
+      { g: "Participation individuelle (2 points)" },
+      { c: "Participation individuelle : implication, prise de parole, contribution au travail d'équipe", p: 2 }
     ],
-    baremeNote: "Note unique sur 20 attribuée à la fin de la séance 2. Barème proposé, ajustable.",
+    baremeNote: "Note sur 20 attribuée à la fin de la séance 2 : 18 points communs à la cellule, 2 points de participation individuelle.",
     journal: {
       titre: "Journal de chaîne de prompts",
       etapes: [
