@@ -387,6 +387,8 @@ window.CONTENT = {
 
   /* ---------- Ressources à télécharger ----------
      Dépose les fichiers dans le dossier ressources/ puis passe dispo à true. */
+  /* Documents proposés au téléchargement directement dans l'étape (clé = id de l'étape). */
+  docsEtapes: {"prompt": ["fiche-methode-prompt"], "cas": ["dossier-client-citanuit", "grille-evaluation"], "final": ["glossaire", "sources-seance-1"]},
   ressources: [
     { titre: "Fiche méthode : le prompt en 5 blocs", fichier: "ressources/fiche-methode-prompt.pdf", type: "PDF", dispo: true },
     { titre: "Dossier client CITANUIT", fichier: "ressources/dossier-client-citanuit.pdf", type: "PDF", dispo: true },

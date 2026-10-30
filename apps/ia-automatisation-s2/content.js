@@ -230,6 +230,10 @@ window.CONTENT = {
     ["Reporting", "Compte rendu régulier des résultats d'une action."]
   ],
 
+  /* Documents proposés au téléchargement directement dans l'étape (clé = id de l'étape). */
+
+  docsEtapes: {"veille": ["fiche-veille"], "flux": ["modele-flux"]},
+
   ressources: [
     { titre: "Fiche méthode : la veille augmentée", fichier: "ressources/fiche-veille.pdf", type: "PDF", dispo: true },
     { titre: "Modèle de flux : déclencheur, actions, filtre, validation", fichier: "ressources/modele-flux.pdf", type: "PDF", dispo: true }

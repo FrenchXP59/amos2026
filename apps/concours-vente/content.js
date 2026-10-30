@@ -149,6 +149,8 @@ window.CONTENT = {
   ],
 
   glossaire: KN.glossaire,
+  /* Documents proposés au téléchargement directement dans l'étape (clé = id de l'étape). */
+  docsEtapes: {"methodes": ["fiches-methode"], "cas": ["sujet-kilometre-nord"], "terrain": ["grille-client-mystere"]},
   ressources: KN.ressources,
 
   actus: []

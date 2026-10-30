@@ -277,6 +277,10 @@ window.CONTENT = {
     ["AI Act", "Règlement européen sur l'IA. Article 50 : obligations de transparence depuis le 2 août 2026."]
   ],
 
+  /* Documents proposés au téléchargement directement dans l'étape (clé = id de l'étape). */
+
+  docsEtapes: {"chaine": ["fiche-chaine-prompts"], "cas": ["dossier-nordval", "grille-evaluation"], "final": ["glossaire"]},
+
   ressources: [
     { titre: "Fiche méthode : la chaîne de prompts", fichier: "ressources/fiche-chaine-prompts.pdf", type: "PDF", dispo: true },
     { titre: "Dossier Olympique Nordval", fichier: "ressources/dossier-nordval.pdf", type: "PDF", dispo: true },

@@ -195,6 +195,8 @@ window.CONTENT = {
     ["Compte-rendu d'analyse terrain", "Livrable qui restitue les observations, la grille client mystère et les enseignements des interviews."],
     ["Mètre linéaire", "Longueur de rayon occupée par une marque ; l'enseigne raisonne en chiffre d'affaires ou en marge par mètre."]
   ]),
+  /* Documents proposés au téléchargement directement dans l'étape (clé = id de l'étape). */
+  docsEtapes: {"restitution": ["grille-client-mystere"], "decouverte": ["fiches-methode"], "pitch-v1": ["sujet-kilometre-nord"]},
   ressources: KN.ressources,
   actus: []
 };

@@ -286,6 +286,10 @@ window.CONTENT = {
     ["RGPD", "Règlement européen sur la protection des données personnelles."]
   ],
 
+  /* Documents proposés au téléchargement directement dans l'étape (clé = id de l'étape). */
+
+  docsEtapes: {"prompt": ["fiche-prompt-pro"], "cas": ["appel-offres-lys-padel-open", "grille-participation"], "final": ["glossaire"]},
+
   ressources: [
     { titre: "Fiche méthode : le prompt professionnel", fichier: "ressources/fiche-prompt-pro.pdf", type: "PDF", dispo: true },
     { titre: "Appel d'offres Lys Padel Open", fichier: "ressources/appel-offres-lys-padel-open.pdf", type: "PDF", dispo: true },

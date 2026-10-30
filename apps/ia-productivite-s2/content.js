@@ -234,6 +234,10 @@
       ["Shadow AI", "Usage d'outils d'IA non autorisés ou non encadrés par l'organisation."]
     ]),
 
+    /* Documents proposés au téléchargement directement dans l'étape (clé = id de l'étape). */
+
+    docsEtapes: {"modele": ["fiche-modelisation"], "charte": ["modele-charte-ia"], "cas": ["grille-evaluation"]},
+
     ressources: [
       { titre: "Fiche méthode : modéliser un scénario avec l'IA", fichier: "ressources/fiche-modelisation.pdf", type: "PDF", dispo: true },
       { titre: "Modèle de charte d'usage de l'IA", fichier: "ressources/modele-charte-ia.pdf", type: "PDF", dispo: true },

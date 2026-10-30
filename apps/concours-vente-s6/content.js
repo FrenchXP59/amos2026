@@ -96,6 +96,8 @@ window.CONTENT = {
   pitch: KN.pitch,
   jury: KN.jury,
   glossaire: KN.glossaire,
+  /* Documents proposés au téléchargement directement dans l'étape (clé = id de l'étape). */
+  docsEtapes: {"passages": ["grille-jury"]},
   ressources: KN.ressources,
   actus: []
 };

@@ -201,6 +201,8 @@ window.CONTENT = {
     ["Anticipation", "Traiter une objection prévisible avant qu'elle soit formulée."],
     ["Auto-évaluation", "Évaluation de sa propre prestation avec la grille du jury, pour fixer ses priorités."]
   ]),
+  /* Documents proposés au téléchargement directement dans l'étape (clé = id de l'étape). */
+  docsEtapes: {"techniques": ["fiche-objections"], "autoeval": ["grille-auto-evaluation"]},
   ressources: KN.ressources,
   actus: []
 };

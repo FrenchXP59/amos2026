@@ -231,6 +231,10 @@ window.CONTENT = {
     ["Deepfake", "Contenu généré qui imite une personne ou un fait réel ; à signaler (AI Act)."]
   ],
 
+  /* Documents proposés au téléchargement directement dans l'étape (clé = id de l'étape). */
+
+  docsEtapes: {"prompt": ["fiche-prompt-visuel"], "coherence": ["checklist-visuel-ia"], "cas": ["brief-mini-kit", "checklist-visuel-ia"]},
+
   ressources: [
     { titre: "Fiche méthode : le prompt visuel", fichier: "ressources/fiche-prompt-visuel.pdf", type: "PDF", dispo: true },
     { titre: "Brief du mini-kit et charte CITANUIT", fichier: "ressources/brief-mini-kit.pdf", type: "PDF", dispo: true },

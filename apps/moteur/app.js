@@ -389,12 +389,21 @@
   }
 
   /* ---------- Gabarits communs ---------- */
+  // Documents de l'étape (C.docsEtapes) : liens de téléchargement sous le chapeau.
+  function docsHTML(id) {
+    const keys = (C.docsEtapes || {})[id];
+    if (!keys || !C.ressources) return "";
+    const docs = keys.map((k) => C.ressources.find((r) => r.dispo && r.fichier.includes(k))).filter(Boolean);
+    if (!docs.length) return "";
+    return `<div class="page-docs"><span>À télécharger</span>${docs.map((r) => `<a class="doc-chip" href="${esc(r.fichier)}" download>${esc(r.titre)} <small>${esc(r.type || "PDF")}</small></a>`).join("")}</div>`;
+  }
   function head(p, lede) {
     const i = PAGES.indexOf(p.id);
     return `<header class="page-head">
       <span class="cp-badge" aria-hidden="true">${p.id === "pause" ? p.heure : "CP" + i}</span>
       <h1>${esc(p.titre)}</h1>
       ${lede ? `<p class="lede">${lede}</p>` : ""}
+      ${docsHTML(p.id)}
     </header>`;
   }
   function src(url, name) { return `<span class="source">Source : <a href="${esc(url)}" target="_blank" rel="noopener">${esc(name || new URL(url).hostname)}</a></span>`; }

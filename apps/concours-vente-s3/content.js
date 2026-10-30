@@ -206,6 +206,8 @@ window.CONTENT = {
     ["Contrepartie", "Ce que l'on obtient en échange d'une concession."],
     ["Marge brute", "Prix de vente HT moins prix d'achat HT."]
   ]),
+  /* Documents proposés au téléchargement directement dans l'étape (clé = id de l'étape). */
+  docsEtapes: {"argumentaire": ["fiches-methode", "sujet-kilometre-nord"], "plan": ["grille-jury"]},
   ressources: KN.ressources,
   actus: []
 };
