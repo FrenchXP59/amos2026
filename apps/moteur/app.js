@@ -547,7 +547,7 @@
       ${C.iaHumain.map((it, i) => `
       <article class="slot" data-slot="${i}">
         <div class="media">${it.src
-          ? (it.type === "image" ? `<img src="${esc(it.src)}" alt="${esc(it.legende)}">` : `<p style="text-align:left;color:var(--ink)">${esc(it.src)}</p>`)
+          ? (it.type === "image" ? `<img src="${esc(it.src)}" alt="${esc(it.legende)}" data-zoom="${i}" title="Agrandir">` : `<p style="text-align:left;color:var(--ink)">${esc(it.src)}</p>`)
           : `<div><span class="num">${i + 1}</span>Emplacement : ${esc(it.legende)}</div>`}</div>
         <div class="body">
           <strong>${esc(it.legende)}</strong>
@@ -561,11 +561,51 @@
     </div>
     <section class="section">${awardRow("Point pour")}</section>`;
   BIND.iahumain = (root) => {
-    $$("[data-reveal]", root).forEach((b) => (b.onclick = () => {
-      const r = $(`[data-res="${b.dataset.reveal}"]`, root); r.hidden = !r.hidden;
-      b.textContent = r.hidden ? "Révéler" : "Masquer";
-    }));
+    const toggle = (i, show) => {
+      const r = $(`[data-res="${i}"]`, root), b = $(`[data-reveal="${i}"]`, root);
+      r.hidden = show === undefined ? !r.hidden : !show;
+      b.textContent = r.hidden ? "Révéler" : "Masquer";
+      return !r.hidden;
+    };
+    $$("[data-reveal]", root).forEach((b) => (b.onclick = () => toggle(b.dataset.reveal)));
+    $$("[data-zoom]", root).forEach((im) => (im.onclick = () => lightbox(+im.dataset.zoom)));
+    // Visionneuse plein écran : flèches pour naviguer, Entrée ou bouton pour révéler, Échap pour fermer.
+    function lightbox(start) {
+      const items = C.iaHumain.map((it, i) => ({ it, i })).filter((x) => x.it.type === "image" && x.it.src);
+      let k = Math.max(0, items.findIndex((x) => x.i === start));
+      const lb = document.createElement("div");
+      lb.className = "lightbox"; lb.setAttribute("role", "dialog"); lb.setAttribute("aria-label", "Visuel en plein écran");
+      document.body.appendChild(lb);
+      const show = () => {
+        const { it, i } = items[k], open = !$(`[data-res="${i}"]`, root).hidden;
+        lb.innerHTML = `<button class="lb-close" aria-label="Fermer">×</button>
+          <button class="lb-nav prev" aria-label="Visuel précédent">‹</button>
+          <figure><img src="${esc(it.src)}" alt="${esc(it.legende)}"><figcaption><strong>${esc(it.legende)}</strong>
+          <span class="lb-res" ${open ? "" : "hidden"}><span class="verdict ${it.reponse}">${it.reponse === "ia" ? "Généré par IA" : "Fait par un humain"}</span> ${esc(it.indice)}</span>
+          <button class="btn small lamp lb-reveal">${open ? "Masquer" : "Révéler"}</button></figcaption></figure>
+          <button class="lb-nav next" aria-label="Visuel suivant">›</button>`;
+        $(".lb-close", lb).onclick = close;
+        $(".prev", lb).onclick = (e) => { e.stopPropagation(); go(-1); };
+        $(".next", lb).onclick = (e) => { e.stopPropagation(); go(1); };
+        $(".lb-reveal", lb).onclick = (e) => { e.stopPropagation(); reveal(); };
+      };
+      const go = (d) => { k = (k + d + items.length) % items.length; show(); };
+      const reveal = () => { const on = toggle(items[k].i); if (on && !CALME && S.son !== false) chime(); show(); };
+      const key = (e) => {
+        if (e.key === "Escape") close();
+        else if (e.key === "ArrowRight") go(1);
+        else if (e.key === "ArrowLeft") go(-1);
+        else if (e.key === "Enter" || e.key === " ") { e.preventDefault(); reveal(); }
+        else return;
+        e.stopPropagation();
+      };
+      function close() { document.removeEventListener("keydown", key, true); lb.remove(); }
+      lb.onclick = (e) => { if (e.target === lb) close(); };
+      document.addEventListener("keydown", key, true);
+      show();
+    }
   };
+
 
   /* --- CP2 Vidéo + quiz flash --- */
   RENDER.video = (p) => `

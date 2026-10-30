@@ -55,12 +55,12 @@ window.CONTENT = {
      Remplace chaque emplacement par un vrai visuel (dépose-le dans assets/)
      ou un texte. reponse : "ia" ou "humain". */
   iaHumain: [
-    { type: "image", src: "", legende: "Visuel 1 : affiche d'un trail", reponse: "ia",     indice: "Regarde les mains, les dossards, le texte dans l'image." },
-    { type: "image", src: "", legende: "Visuel 2 : photo d'arrivée",    reponse: "humain", indice: "Les détails imparfaits sont souvent humains." },
-    { type: "texte", src: "", legende: "Texte 3 : post Instagram d'un club", reponse: "ia",     indice: "Emojis en série, tournures très lisses." },
-    { type: "image", src: "", legende: "Visuel 4 : supporters en tribune", reponse: "ia",     indice: "Visages du fond, logos déformés." },
-    { type: "texte", src: "", legende: "Texte 5 : communiqué de presse", reponse: "humain", indice: "Détails locaux précis et vérifiables." },
-    { type: "image", src: "", legende: "Visuel 6 : coureuse de nuit",   reponse: "humain", indice: "Lumière réelle des frontales, grain photo." }
+    { type: "image", src: "assets/iahumain/1-tribune.jpg", legende: "Visuel 1 : une tribune de supporters du LOSC", reponse: "ia", indice: "Textes déformés sur les écharpes et les drapeaux, un loup à la place du dogue lillois, une foule trop homogène." },
+    { type: "image", src: "assets/iahumain/2-frontale.jpg", legende: "Visuel 2 : une traileuse de nuit à la frontale", reponse: "humain", indice: "Vraie lumière de flash, ombres cohérentes, bois et sol imparfaits : une photo prise sur place." },
+    { type: "image", src: "assets/iahumain/3-affiche-club.jpg", legende: "Visuel 3 : l'affiche d'un club de trail", reponse: "ia", indice: "Rendu trop parfait, typographie « pinceau » générique, visages lisses, décor de carte postale." },
+    { type: "image", src: "assets/iahumain/4-article.jpg", legende: "Visuel 4 : un article de presse sur un trail à Chamonix", reponse: "humain", indice: "Un média, un athlète nommé, une date : tout se vérifie en deux clics. C'est ce réflexe qu'on veut." },
+    { type: "image", src: "assets/iahumain/5-course-lac.jpg", legende: "Visuel 5 : une course en montagne au-dessus d'un lac", reponse: "ia", indice: "Lumière idéale partout, dossards tous identiques, coureurs clonés au second plan." },
+    { type: "image", src: "assets/iahumain/6-village.jpg", legende: "Visuel 6 : un coureur acclamé dans un village de montagne", reponse: "humain", indice: "Des dizaines de visages et de mains nets et tous différents, des téléphones, des détails imparfaits : une vraie photo de presse." }
   ],
 
   /* ---------- Quiz flash après la vidéo ---------- */
