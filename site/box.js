@@ -49,6 +49,8 @@ import {unlockClass,loadClass} from "./access.mjs";
   const MOIS = ["janv.", "févr.", "mars", "avr.", "mai", "juin", "juil.", "août", "sept.", "oct.", "nov.", "déc."];
   const today = () => { const d = new Date(); return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`; };
   const parts = (iso) => { const d = new Date(iso + "T12:00:00"); return { j: JOURS[d.getDay()], n: d.getDate(), m: MOIS[d.getMonth()], y: d.getFullYear() }; };
+  // Une séance est terminée après son heure de fin : avant, les applis (et leurs réponses) restent masquées.
+  const over = (s) => { const fin = ((s.heure || "").split("–")[1] || "23:59").trim(); return new Date() > new Date(`${s.date}T${fin}:00`); };
   const status = (iso) => (iso < today() ? "past" : iso === today() ? "today" : "future");
   const hour = (h) => h.replace(/(^|–)0(\d)/g, "$1$2").replace(/:00/g, "h").replace(/:(\d\d)/g, "h$1").replace("–", " – ");
 
@@ -148,9 +150,12 @@ import {unlockClass,loadClass} from "./access.mjs";
   }
   function seanceHTML(s, cid) {
     const p = parts(s.date), stt = status(s.date);
-    const apps = (s.apps || []).map((a) => `<a class="item" href="${esc(a.url)}" target="_blank" rel="noopener"><span class="k">Appli</span><span>${esc(a.label)}</span></a>`);
+    const fini = over(s);
+    const apps = fini
+      ? (s.apps || []).map((a) => `<a class="item" href="${esc(a.url)}" target="_blank" rel="noopener"><span class="k">Appli</span><span>${esc(a.label)}</span></a>`)
+      : (s.apps || []).length ? [`<span class="item off"><span class="k">Appli</span><span>Projetée en cours, ouverte ici après la séance pour réviser.</span></span>`] : [];
     const res = (s.ressources || []).map((r) => `<a class="item" href="${esc(r.url)}" download><span class="k">${esc(r.type || "PDF")}</span><span>${esc(r.titre)}</span></a>`);
-    const quiz = s.video && (s.apps || [])[0] ? [`<a class="item" href="${esc(s.apps[0].url.split("#")[0])}#video" target="_blank" rel="noopener"><span class="k">${s.videoSuite ? "Débat" : "Quiz"}</span><span>${s.videoSuite ? "Débat de la vidéo" : "Quiz de la vidéo"}</span></a>`] : [];
+    const quiz = fini && s.video && (s.apps || [])[0] ? [`<a class="item" href="${esc(s.apps[0].url.split("#")[0])}#video" target="_blank" rel="noopener"><span class="k">${s.videoSuite ? "Débat" : "Quiz"}</span><span>${s.videoSuite ? "Débat de la vidéo" : "Quiz de la vidéo"}</span></a>`] : [];
     const items = quiz.concat(apps, res);
     return `<li class="seance ${stt}" id="s-${cid}-${s.n}">
       <div class="when"><b>${p.n}</b><span>${p.j} ${p.m}</span></div>

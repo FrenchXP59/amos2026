@@ -15,6 +15,8 @@ import { createHash } from "node:crypto";
 import { cpSync, existsSync, mkdirSync, readFileSync, readdirSync, rmSync, writeFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
+import vm from "node:vm";
+import { posix } from "node:path";
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
 const DIST = join(ROOT, "dist");
@@ -39,6 +41,28 @@ cpSync(join(ROOT, "site"), DIST, { recursive: true });
 cpSync(join(ROOT, "apps"), join(DIST, "apps"), { recursive: true });
 if (existsSync(join(ROOT, "ressources"))) cpSync(join(ROOT, "ressources"), join(DIST, "ressources"), { recursive: true });
 
+
+// Documents d'une appli de séance, lus dans son content.js : la box les propose
+// au téléchargement sans donner le lien de l'appli (qui contient les réponses des jeux).
+const docsCache = new Map();
+function appDocs(appUrl) {
+  const dir = posix.dirname(appUrl.split("?")[0]);           // ex. apps/ia-communication
+  if (docsCache.has(dir)) return docsCache.get(dir);
+  let docs = [];
+  try {
+    const html = readFileSync(join(ROOT, dir, "index.html"), "utf8");
+    const srcs = [...html.matchAll(/<script src="([^"]+)"/g)].map((m) => m[1]).filter((u) => !u.includes("moteur/"));
+    const ctx = { console };
+    ctx.window = ctx;   // comme dans un navigateur : window.X est aussi une variable globale
+    vm.createContext(ctx);
+    for (const src of srcs) vm.runInContext(readFileSync(join(ROOT, dir, src), "utf8"), ctx);
+    docs = (ctx.window.CONTENT?.ressources || []).filter((r) => r.dispo && /\.pdf$/i.test(r.fichier))
+      .map((r) => ({ titre: r.titre, url: posix.normalize(posix.join(dir, r.fichier)), type: r.type || "PDF" }));
+  } catch (e) { console.warn(`! documents introuvables pour ${dir} : ${e.message}`); }
+  docsCache.set(dir, docs);
+  return docs;
+}
+
 const annees = readdirSync(join(ROOT, "contenu")).filter((f) => /^\d{4}-\d{4}\.mjs$/.test(f)).map((f) => f.replace(".mjs", "")).sort();
 const index = { annees: [], courante: null };
 
@@ -52,6 +76,7 @@ for (const annee of annees) {
     const code = codes[annee] && codes[annee][k];
     if (!code) { console.error(`✗ ${annee} : pas de code pour la classe ${k}.`); process.exit(1); }
     const seances = [...cl.seances].sort((a, b) => (a.date + a.heure).localeCompare(b.date + b.heure));
+    for (const s of seances) if ((!s.ressources || !s.ressources.length) && s.apps && s.apps[0]) s.ressources = appDocs(s.apps[0].url);
     const usedCours = [...new Set(seances.map((s) => s.cours))];
     const cours = Object.fromEntries(usedCours.map((c) => [c, D.cours[c]]));
     const usedOutils = [...new Set(usedCours.flatMap((c) => D.cours[c].outils || []))];
