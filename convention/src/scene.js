@@ -245,10 +245,12 @@ export async function createConvention(container,{onProgress,onPosition,onIntera
       let forward=(keys.has('z')||keys.has('w')||keys.has('arrowup')?1:0)-(keys.has('s')||keys.has('arrowdown')?1:0)-touch.y;
       let right=(keys.has('d')||keys.has('arrowright')?1:0)-(keys.has('q')||keys.has('a')||keys.has('arrowleft')?1:0)+touch.x;
       const norm=Math.max(1,Math.hypot(forward,right));forward/=norm;right/=norm;const speed=keys.has('shift')?5:2.9;
-      const dx=(right*Math.cos(yaw)-forward*Math.sin(yaw))*speed*dt,dz=(-forward*Math.cos(yaw)-right*Math.sin(yaw))*speed*dt;
+      // Pas indépendant de la fluidité : jusqu'à 0,25 s rattrapées par sous-pas de 0,05 s (collisions fiables, même sur un PC lent).
+      const moveDt=Math.min(.25,elapsed),steps=Math.max(1,Math.ceil(moveDt/.05));
+      const dx=(right*Math.cos(yaw)-forward*Math.sin(yaw))*speed*moveDt,dz=(-forward*Math.cos(yaw)-right*Math.sin(yaw))*speed*moveDt;
       const previousPlayer=player.group.position.clone();
-      if(dx||dz){moveWithCollisions(player.group.position,dx,dz,obstacles,bodiesFor(player),player.radius);const angle=Math.atan2(dx,dz),diff=THREE.MathUtils.euclideanModulo(angle-player.group.rotation.y+Math.PI,Math.PI*2)-Math.PI;player.group.rotation.y+=diff*Math.min(1,dt*12);}
-      animatePerson(player,player.group.position.distanceTo(previousPlayer)/dt,now/1000,dt);
+      if(dx||dz){const bodies=bodiesFor(player);for(let st=0;st<steps;st++)moveWithCollisions(player.group.position,dx/steps,dz/steps,obstacles,bodies,player.radius);const angle=Math.atan2(dx,dz),diff=THREE.MathUtils.euclideanModulo(angle-player.group.rotation.y+Math.PI,Math.PI*2)-Math.PI;player.group.rotation.y+=diff*Math.min(1,dt*12);}
+      animatePerson(player,player.group.position.distanceTo(previousPlayer)/moveDt,now/1000,dt);
       for(const a of actors){
         restoreActivity(a);
         let velocity=0;
