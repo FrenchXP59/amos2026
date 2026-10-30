@@ -26,6 +26,7 @@ Six séances : 4/11 matin, 23/11 après-midi, 24/11 après-midi, 25/11 matin, 27
 - [ ] Choisir le juré qui joue l'acheteur et lui envoyer les scénarios et les cartes quelques jours avant.
 - [ ] Vidéos NotebookLM des séances 2, 3 et 4 (docs NotebookLM du 23, 24 et 25 novembre).
 - [x] Vidéo séance 2 « Écouter avant de vendre » (3 min 30) : https://youtu.be/95pIYkMuaRw, intégrée dans l'appli et la box (29/10). Quiz aligné (4 questions + 1 bonus).
+- [x] Vidéo séance 4 « L'objection, une question déguisée » (3 min 40) : https://youtu.be/CS3vC5yewuM, intégrée dans l'appli et la box (30/10). Quiz aligné (4 questions + 1 bonus).
 - [x] PDF : fiches méthode, sujet et fiche de marge, grille client mystère, grille du jury, grille d'auto-évaluation, fiche objections, consignes de note réflexive.
 - [x] Cartes de l'acheteur à imprimer (pack intervenant, hors dépôt).
 - [ ] Nom « Kilomètre Nord » : recherche web négative, base INPI non consultée.

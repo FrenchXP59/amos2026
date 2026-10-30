@@ -28,12 +28,12 @@ window.CONTENT = {
     tirageNote: "Constituées en séance 1, elles restent les mêmes jusqu'au concours. Pour corriger un nom ou un membre : séance 1, ou clic sur les scores."
   },
 
-  videos: { s1: { titre: "L'objection, une question déguisée", duree: "4 à 5 min", url: "" } },
+  videos: { s1: { titre: "L'objection, une question déguisée", duree: "3 min 40", url: "https://youtu.be/CS3vC5yewuM" } },
 
   parcours: [
     { id: "accueil", heure: "9:00", duree: 10, titre: "Départ", sous: "Les équipes, la séance" },
     { id: "video", heure: "9:10", duree: 15, titre: "L'objection, une question déguisée", sous: "Vidéo et quiz flash",
-      lede: "Quatre minutes pour changer de regard sur les objections, puis quatre questions. L'équipe la plus rapide prend le point." },
+      lede: "Un peu plus de trois minutes pour changer de regard sur les objections, puis quatre questions et une question bonus. L'équipe la plus rapide prend le point." },
     { id: "techniques", type: "fiches", data: "techniques", heure: "9:25", duree: 20, titre: "Sept techniques", sous: "Traiter une objection",
       lede: "Une méthode en cinq temps, sept techniques pour répondre. On ne les apprend pas toutes : on en maîtrise trois." },
     { id: "reconnaitre", type: "tri", data: "triTechniques", heure: "9:45", duree: 15, titre: "Quelle technique ?", sous: "Reconnaître la réponse",
@@ -51,10 +51,21 @@ window.CONTENT = {
 
   /* ---------- Vidéo + quiz flash (aligné sur la note de cadrage NotebookLM du 25 novembre) ---------- */
   quizFlash: [
-    { q: "Une objection, c'est souvent…", options: ["Un refus définitif", "Une question déguisée, un besoin de réassurance", "La fin de la négociation", "Une attaque personnelle"], bonne: 1, explication: "L'acheteur qui objecte s'intéresse encore : il dit ce qui manque pour qu'il dise oui." },
-    { q: "Premier réflexe face à une objection ?", options: ["Contredire tout de suite", "Écouter jusqu'au bout, sans couper", "Baisser le prix", "Changer de sujet"], bonne: 1, explication: "Couper, c'est montrer qu'on n'écoute pas, et risquer de répondre à côté." },
-    { q: "La technique du boomerang consiste à…", options: ["Ignorer l'objection", "Transformer l'objection en argument", "Renvoyer l'acheteur", "Proposer une remise"], bonne: 1, explication: "« Votre marque est inconnue ? C'est justement ce qui la rendra exclusive chez vous. »" },
-    { q: "Pourquoi reformuler l'objection ?", options: ["Pour gagner du temps et vérifier qu'on a compris", "Pour la répéter au jury", "Pour l'esquiver", "Ça ne sert à rien"], bonne: 0, explication: "On vérifie ce que l'acheteur veut dire vraiment, et on se donne quelques secondes pour choisir sa réponse." }
+    { q: "« Votre marque, personne ne la connaît ! » Cette objection, c'est le plus souvent…", options: ["Une attaque personnelle", "Un refus définitif", "Une question déguisée : une inquiétude, un besoin d'être rassuré", "La fin de la négociation"], bonne: 2,
+      explication: "Certaines objections sont de vrais refus, mais la plupart sont une invitation à creuser.",
+      complement: "Réflexe à éviter : se braquer ou se justifier tout de suite." },
+    { q: "Dans la méthode en cinq marches, que fait-on juste avant de répondre ?", options: ["On reformule", "On questionne pour trouver le vrai problème", "On vérifie", "On baisse le prix"], bonne: 1,
+      explication: "Écouter sans interrompre, reformuler, questionner, répondre, puis vérifier que l'inquiétude est dissipée.",
+      complement: "La marche la plus souvent oubliée : la dernière. « Est-ce que cela répond à votre inquiétude ? »" },
+    { q: "« Exactement, et c'est justement cette exclusivité qui va différencier votre magasin. » C'est la technique…", options: ["Du questionnement", "De la compensation", "Du boomerang", "De la reformulation"], bonne: 2,
+      explication: "Le boomerang transforme l'objection en atout.",
+      complement: "Compenser, c'est reconnaître un inconvénient réel et le contrebalancer, par exemple avec une première commande test. Sans jamais inventer de fausse garantie. Les sept techniques sont détaillées à {heure:techniques}." },
+    { q: "Pourquoi préférer « Oui, et » à « Oui, mais » ?", options: ["C'est plus court", "« Mais » sonne comme une contradiction et braque l'acheteur", "C'est imposé par le jury", "Il n'y a aucune différence"], bonne: 1,
+      explication: "« Je comprends votre inquiétude, et voici ce que nous pouvons examiner » garde un ton collaboratif.",
+      complement: "Pas une formule magique : l'attitude compte autant que la technique. Entraînement dans le duel de {heure:duel}." },
+    { bonus: true, q: "Au concours, vers quelle minute de la négociation tombe l'objection imposée ?", options: ["La 1re", "La 3e", "La 7e", "La 12e"], bonne: 2,
+      explication: "Vers la 7e minute. Le piège : réciter une réponse toute faite. On applique les cinq marches avec naturel.",
+      complement: "Vous la vivrez en conditions réelles pendant les simulations de {heure:simulations}." }
   ],
 
   /* ---------- Techniques de traitement ---------- */

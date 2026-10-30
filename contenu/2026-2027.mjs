@@ -207,7 +207,7 @@ export default {
           "date": "2026-11-25",
           "heure": "09:00–12:30",
           "titre": "Objections, simulations complètes et auto-évaluation",
-          "video": "",
+          "video": "https://youtu.be/CS3vC5yewuM",
           "apps": [
             {
               "outil": "appli-concours",
