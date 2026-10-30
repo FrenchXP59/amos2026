@@ -40,10 +40,10 @@ window.CONTENT = {
   /* ---------- Le parcours de la séance (horaires = checkpoints) ---------- */
   parcours: [
     { id: "accueil",   heure: "9:00",  duree: 10, titre: "Départ",                     sous: "Agences et brief teaser" },
-    { id: "iahumain",  heure: "9:10",  duree: 15, titre: "IA ou humain ?",             sous: "Le jeu d'ouverture", lede: "Six contenus de sport. Pour chacun : IA ou humain ? Votez à main levée, puis révélez. Une agence qui a juste marque un point." },
-    { id: "video",     heure: "9:25",  duree: 20, titre: "Vidéo et quiz flash",        sous: "De l'IA qui répond à l'IA qui agit", lede: "Trois minutes pour comprendre la rupture de l'année, puis six questions éclair et une question bonus. Chaque bonne réponse rapporte un point à l'agence la plus rapide." },
-    { id: "rupture",   heure: "9:45",  duree: 25, titre: "Rupture 2026",               sous: "L'escalier de l'autonomie", lede: "Jusqu'ici, l'IA répondait. En 2026, elle exécute. La question n'est plus « quel prompt ? » mais « jusqu'où je lui donne la main ? »." },
-    { id: "panorama",  heure: "10:10", duree: 15, titre: "Outils et actus",            sous: "Ce qui a changé cette année", lede: "Les outils changent tous les trois mois. Ce qui reste : savoir choisir selon le besoin, le coût, les droits et la confidentialité." },
+    { id: "iahumain",  heure: "9:10",  duree: 20, titre: "IA ou humain ?",             sous: "Le jeu d'ouverture", lede: "Six contenus de sport. Pour chacun : IA ou humain ? Votez à main levée, puis révélez. Une agence qui a juste marque un point." },
+    { id: "video",     heure: "9:30",  duree: 20, titre: "Vidéo et quiz flash",        sous: "De l'IA qui répond à l'IA qui agit", lede: "Trois minutes pour comprendre la rupture de l'année, puis six questions éclair et une question bonus. Chaque bonne réponse rapporte un point à l'agence la plus rapide." },
+    { id: "rupture",   heure: "9:50",  duree: 25, titre: "Rupture 2026",               sous: "L'escalier de l'autonomie", lede: "Jusqu'ici, l'IA répondait. En 2026, elle exécute. La question n'est plus « quel prompt ? » mais « jusqu'où je lui donne la main ? »." },
+    { id: "panorama",  heure: "10:15", duree: 10, titre: "Outils et actus",            sous: "Ce qui a changé cette année", lede: "Les outils changent tous les trois mois. Ce qui reste : savoir choisir selon le besoin, le coût, les droits et la confidentialité." },
     { id: "prompt",    heure: "10:25", duree: 30, titre: "Prompt engineering",         sous: "Méthode, défis, battle", lede: "Le cœur de la séance. Une méthode simple, une démonstration d'itération, trois défis chronométrés sur vos outils gratuits, puis la battle." },
     { id: "pause",     heure: "10:55", duree: 15, titre: "Pause",                      sous: "Ravitaillement" },
     { id: "critique",  heure: "11:10", duree: 20, titre: "Regard critique",            sous: "Droit, biais, bad buzz", lede: "Produire avec l'IA, c'est facile. Savoir ce qu'on a le droit de publier, et ce qui va faire rire tout le réseau, c'est le métier." },
@@ -62,6 +62,21 @@ window.CONTENT = {
     { type: "image", src: "assets/iahumain/5-course-lac.jpg", legende: "Visuel 5 : une course en montagne au-dessus d'un lac", reponse: "ia", indice: "Lumière idéale partout, dossards tous identiques, coureurs clonés au second plan." },
     { type: "image", src: "assets/iahumain/6-village.jpg", legende: "Visuel 6 : un coureur acclamé dans un village de montagne", reponse: "humain", indice: "Des dizaines de visages et de mains nets et tous différents, des téléphones, des détails imparfaits : une vraie photo de presse." }
   ],
+
+  /* Vidéo de clôture du jeu : fichier de Fred lu depuis son PC (non publié en ligne, droits RTBF). */
+  iaHumainVideo: {
+    titre: "Pour finir : un photojournaliste fait le test",
+    intro: "Un photojournaliste chevronné face à des photos réelles et générées par IA. Regardez ce qui le trompe, ce qui le sauve, et ce que ça lui fait.",
+    fichier: "testphotojournaliste.mp4, 2 min 38, dans Documents/AMOS",
+    source: "Source : RTBF, « Réalité ou IA ? Un photojournaliste fait le test ». Projetée en classe, non diffusée en ligne.",
+    minutes: 5,
+    questions: [
+      "Il a des décennies de métier et il hésite. Que vaut notre œil à nous ?",
+      "Ses indices : les cheveux, la lumière, le reflet d'un flash. Lesquels marcheront encore dans un an ?",
+      "« Le mensonge va devenir la référence. » D'accord ou pas ? Qu'est-ce qui peut garder des repères communs : sources, mention IA, loi ?",
+      "Vous êtes chargé de com : publiez-vous un visuel IA réaliste sans le dire ? (On y revient à {heure:critique}.)"
+    ]
+  },
 
   /* ---------- Quiz flash après la vidéo ---------- */
   /* Quiz aligné sur la vidéo « De l'IA passive à l'IA active » (version de Fred, 27/10/2026).

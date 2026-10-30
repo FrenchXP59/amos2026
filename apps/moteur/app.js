@@ -559,8 +559,16 @@
         </div>
       </article>`).join("")}
     </div>
-    <section class="section">${awardRow("Point pour")}</section>`;
+    <section class="section">${awardRow("Point pour")}</section>
+    ${C.iaHumainVideo ? (() => { const v = C.iaHumainVideo; return `<section class="section ih-video"><h2>${esc(v.titre)}</h2><p class="muted" style="max-width:75ch">${esc(v.intro)}</p>
+      <div class="ih-video-grid"><div class="ih-player"><video controls playsinline preload="metadata" hidden></video>
+        <label class="ih-pick"><input type="file" accept="video/*" hidden><span class="btn lamp">Charger la vidéo depuis ce PC</span><small>${esc(v.fichier)}</small></label></div>
+      <div><h3 style="margin:0 0 10px">Échange avec la classe</h3><ol class="ctx" style="margin:0 0 16px">${v.questions.map((q) => `<li>${esc(q)}</li>`).join("")}</ol>
+        <button class="btn" data-ihdebat="${v.minutes || 5}">Lancer ${v.minutes || 5} min d'échange</button><p class="muted" style="font-size:.85rem;margin-top:12px">${esc(v.source)}</p></div></div></section>`; })() : ""}`;
   BIND.iahumain = (root) => {
+    const pick = $(".ih-pick input", root);
+    if (pick) pick.onchange = () => { const f = pick.files[0]; if (!f) return; const vid = $(".ih-player video", root); vid.src = URL.createObjectURL(f); vid.hidden = false; $(".ih-pick", root).hidden = true; };
+    const deb = $("[data-ihdebat]", root); if (deb) deb.onclick = () => setTimer(+deb.dataset.ihdebat, true);
     const toggle = (i, show) => {
       const r = $(`[data-res="${i}"]`, root), b = $(`[data-reveal="${i}"]`, root);
       r.hidden = show === undefined ? !r.hidden : !show;
