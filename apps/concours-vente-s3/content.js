@@ -28,12 +28,12 @@ window.CONTENT = {
     tirageNote: "Constituées en séance 1, elles restent les mêmes jusqu'au concours. Pour corriger un nom ou un membre : séance 1, ou clic sur les scores."
   },
 
-  videos: { s1: { titre: "Le pitch qui donne envie", duree: "4 à 5 min", url: "" } },
+  videos: { s1: { titre: "Le pitch qui donne envie", duree: "4 min 30", url: "https://youtu.be/OmnbD2FRplk" } },
 
   parcours: [
     { id: "accueil", heure: "13:30", duree: 10, titre: "Départ", sous: "Les équipes, la séance" },
     { id: "video", heure: "13:40", duree: 20, titre: "Le pitch qui donne envie", sous: "Vidéo et débat",
-      lede: "Quatre minutes sur AIDA, CAB et l'art d'adapter son discours, puis un débat qui divise les vendeurs." },
+      lede: "Quatre minutes et demie sur AIDA, CAB, SONCAS et le pitch en équipe, puis un débat qui divise les vendeurs : par cœur ou improvisation ?" },
     { id: "argumentaire", type: "construire", data: "argumentaire", heure: "14:00", duree: 30, titre: "L'argumentaire", sous: "Chaque référence en CAB",
       lede: "Trois références, trois arguments complets. Le bénéfice doit parler à l'acheteur, pas seulement au coureur." },
     { id: "profils", type: "tri", data: "triProfils", heure: "14:30", duree: 15, titre: "Un argument, un profil", sous: "Adapter au SONCAS",
@@ -55,11 +55,12 @@ window.CONTENT = {
 
   /* ---------- Vidéo + débat (aligné sur la note de cadrage NotebookLM du 24 novembre) ---------- */
   videoDebat: {
-    question: "Faut-il apprendre son pitch par cœur ?",
+    question: "Faut-il tout apprendre par cœur ou savoir improviser ?",
     relances: [
-      "Pour : en 2 minutes, chaque seconde compte, et le trac efface l'improvisation.",
-      "Contre : un texte récité s'entend, l'acheteur décroche, et le moindre imprévu fait tout dérailler.",
-      "Entre les deux : apprendre l'accroche et la conclusion mot pour mot, le reste en mots-clés ?"
+      "Par cœur : timing maîtrisé, stress réduit, tous les arguments placés. Mais si l'acheteur coupe la parole ?",
+      "Improvisation structurée : plus vivant, on s'adapte. Mais avec l'adrénaline des deux minutes, on oublie une étape.",
+      "Entre les deux : apprendre l'accroche et la conclusion mot pour mot, le reste en mots-clés ?",
+      "Règle du concours : les fiches de notes sont tolérées, mais les lire pénalise le critère « aisance à l'oral ». Qu'est-ce que ça change pour votre préparation ?"
     ],
     minutes: 8
   },

@@ -191,7 +191,8 @@ export default {
           "date": "2026-11-24",
           "heure": "13:30–17:00",
           "titre": "Argumentaire CAB, pitch AIDA, rôles et plan de négociation",
-          "video": "",
+          "video": "https://youtu.be/OmnbD2FRplk",
+          "videoSuite": "debat",
           "apps": [
             {
               "outil": "appli-concours",
