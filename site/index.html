@@ -18,11 +18,13 @@
     </a>
     <nav class="years" id="years" aria-label="Année"></nav>
     <a class="icon-btn convention-link" id="convention-link" href="convention/">Convention 3D</a>
+    <button class="icon-btn" id="teacher-btn">Espace formateur</button>
     <button class="icon-btn" id="theme-btn" aria-label="Changer de thème">Jour</button>
   </header>
   <main id="main" tabindex="-1"></main>
   <footer class="foot" id="foot"></footer>
   <div class="toast" id="toast" role="status"></div>
+  <dialog id="teacher-dialog" class="teacher-dialog"><form id="teacher-form"><h2>Accès formateur</h2><p>Votre code personnel donne accès à toutes les classes et à leurs séances.</p><label for="teacher-code">Code formateur</label><input id="teacher-code" type="password" inputmode="numeric" maxlength="64" autocomplete="off" required><p id="teacher-error" class="err" role="alert"></p><div class="teacher-actions"><button type="button" id="teacher-cancel" class="icon-btn">Annuler</button><button type="submit" class="btn primary">Ouvrir mon espace</button></div></form></dialog>
   <script src="data/annees.js"></script>
   <script src="intro-gate.js"></script>
   <script type="module" src="box.js"></script>

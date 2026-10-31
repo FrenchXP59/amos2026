@@ -11,3 +11,6 @@ prive/
 # Variables locales : jamais versionnées
 .env
 .env.*
+
+# Données dérivées des codes, générées pour la fonction privée
+netlify/functions/formateur/classes.generated.mjs
