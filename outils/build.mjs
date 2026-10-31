@@ -65,6 +65,7 @@ function appDocs(appUrl) {
 
 const annees = readdirSync(join(ROOT, "contenu")).filter((f) => /^\d{4}-\d{4}\.mjs$/.test(f)).map((f) => f.replace(".mjs", "")).sort();
 const index = { annees: [], courante: null };
+const formateurClasses = {};
 
 for (const annee of annees) {
   const D = (await import(pathToFileURL(join(ROOT, "contenu", `${annee}.mjs`)).href)).default;
@@ -88,6 +89,7 @@ for (const annee of annees) {
       cours: usedCours.map((c) => D.cours[c].titre),
       dates: seances.map((s) => ({ date: s.date, heure: s.heure }))
     };
+    (formateurClasses[annee] ||= {})[k] = fileId(annee, code);
     // Privé : tout le contenu de la classe
     const priv = { annee, k, cours, outils, seances };
     writeFileSync(join(out, `${fileId(annee, code)}.json`), JSON.stringify(priv));
@@ -101,6 +103,9 @@ for (const annee of annees) {
 index.courante = index.annees[index.annees.length - 1];
 writeFileSync(join(DIST, "data", "annees.json"), JSON.stringify(index));
 writeFileSync(join(DIST, "data", "annees.js"), `window.__BOX_ANNEES = ${JSON.stringify(index)};\n`);
+const privateDir = join(ROOT, "netlify", "functions", "formateur");
+mkdirSync(privateDir, {recursive:true});
+writeFileSync(join(privateDir, "classes.generated.mjs"), `export default ${JSON.stringify(formateurClasses)};\n`);
 console.log(`✓ Site généré dans dist/ (année courante : ${index.courante})`);
 
 await buildConvention();

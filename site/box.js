@@ -36,6 +36,28 @@ import {unlockClass,loadClass} from "./access.mjs";
     return window.__BOX_PUBLIC[annee];
   }
   const classes = {};
+  let teacherActive = false;
+  const teacherURL = new URL('.netlify/functions/formateur', location.href.split('#')[0]);
+  async function teacherStatus(){ try{return (await fetch(teacherURL,{cache:'no-store'})).ok;}catch{return false;} }
+  async function teacherClass(annee,k){
+    const url=new URL(teacherURL); url.searchParams.set('annee',annee); url.searchParams.set('classe',k);
+    const response=await fetch(url,{cache:'no-store'});
+    if(response.status===401){teacherActive=false;updateTeacherButton();return null;}
+    if(!response.ok)throw new Error('Accès formateur indisponible');
+    const {id}=await response.json();return loadClass(annee,k,id);
+  }
+  function updateTeacherButton(){ $('#teacher-btn').textContent=teacherActive?'Quitter le mode formateur':'Espace formateur'; }
+  $('#teacher-btn').onclick=async()=>{
+    if(teacherActive){try{const response=await fetch(teacherURL,{method:'DELETE'});if(!response.ok)throw new Error('logout');}catch{toast('Déconnexion impossible. Réessayez.');return;} teacherActive=false;Object.keys(classes).forEach(k=>delete classes[k]);updateTeacherButton();toast('Mode formateur quitté');route();return;}
+    $('#teacher-error').textContent='';$('#teacher-code').value='';$('#teacher-dialog').showModal();$('#teacher-code').focus();
+  };
+  $('#teacher-cancel').onclick=()=>$('#teacher-dialog').close();
+  $('#teacher-form').onsubmit=async e=>{
+    e.preventDefault();const input=$('#teacher-code'),button=e.submitter;button.disabled=true;$('#teacher-error').textContent='';
+    try{const res=await fetch(teacherURL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({code:input.value})});input.value='';if(!res.ok){$('#teacher-error').textContent=res.status===401?'Code incorrect.':'Accès momentanément indisponible. Réessayez.';return;}
+      teacherActive=true;updateTeacherButton();$('#teacher-dialog').close();toast('Mode formateur activé');await route(true);
+    }catch{$('#teacher-error').textContent='Connexion impossible. Réessayez.';}finally{button.disabled=false;}
+  };
   async function getClasse(annee, k, code) {
     const {content, id} = await unlockClass(annee, k, code);
     const key = `${annee}/${k}`;
@@ -126,7 +148,7 @@ import {unlockClass,loadClass} from "./access.mjs";
     return `<a class="back" href="#/${esc(P.annee)}">Toutes les classes</a>
       <section class="class-head ${justOpened ? "unlocked" : ""}">${bib(cl.label, P.annee)}
         <div><h1>${esc(cl.niveau)}</h1><p>${esc(cl.programme)}. Intervenant : ${esc(P.intervenant)}.</p>
-        <p><button class="icon-btn" id="lock-btn">Verrouiller sur cet appareil</button></p></div>
+        ${teacherActive ? '<p class="muted">Mode formateur actif</p>' : '<p><button class="icon-btn" id="lock-btn">Verrouiller sur cet appareil</button></p>'}</div>
       </section>
       ${nx ? `<section class="next-card">
         <div class="day"><b>${np.n}</b><span>${np.m}</span></div>
@@ -150,19 +172,20 @@ import {unlockClass,loadClass} from "./access.mjs";
   }
   function seanceHTML(s, cid) {
     const p = parts(s.date), stt = status(s.date);
-    const fini = over(s);
+    const futur = !teacherActive && s.date > today();
+    const fini = teacherActive || over(s);
     const apps = fini
       ? (s.apps || []).map((a) => `<a class="item" href="${esc(a.url)}" target="_blank" rel="noopener"><span class="k">Appli</span><span>${esc(a.label)}</span></a>`)
       : (s.apps || []).length ? [`<span class="item off"><span class="k">Appli</span><span>Projetée en cours, ouverte ici après la séance pour réviser.</span></span>`] : [];
-    const res = (s.ressources || []).map((r) => `<a class="item" href="${esc(r.url)}" download><span class="k">${esc(r.type || "PDF")}</span><span>${esc(r.titre)}</span></a>`);
+    const res = (futur ? [] : (s.ressources || [])).map((r) => `<a class="item" href="${esc(r.url)}" download><span class="k">${esc(r.type || "PDF")}</span><span>${esc(r.titre)}</span></a>`);
     const quiz = fini && s.video && (s.apps || [])[0] ? [`<a class="item" href="${esc(s.apps[0].url.split("#")[0])}#video" target="_blank" rel="noopener"><span class="k">${s.videoSuite ? "Débat" : "Quiz"}</span><span>${s.videoSuite ? "Débat de la vidéo" : "Quiz de la vidéo"}</span></a>`] : [];
-    const items = quiz.concat(apps, res);
+    const items = futur ? [`<span class="item off"><span class="k">Bientôt</span><span>Les ressources seront disponibles le jour de la séance.</span></span>`] : quiz.concat(apps, res);
     return `<li class="seance ${stt}" id="s-${cid}-${s.n}">
       <div class="when"><b>${p.n}</b><span>${p.j} ${p.m}</span></div>
       <div class="body">
         <div class="row"><h3>Séance ${s.n}</h3><span class="pill ${stt === "today" ? "today" : ""}">${stt === "past" ? "Passée" : stt === "today" ? "Aujourd'hui" : "À venir"}</span></div>
         <p class="hour">${esc(hour(s.heure))}${s.titre ? `. ${esc(s.titre)}` : ""}</p>
-        ${videoHTML(s.video)}
+        ${futur ? "" : videoHTML(s.video)}
         <div class="items">${items.length ? items.join("") : `<span class="item off"><span class="k">Bientôt</span><span>Vidéo, applis et documents mis en ligne autour de la séance.</span></span>`}</div>
       </div>
     </li>`;
@@ -187,6 +210,7 @@ import {unlockClass,loadClass} from "./access.mjs";
     else {
       const key = `${annee}/${k}`;
       let C = classes[key];
+      if (!C && teacherActive) { try { C = await teacherClass(annee,k); if(C)classes[key]=C; } catch { main.innerHTML = `<p class="err">Accès formateur indisponible. Réessayez.</p>`; return; } }
       if (!C && st.grants[key]) {
         try { C = await loadClass(annee, k, st.grants[key]); classes[key] = C; }
         catch { delete st.grants[key]; save(); }
@@ -197,7 +221,7 @@ import {unlockClass,loadClass} from "./access.mjs";
       else {
         main.innerHTML = classView(P, k, C, justOpened === true);
         $$("[data-goto]").forEach((b) => (b.onclick = () => { const t = document.getElementById(b.dataset.goto); if (t) t.scrollIntoView({ behavior: "smooth", block: "start" }); }));
-        $("#lock-btn").onclick = () => { delete st.codes[key]; delete st.grants[key]; delete classes[key]; save(); toast("Classe verrouillée sur cet appareil"); route(); };
+        const lock = $("#lock-btn"); if (lock) lock.onclick = () => { delete st.codes[key]; delete st.grants[key]; delete classes[key]; save(); toast("Classe verrouillée sur cet appareil"); route(); };
       }
     }
     if (justOpened !== true) window.scrollTo(0, 0);
@@ -211,5 +235,5 @@ import {unlockClass,loadClass} from "./access.mjs";
 
   applyTheme();
   window.addEventListener("hashchange", () => route());
-  route();
+  teacherStatus().then(async active=>{teacherActive=active;updateTeacherButton();await route();if(new URL(location.href).searchParams.has('formateur')&&!teacherActive)$('#teacher-btn').click();});
 })();
