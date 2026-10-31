@@ -13,16 +13,18 @@ function authenticated(req,key){
   if(!value)return false; const [expires,signature,...rest]=value.split('.');
   return !rest.length && /^\d{10}$/.test(expires||'') && Number(expires)>Math.floor(Date.now()/1000) && /^[a-f0-9]{64}$/.test(signature||'') && same(signature,sign(expires,key));
 }
-export default async function handler(req){
+export async function login(req){
   const code=env('FORMATEUR_CODE'),key=env('FORMATEUR_SESSION_KEY');
   if(!code||!key||key.length<32)return json({error:'Service formateur indisponible'},503);
-  if(req.method==='POST'){
     if(req.headers.get('origin')!==new URL(req.url).origin)return json({error:'Requête refusée'},403);
     let payload;try{payload=await req.json()}catch{return json({error:'Requête invalide'},400)}
     if(typeof payload.code!=='string'||payload.code.length>64||!same(payload.code.trim(),code))return json({error:'Code incorrect'},401);
     const expires=String(Math.floor(Date.now()/1000)+28800);
     return json({ok:true},200,{'Set-Cookie':cookie(`${expires}.${sign(expires,key)}`)});
-  }
+}
+export default async function handler(req){
+  const code=env('FORMATEUR_CODE'),key=env('FORMATEUR_SESSION_KEY');
+  if(!code||!key||key.length<32)return json({error:'Service formateur indisponible'},503);
   if(req.method==='DELETE')return json({ok:true},200,{'Set-Cookie':`${cookieName}=; Path=/; HttpOnly; Secure; SameSite=Strict; Max-Age=0`});
   if(req.method!=='GET')return json({error:'Méthode non autorisée'},405);
   if(!authenticated(req,key))return json({authenticated:false},401);
@@ -32,4 +34,3 @@ export default async function handler(req){
   const {default:classes}=await import('./classes.generated.mjs');
   const id=classes[year]?.[group];return id?json({id}):json({error:'Classe introuvable'},404);
 }
-export const config={rateLimit:{action:'rate_limit',aggregateBy:'ip',windowSize:60,windowLimit:30}};

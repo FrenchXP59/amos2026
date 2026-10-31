@@ -54,7 +54,7 @@ import {unlockClass,loadClass} from "./access.mjs";
   $('#teacher-cancel').onclick=()=>$('#teacher-dialog').close();
   $('#teacher-form').onsubmit=async e=>{
     e.preventDefault();const input=$('#teacher-code'),button=e.submitter;button.disabled=true;$('#teacher-error').textContent='';
-    try{const res=await fetch(teacherURL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({code:input.value})});input.value='';if(!res.ok){$('#teacher-error').textContent=res.status===401?'Code incorrect.':'Accès momentanément indisponible. Réessayez.';return;}
+    try{const res=await fetch(new URL('.netlify/functions/formateur-connexion', location.href.split('#')[0]),{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({code:input.value})});input.value='';if(!res.ok){$('#teacher-error').textContent=res.status===401?'Code incorrect.':'Accès momentanément indisponible. Réessayez.';return;}
       teacherActive=true;updateTeacherButton();$('#teacher-dialog').close();toast('Mode formateur activé');await route(true);
     }catch{$('#teacher-error').textContent='Connexion impossible. Réessayez.';}finally{button.disabled=false;}
   };
