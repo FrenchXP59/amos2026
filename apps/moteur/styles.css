@@ -848,3 +848,7 @@ canvas.confetti { position: fixed; inset: 0; width: 100vw; height: 100vh; z-inde
 .doc-chip::before { content: "↓"; font-weight: 700; }
 .doc-chip small { color: var(--muted); font-size: .72rem; }
 .doc-chip:hover { border-color: var(--ink); }
+
+/* Rappel : vote par téléphone */
+.vote-tel { margin-top: 12px; padding: 10px 14px; border-left: 3px solid var(--accent, #4CAF7A); background: var(--surface); border-radius: 0 var(--r-m) var(--r-m) 0; font-size: .92rem; max-width: 80ch; }
+.vote-tel span { font-size: .75rem; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); margin-right: 8px; }

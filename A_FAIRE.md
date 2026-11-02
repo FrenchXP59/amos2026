@@ -143,4 +143,7 @@ Tous les PDF de novembre sont générés par `node outils/pdf/generer.mjs` à pa
 
 ## 8. Idées en attente
 
+- [ ] **Vote entre groupes par téléphone** (pitchs, battles de recommandations) : il faut empêcher un membre de voter pour son propre groupe. Mis de côté le 2/11.
+- Les quiz des applis sont exportés vers quiz.horizonduo.net : après toute modification d'un quiz, lancer `node outils/export-quiz.mjs ../horizonduo-formation-supabase/questions-cours.js` puis publier le dépôt du quiz.
+
 - [ ] **Campus 3D d'accès aux cours** (inspiré de la démo FLOW 2026) : couche facultative par-dessus la box, avec accès direct toujours visible et repli mobile. Mis de côté le 27/10, à reprendre après les vidéos. Variante légère : plan 2,5D cliquable. Niveau d'effort conseillé : élevé (conception en très élevé).
