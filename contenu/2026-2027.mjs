@@ -430,6 +430,7 @@ export default {
           "n": 1,
           "date": "2026-11-02",
           "heure": "13:30–17:00",
+          "appsOuvertes": true,
           "titre": "Frontière irrégulière, chaînes de prompts, diagnostic et scénarios",
           "video": "https://youtu.be/mBw2X9lwEA4",
           "apps": [
