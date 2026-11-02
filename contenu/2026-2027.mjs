@@ -349,6 +349,7 @@ export default {
           "n": 1,
           "date": "2026-11-02",
           "heure": "09:00–12:30",
+          "appsOuvertes": true,
           "titre": "Panorama, agents et prompt engineering",
           "video": "https://youtu.be/GjL48ZArdU0",
           "apps": [

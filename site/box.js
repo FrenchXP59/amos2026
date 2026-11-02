@@ -173,7 +173,7 @@ import {unlockClass,loadClass} from "./access.mjs";
   function seanceHTML(s, cid) {
     const p = parts(s.date), stt = status(s.date);
     const futur = !teacherActive && s.date > today();
-    const fini = teacherActive || over(s);
+    const fini = teacherActive || s.appsOuvertes === true || over(s);
     const apps = fini
       ? (s.apps || []).map((a) => `<a class="item" href="${esc(a.url)}" target="_blank" rel="noopener"><span class="k">Appli</span><span>${esc(a.label)}</span></a>`)
       : (s.apps || []).length ? [`<span class="item off"><span class="k">Appli</span><span>Projetée en cours, ouverte ici après la séance pour réviser.</span></span>`] : [];
