@@ -22,3 +22,5 @@ dialog:has(#entryForm){max-width:790px}.entry-identity{display:grid;grid-templat
 @media(min-width:701px){.hall-title{left:34px;top:94px;width:238px;padding:12px 16px;border-radius:10px;background:#f7f8f1e8;backdrop-filter:blur(12px);box-shadow:0 5px 25px #16343b0a;text-shadow:none}.hall-title h2{font-size:28px;margin:4px 0}.mission-panel{top:226px}}
 
 .camera-controls{display:flex;align-items:center;gap:2px;border-right:1px solid #cad6cb;padding-right:8px;margin-right:6px}.camera-controls span{font-size:9px;letter-spacing:.08em;color:#526c65}.camera-controls .icon-button{font-size:23px;line-height:1}@media(max-width:700px){.camera-controls{padding-right:3px;margin-right:2px}.camera-controls span{display:none}}
+
+.pw-wrap{position:relative;display:block}.pw-wrap input{padding-right:92px!important}.pw-toggle{position:absolute;right:8px;top:calc(50% + 4px);transform:translateY(-50%);background:transparent;border:0;color:#315d59;font-size:11px;font-weight:650;text-decoration:underline;padding:6px 8px;cursor:pointer}

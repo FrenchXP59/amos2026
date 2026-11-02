@@ -46,6 +46,13 @@ import {unlockClass,loadClass} from "./access.mjs";
     if(!response.ok)throw new Error('Accès formateur indisponible');
     const {id}=await response.json();return loadClass(annee,k,id);
   }
+  // Afficher ou masquer un code saisi
+  document.addEventListener("click", (e) => {
+    const b = e.target.closest(".pw-toggle"); if (!b) return;
+    const inp = document.getElementById(b.dataset.pw); if (!inp) return;
+    const show = inp.type === "password"; inp.type = show ? "text" : "password";
+    b.textContent = show ? "Masquer" : "Afficher"; b.setAttribute("aria-pressed", String(show)); inp.focus();
+  });
   function updateTeacherButton(){ $('#teacher-btn').textContent=teacherActive?'Quitter le mode formateur':'Espace formateur'; }
   $('#teacher-btn').onclick=async()=>{
     if(teacherActive){try{const response=await fetch(teacherURL,{method:'DELETE'});if(!response.ok)throw new Error('logout');}catch{toast('Déconnexion impossible. Réessayez.');return;} teacherActive=false;Object.keys(classes).forEach(k=>delete classes[k]);updateTeacherButton();toast('Mode formateur quitté');route();return;}

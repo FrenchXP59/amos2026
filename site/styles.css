@@ -154,3 +154,8 @@ details.obj li { margin: 4px 0; }
 @media(max-width:600px){.convention-link{font-size:.75rem;padding:8px}.top{gap:8px}}
 
 .teacher-dialog{width:min(440px,calc(100% - 32px));border:1px solid var(--line);border-radius:var(--r-m);padding:24px;background:var(--surface);color:var(--ink)}.teacher-dialog::backdrop{background:#0009}.teacher-dialog h2{margin:0 0 10px}.teacher-dialog p{margin:10px 0}.teacher-dialog label{display:block;margin:16px 0 6px;font-weight:700}.teacher-dialog input{width:100%;padding:12px;font:inherit;border:1px solid var(--line);border-radius:var(--r-s);background:var(--surface-2);color:var(--ink)}.teacher-actions{display:flex;justify-content:flex-end;gap:10px;flex-wrap:wrap;margin-top:16px}
+
+/* Bouton Afficher / Masquer le code */
+.pw-wrap { position: relative; display: block; }
+.pw-wrap input { width: 100%; padding-right: 92px; }
+.pw-toggle { position: absolute; right: 6px; top: 50%; transform: translateY(-50%); border: 0; background: transparent; color: inherit; font: inherit; font-size: .85rem; font-weight: 600; text-decoration: underline; cursor: pointer; padding: 6px 8px; }
