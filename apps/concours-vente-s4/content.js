@@ -51,16 +51,16 @@ window.CONTENT = {
 
   /* ---------- Vidéo + quiz flash (aligné sur la note de cadrage NotebookLM du 25 novembre) ---------- */
   quizFlash: [
-    { q: "« Votre marque, personne ne la connaît ! » Cette objection, c'est le plus souvent…", options: ["Une attaque personnelle", "Un refus définitif", "Une question déguisée : une inquiétude, un besoin d'être rassuré", "La fin de la négociation"], bonne: 2,
+    { q: "« Votre marque, personne ne la connaît ! » Cette objection, c'est le plus souvent…", options: ["Une attaque personnelle", "Une question déguisée : une inquiétude, un besoin d'être rassuré", "Un refus définitif", "La fin de la négociation"], bonne: 1,
       explication: "Certaines objections sont de vrais refus, mais la plupart sont une invitation à creuser.",
       complement: "Réflexe à éviter : se braquer ou se justifier tout de suite." },
-    { q: "Dans la méthode en cinq marches, que fait-on juste avant de répondre ?", options: ["On reformule", "On questionne pour trouver le vrai problème", "On vérifie", "On baisse le prix"], bonne: 1,
+    { q: "Dans la méthode en cinq marches, que fait-on juste avant de répondre ?", options: ["On reformule", "On vérifie", "On questionne pour trouver le vrai problème", "On baisse le prix"], bonne: 2,
       explication: "Écouter sans interrompre, reformuler, questionner, répondre, puis vérifier que l'inquiétude est dissipée.",
       complement: "La marche la plus souvent oubliée : la dernière. « Est-ce que cela répond à votre inquiétude ? »" },
-    { q: "« Exactement, et c'est justement cette exclusivité qui va différencier votre magasin. » C'est la technique…", options: ["Du questionnement", "De la compensation", "Du boomerang", "De la reformulation"], bonne: 2,
+    { q: "« Exactement, et c'est justement cette exclusivité qui va différencier votre magasin. » C'est la technique…", options: ["Du boomerang", "Du questionnement", "De la compensation", "De la reformulation"], bonne: 0,
       explication: "Le boomerang transforme l'objection en atout.",
       complement: "Compenser, c'est reconnaître un inconvénient réel et le contrebalancer, par exemple avec une première commande test. Sans jamais inventer de fausse garantie. Les sept techniques sont détaillées à {heure:techniques}." },
-    { q: "Pourquoi préférer « Oui, et » à « Oui, mais » ?", options: ["C'est plus court", "« Mais » sonne comme une contradiction et braque l'acheteur", "C'est imposé par le jury", "Il n'y a aucune différence"], bonne: 1,
+    { q: "Pourquoi préférer « Oui, et » à « Oui, mais » ?", options: ["C'est plus court", "C'est imposé par le jury", "Il n'y a aucune différence", "« Mais » sonne comme une contradiction et braque l'acheteur"], bonne: 3,
       explication: "« Je comprends votre inquiétude, et voici ce que nous pouvons examiner » garde un ton collaboratif.",
       complement: "Pas une formule magique : l'attitude compte autant que la technique. Entraînement dans le duel de {heure:duel}." },
     { bonus: true, q: "Au concours, vers quelle minute de la négociation tombe l'objection imposée ?", options: ["La 1re", "La 3e", "La 7e", "La 12e"], bonne: 2,
@@ -167,14 +167,14 @@ window.CONTENT = {
 
   /* ---------- Battle finale ---------- */
   battle: [
-    { q: "Dans la méthode en cinq temps, que fait-on juste après avoir écouté ?", options: ["On répond", "On reformule", "On baisse le prix", "On conclut"], bonne: 1 },
-    { q: "« Votre marque est inconnue » → « Justement, elle sera exclusive chez vous. » Quelle technique ?", options: ["Compenser", "Boomerang", "Différer", "Témoignage"], bonne: 1 },
-    { q: "« C'est vrai, la marge est serrée ; en échange, nous reprenons les invendus. » Quelle technique ?", options: ["Compenser", "Questionner", "Anticiper", "Boomerang"], bonne: 0 },
-    { q: "Pourquoi préférer « oui, et » à « oui, mais » ?", options: ["C'est plus court", "« Mais » efface ce qui précède et braque l'acheteur", "C'est la règle du concours", "Aucune différence"], bonne: 1 },
-    { q: "Traiter l'objection dans le pitch, avant qu'elle soit posée, c'est…", options: ["Différer", "Anticiper", "Questionner", "Compenser"], bonne: 1 },
-    { q: "Différer une objection, c'est acceptable…", options: ["Pour esquiver une question gênante", "Quand le prix arrive avant la découverte", "Toujours", "Jamais"], bonne: 1 },
+    { q: "Dans la méthode en cinq temps, que fait-on juste après avoir écouté ?", options: ["On répond", "On baisse le prix", "On conclut", "On reformule"], bonne: 3 },
+    { q: "« Votre marque est inconnue » → « Justement, elle sera exclusive chez vous. » Quelle technique ?", options: ["Boomerang", "Compenser", "Différer", "Témoignage"], bonne: 0 },
+    { q: "« C'est vrai, la marge est serrée ; en échange, nous reprenons les invendus. » Quelle technique ?", options: ["Questionner", "Compenser", "Anticiper", "Boomerang"], bonne: 1 },
+    { q: "Pourquoi préférer « oui, et » à « oui, mais » ?", options: ["C'est plus court", "C'est la règle du concours", "« Mais » efface ce qui précède et braque l'acheteur", "Aucune différence"], bonne: 2 },
+    { q: "Traiter l'objection dans le pitch, avant qu'elle soit posée, c'est…", options: ["Différer", "Questionner", "Anticiper", "Compenser"], bonne: 2 },
+    { q: "Différer une objection, c'est acceptable…", options: ["Quand le prix arrive avant la découverte", "Pour esquiver une question gênante", "Toujours", "Jamais"], bonne: 0 },
     { q: "La dernière étape du traitement d'une objection ?", options: ["Remercier", "Vérifier que la réponse convient", "Passer à la suivante", "Signer"], bonne: 1 },
-    { q: "Au concours, l'objection imposée tombe…", options: ["Au début du pitch", "Vers la 7e minute", "Après la note", "Jamais"], bonne: 1 }
+    { q: "Au concours, l'objection imposée tombe…", options: ["Au début du pitch", "Après la note", "Jamais", "Vers la 7e minute"], bonne: 3 }
   ],
 
   aRetenir: [

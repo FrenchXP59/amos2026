@@ -183,14 +183,14 @@
 
     /* ---------- Battle finale ---------- */
     battle: [
-      { q: "L'article 50 de l'AI Act (transparence) s'applique depuis…", options: ["Le 1er janvier 2025", "Le 2 août 2026", "Le 2 décembre 2027", "Il n'est pas encore voté"], bonne: 1 },
-      { q: "Additionner les abonnés Instagram, TikTok, X et newsletter donne…", options: ["L'audience unique exacte", "Un total surestimé, à cause des doublons", "Un total sous-estimé", "Le nombre de clients"], bonne: 1 },
+      { q: "L'article 50 de l'AI Act (transparence) s'applique depuis…", options: ["Le 2 août 2026", "Le 1er janvier 2025", "Le 2 décembre 2027", "Il n'est pas encore voté"], bonne: 0 },
+      { q: "Additionner les abonnés Instagram, TikTok, X et newsletter donne…", options: ["L'audience unique exacte", "Un total sous-estimé", "Un total surestimé, à cause des doublons", "Le nombre de clients"], bonne: 2 },
       { q: "4 200 abonnés + 30 % =", options: ["5 460", "5 900", "4 230", "5 200"], bonne: 0 },
-      { q: "Dans un modèle produit avec l'IA, on exige…", options: ["Le résultat final seulement", "Les formules et les hypothèses", "Un joli graphique", "Une source Statista"], bonne: 1 },
-      { q: "Coller le fichier des abonnés dans une IA grand public, c'est…", options: ["Autorisé", "Autorisé avec validation", "Interdit : données personnelles", "Recommandé pour gagner du temps"], bonne: 2 },
-      { q: "Un chatbot qui répond aux supporters doit…", options: ["Se faire passer pour un salarié", "Indiquer qu'il s'agit d'une IA", "Être interdit", "Répondre uniquement en anglais"], bonne: 1 },
+      { q: "Dans un modèle produit avec l'IA, on exige…", options: ["Le résultat final seulement", "Un joli graphique", "Une source Statista", "Les formules et les hypothèses"], bonne: 3 },
+      { q: "Coller le fichier des abonnés dans une IA grand public, c'est…", options: ["Autorisé", "Interdit : données personnelles", "Autorisé avec validation", "Recommandé pour gagner du temps"], bonne: 1 },
+      { q: "Un chatbot qui répond aux supporters doit…", options: ["Se faire passer pour un salarié", "Être interdit", "Répondre uniquement en anglais", "Indiquer qu'il s'agit d'une IA"], bonne: 3 },
       { q: "L'analyse de sensibilité sert à…", options: ["Rendre le modèle plus joli", "Trouver l'hypothèse qui fait le plus varier le résultat", "Supprimer les risques", "Remplacer le tableur"], bonne: 1 },
-      { q: "Une règle de charte utile est une règle…", options: ["Générale et inspirante", "Précise et vérifiable", "Longue", "Rédigée par l'IA"], bonne: 1 }
+      { q: "Une règle de charte utile est une règle…", options: ["Précise et vérifiable", "Générale et inspirante", "Longue", "Rédigée par l'IA"], bonne: 0 }
     ],
 
     aRetenir: [

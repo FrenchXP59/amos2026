@@ -196,14 +196,14 @@ window.CONTENT = {
   },
 
   battle: [
-    { q: "Chez Zapier, un Zap commence toujours par…", options: ["Une action", "Un déclencheur", "Un filtre", "Un routeur"], bonne: 1 },
+    { q: "Chez Zapier, un Zap commence toujours par…", options: ["Une action", "Un filtre", "Un routeur", "Un déclencheur"], bonne: 3 },
     { q: "Chez Make, à quoi sert un routeur ?", options: ["À envoyer des mails", "À faire bifurquer le scénario en plusieurs chemins", "À stocker des fichiers", "À payer l'abonnement"], bonne: 1 },
-    { q: "Un filtre dans un flux sert à…", options: ["Décorer", "N'exécuter la suite que si une condition est remplie", "Supprimer les données", "Accélérer l'IA"], bonne: 1 },
-    { q: "Résumer la veille avec l'IA et l'envoyer au client : on…", options: ["Automatise complètement", "Automatise avec validation humaine", "Ne le fait jamais", "Le fait à la main"], bonne: 1 },
+    { q: "Un filtre dans un flux sert à…", options: ["N'exécuter la suite que si une condition est remplie", "Décorer", "Supprimer les données", "Accélérer l'IA"], bonne: 0 },
+    { q: "Résumer la veille avec l'IA et l'envoyer au client : on…", options: ["Automatise complètement", "Ne le fait jamais", "Automatise avec validation humaine", "Le fait à la main"], bonne: 2 },
     { q: "Dans une veille faite par l'IA, un lien cité…", options: ["Est forcément juste", "S'ouvre et se vérifie", "Est inutile", "Remplace la lecture"], bonne: 1 },
-    { q: "Répondre à un spectateur blessé après le tournoi : on…", options: ["Automatise", "Automatise avec validation", "N'automatise pas", "Ignore"], bonne: 2 },
-    { q: "Une veille utile commence par…", options: ["Beaucoup de sources", "Une question à laquelle elle répond", "Un outil payant", "Un résumé IA"], bonne: 1 },
-    { q: "Le dernier maillon d'un flux qui écrit au client, c'est…", options: ["L'IA", "Un humain qui relit", "Le filtre", "Le déclencheur"], bonne: 1 }
+    { q: "Répondre à un spectateur blessé après le tournoi : on…", options: ["N'automatise pas", "Automatise", "Automatise avec validation", "Ignore"], bonne: 0 },
+    { q: "Une veille utile commence par…", options: ["Beaucoup de sources", "Un outil payant", "Une question à laquelle elle répond", "Un résumé IA"], bonne: 2 },
+    { q: "Le dernier maillon d'un flux qui écrit au client, c'est…", options: ["L'IA", "Le filtre", "Le déclencheur", "Un humain qui relit"], bonne: 3 }
   ],
 
   aRetenir: [

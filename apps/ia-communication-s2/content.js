@@ -204,12 +204,12 @@ window.CONTENT = {
   battle: [
     { q: "Où ajoute-t-on le titre d'une affiche générée par IA ?", options: ["Dans le prompt", "Dans l'outil de mise en page", "Nulle part", "Dans la légende"], bonne: 1 },
     { q: "Quel format pour une story ?", options: ["1:1", "4:5", "9:16", "16:9"], bonne: 2 },
-    { q: "Des coureurs tous jeunes et minces sur un visuel IA, c'est…", options: ["Un choix de style", "Un biais à corriger", "Obligatoire", "Sans importance"], bonne: 1 },
-    { q: "Peut-on montrer un logo de marque connue sur un visuel IA de l'événement ?", options: ["Oui", "Non : droits et faux partenariat", "Oui, s'il est petit", "Oui, en story"], bonne: 1 },
-    { q: "Pour qu'une série de posts se ressemble, on…", options: ["Change d'outil à chaque post", "Garde la même description de lieu et de lumière", "Ajoute des émojis", "Utilise des couleurs différentes"], bonne: 1 },
+    { q: "Des coureurs tous jeunes et minces sur un visuel IA, c'est…", options: ["Un choix de style", "Obligatoire", "Sans importance", "Un biais à corriger"], bonne: 3 },
+    { q: "Peut-on montrer un logo de marque connue sur un visuel IA de l'événement ?", options: ["Non : droits et faux partenariat", "Oui", "Oui, s'il est petit", "Oui, en story"], bonne: 0 },
+    { q: "Pour qu'une série de posts se ressemble, on…", options: ["Change d'outil à chaque post", "Ajoute des émojis", "Garde la même description de lieu et de lumière", "Utilise des couleurs différentes"], bonne: 2 },
     { q: "Avant de générer une vidéo, on fait d'abord…", options: ["Le montage", "Le storyboard", "La musique", "Les sous-titres"], bonne: 1 },
     { q: "Quel outil vidéo d'OpenAI a fermé en 2026 ?", options: ["Sora", "DALL·E", "Whisper", "Codex"], bonne: 0 },
-    { q: "Un visuel IA présenté comme une photo de l'édition 2026, c'est…", options: ["Astucieux", "Trompeur, et refusé par le client", "Obligatoire", "Plus rapide"], bonne: 1 }
+    { q: "Un visuel IA présenté comme une photo de l'édition 2026, c'est…", options: ["Astucieux", "Obligatoire", "Plus rapide", "Trompeur, et refusé par le client"], bonne: 3 }
   ],
 
   aRetenir: [

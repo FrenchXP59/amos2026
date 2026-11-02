@@ -82,23 +82,23 @@ window.CONTENT = {
   /* Quiz aligné sur la vidéo « De l'IA passive à l'IA active » (version de Fred, 27/10/2026).
      bonus: true = question hors vidéo ; complement = ce que l'intervenant ajoute à l'oral. */
   quizFlash: [
-    { q: "LLM signifie…", options: ["Large Language Model", "Logiciel de Langage Multiple", "Learning Logic Machine", "Long Language Memory"], bonne: 0,
+    { q: "LLM signifie…", options: ["Logiciel de Langage Multiple", "Learning Logic Machine", "Large Language Model", "Long Language Memory"], bonne: 2,
       explication: "Un grand modèle de langage : il génère du texte à partir de ce qu'il a appris et du contexte qu'on lui donne.",
       complement: "ChatGPT, Claude, Gemini, Le Chat ou Copilot reposent tous sur un LLM." },
-    { q: "Une « hallucination » d'IA, c'est…", options: ["Un bug qui fait planter l'outil", "Une information inventée ou une erreur donnée avec aplomb", "Une image trop colorée", "Une réponse refusée par l'IA"], bonne: 1,
+    { q: "Une « hallucination » d'IA, c'est…", options: ["Un bug qui fait planter l'outil", "Une image trop colorée", "Une réponse refusée par l'IA", "Une information inventée ou une erreur donnée avec aplomb"], bonne: 3,
       explication: "Une réponse convaincante n'est pas forcément vraie. D'où la règle : chaque date, chaque chiffre se vérifie." },
     { q: "Pour le CITANUIT, quelle est la différence entre un assistant et un agent ?", options: ["Aucune, c'est le même outil", "L'assistant rédige un texte ; l'agent s'organise et exécute toute une mission", "L'agent est gratuit, l'assistant payant", "L'assistant fait les visuels, l'agent les textes"], bonne: 1,
       explication: "L'assistant répond : un post. L'agent enchaîne : il analyse le brief, prépare trois publications, propose les visuels et range le tout dans un dossier.",
       complement: "Exemples d'agents en 2026 : ChatGPT Work, lancé le 9 juillet 2026, et Claude Cowork." },
-    { q: "Un skill, c'est…", options: ["Un abonnement premium", "Un mode d'emploi réutilisable : ton, règles, formats, contrôles qualité", "Un plugin de réseau social", "Une note attribuée à l'IA"], bonne: 1,
+    { q: "Un skill, c'est…", options: ["Un mode d'emploi réutilisable : ton, règles, formats, contrôles qualité", "Un abonnement premium", "Un plugin de réseau social", "Une note attribuée à l'IA"], bonne: 0,
       explication: "On formalise une fois la méthode, l'agent la réapplique : cohérence et temps gagné.",
       complement: "Sur Claude, les skills sont disponibles sur toutes les offres, y compris gratuite, avec l'exécution de code activée." },
-    { q: "Sur l'escalier de l'autonomie, la troisième marche, ce sont…", options: ["Les fichiers", "Les connecteurs vers des applications autorisées", "Le chat", "L'agent"], bonne: 1,
+    { q: "Sur l'escalier de l'autonomie, la troisième marche, ce sont…", options: ["Les connecteurs vers des applications autorisées", "Les fichiers", "Le chat", "L'agent"], bonne: 0,
       explication: "Chat, puis fichiers, puis connecteurs (mail, stockage, agenda), puis l'agent qui combine les trois.",
       complement: "Le chat seul a des limites d'import de fichiers, qui changent souvent selon les offres : l'agent, lui, travaille directement dans un dossier." },
-    { q: "Plus l'agent agit seul…", options: ["Moins il faut vérifier", "Plus la validation humaine est indispensable", "Plus il devient responsable du résultat", "Plus il coûte cher"], bonne: 1,
+    { q: "Plus l'agent agit seul…", options: ["Moins il faut vérifier", "Plus il devient responsable du résultat", "Plus la validation humaine est indispensable", "Plus il coûte cher"], bonne: 2,
       explication: "On gère les accès, on vérifie les choix et les droits à l'image, on approuve. L'humain reste responsable du résultat." },
-    { q: "Avant de confier les 1 300 photos du CITANUIT à un agent, on…", options: ["Lui donne accès à tout l'ordinateur", "Travaille dans un dossier dédié, avec une sauvegarde", "Supprime les originaux pour gagner de la place", "Le laisse publier directement"], bonne: 1, bonus: true,
+    { q: "Avant de confier les 1 300 photos du CITANUIT à un agent, on…", options: ["Lui donne accès à tout l'ordinateur", "Supprime les originaux pour gagner de la place", "Le laisse publier directement", "Travaille dans un dossier dédié, avec une sauvegarde"], bonne: 3, bonus: true,
       explication: "Un dossier dédié plutôt que tout l'ordinateur, une sauvegarde avant toute action en masse, une validation avant de publier.",
       complement: "Jamais de données personnelles sensibles (liste des inscrits, certificats médicaux) dans un outil non validé." }
   ],
@@ -349,12 +349,12 @@ window.CONTENT = {
 
   /* ---------- Battle finale ---------- */
   battle: [
-    { q: "Quelle marche de l'escalier pour « classer 1 300 photos dans leur dossier » ?", options: ["Chat", "Chat + fichiers", "Chat + connecteurs", "Agent avec accès dossier"], bonne: 3 },
+    { q: "Quelle marche de l'escalier pour « classer 1 300 photos dans leur dossier » ?", options: ["Chat", "Agent avec accès dossier", "Chat + fichiers", "Chat + connecteurs"], bonne: 1 },
     { q: "Quel bloc manque dans « Écris un post pour un trail de nuit » ?", options: ["Le contexte", "Le format", "La cible", "Tous ces blocs"], bonne: 3 },
-    { q: "Quel outil vidéo d'OpenAI a fermé en 2026 ?", options: ["DALL·E", "Sora", "Codex", "Whisper"], bonne: 1 },
+    { q: "Quel outil vidéo d'OpenAI a fermé en 2026 ?", options: ["DALL·E", "Codex", "Sora", "Whisper"], bonne: 2 },
     { q: "Selon IBM (2026), quelle part des fans français fait confiance aux contenus IA ?", options: ["25 %", "45 %", "69 %", "80 %"], bonne: 1 },
-    { q: "Depuis quand l'article 50 de l'AI Act s'applique-t-il ?", options: ["1er janvier 2026", "2 août 2026", "2 décembre 2027", "Pas encore"], bonne: 1 },
-    { q: "Quel réflexe avant de laisser un agent renommer des fichiers en masse ?", options: ["Lui donner tout le PC", "Faire une sauvegarde", "Désactiver la validation", "Utiliser la version gratuite"], bonne: 1 },
+    { q: "Depuis quand l'article 50 de l'AI Act s'applique-t-il ?", options: ["2 août 2026", "1er janvier 2026", "2 décembre 2027", "Pas encore"], bonne: 0 },
+    { q: "Quel réflexe avant de laisser un agent renommer des fichiers en masse ?", options: ["Lui donner tout le PC", "Désactiver la validation", "Utiliser la version gratuite", "Faire une sauvegarde"], bonne: 3 },
     { q: "Quelle technique consiste à faire réagir la cible au contenu ?", options: ["Few-shot", "Le persona", "Le registre", "Le format"], bonne: 1 },
     { q: "Quel critère de la grille vérifie dates et chiffres ?", options: ["Pertinence", "Cohérence", "Exactitude", "Conformité"], bonne: 2 }
   ],

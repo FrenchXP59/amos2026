@@ -174,11 +174,11 @@ window.CONTENT = {
     { q: "« Nous reprenons les invendus » parle surtout au profil…", options: ["Orgueil", "Sécurité", "Nouveauté", "Argent"], bonne: 1 },
     { q: "« Vous serez la seule enseigne de la région » parle au profil…", options: ["Confort", "Argent", "Orgueil", "Sécurité"], bonne: 2 },
     { q: "Chaussure route : plancher 55 € HT, prix visé par l'enseigne 58,33 € HT. L'accord se joue…", options: ["Au-dessus de 65 €", "Entre 55 et 58,33 € HT", "Sous 55 €", "À 70 €"], bonne: 1 },
-    { q: "Donnant-donnant signifie…", options: ["On cède tout pour conclure", "Chaque concession obtient une contrepartie", "On ne cède jamais rien", "On partage la différence"], bonne: 1 },
-    { q: "Au fil de la négociation, les concessions sont…", options: ["De plus en plus grandes", "De plus en plus petites", "Toujours identiques", "Annoncées toutes d'un coup"], bonne: 1 },
+    { q: "Donnant-donnant signifie…", options: ["On cède tout pour conclure", "On ne cède jamais rien", "On partage la différence", "Chaque concession obtient une contrepartie"], bonne: 3 },
+    { q: "Au fil de la négociation, les concessions sont…", options: ["De plus en plus petites", "De plus en plus grandes", "Toujours identiques", "Annoncées toutes d'un coup"], bonne: 0 },
     { q: "Le rôle « Conclusion et engagement » correspond à quelle lettre d'AIDA ?", options: ["A comme Attention", "I", "D", "A comme Action"], bonne: 3 },
-    { q: "Un bénéfice, c'est…", options: ["Un fait technique", "Ce que le produit permet en général", "Ce que ça change pour ce client", "Le prix"], bonne: 2 },
-    { q: "Face à un acheteur « Argent », on met d'abord en avant…", options: ["L'innovation", "La marge et la rentabilité", "Le prestige", "La simplicité"], bonne: 1 }
+    { q: "Un bénéfice, c'est…", options: ["Un fait technique", "Ce que le produit permet en général", "Le prix", "Ce que ça change pour ce client"], bonne: 3 },
+    { q: "Face à un acheteur « Argent », on met d'abord en avant…", options: ["L'innovation", "Le prestige", "La marge et la rentabilité", "La simplicité"], bonne: 2 }
   ],
 
   aRetenir: [

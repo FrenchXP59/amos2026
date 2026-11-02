@@ -52,16 +52,16 @@ window.CONTENT = {
   positionnement: {
     intro: "Répondez seul, à main levée ou sur papier. Si moins de la moitié de la classe a 7 bonnes réponses sur 10, faites l'atelier complet ; sinon, un rappel rapide suffit et le temps gagné va au premier essai.",
     questions: [
-      { q: "AIDA signifie…", options: ["Attention, Intérêt, Désir, Action", "Accueil, Information, Démonstration, Accord", "Argument, Idée, Décision, Achat", "Attente, Intention, Désir, Achat"], bonne: 0, explication: "Les quatre étapes qui guident le client de l'attention à l'action. Votre pitch de 2 minutes suivra ce chemin." },
-      { q: "Dans SONCAS, le S correspond à…", options: ["Service", "Sécurité", "Satisfaction", "Simplicité"], bonne: 1, explication: "S comme Sécurité : le client veut être rassuré, avoir des garanties." },
+      { q: "AIDA signifie…", options: ["Accueil, Information, Démonstration, Accord", "Attention, Intérêt, Désir, Action", "Argument, Idée, Décision, Achat", "Attente, Intention, Désir, Achat"], bonne: 1, explication: "Les quatre étapes qui guident le client de l'attention à l'action. Votre pitch de 2 minutes suivra ce chemin." },
+      { q: "Dans SONCAS, le S correspond à…", options: ["Service", "Satisfaction", "Sécurité", "Simplicité"], bonne: 2, explication: "S comme Sécurité : le client veut être rassuré, avoir des garanties." },
       { q: "« Semelle en mousse de 38 mm » est…", options: ["Une caractéristique", "Un avantage", "Un bénéfice", "Une objection"], bonne: 0, explication: "C'est un fait technique sur le produit : une caractéristique." },
-      { q: "« Vos genoux fatigueront moins sur un semi-marathon » est…", options: ["Une caractéristique", "Un avantage", "Un bénéfice", "Une question"], bonne: 2, explication: "C'est ce que le client gagne, lui, dans sa situation : un bénéfice." },
-      { q: "« Et si ça ne se vend pas, vous reprenez les invendus ? » révèle surtout un profil…", options: ["Orgueil", "Nouveauté", "Sécurité", "Confort"], bonne: 2, explication: "Le client cherche une garantie : profil Sécurité." },
-      { q: "« C'est la toute dernière technologie ? » révèle surtout un profil…", options: ["Nouveauté", "Argent", "Confort", "Sécurité"], bonne: 0, explication: "L'attrait pour l'innovation : profil Nouveauté." },
-      { q: "Avant d'argumenter, le vendeur doit d'abord…", options: ["Annoncer le prix", "Découvrir les besoins du client", "Présenter toute la gamme", "Traiter les objections"], bonne: 1, explication: "On n'argumente bien qu'après avoir compris le besoin : c'est la phase de découverte." },
-      { q: "Laquelle est une question ouverte ?", options: ["Vous courez souvent ?", "Vous préférez la route ?", "Comment se passent vos sorties longues ?", "C'est pour vous ?"], bonne: 2, explication: "Une question ouverte appelle une réponse développée, pas un oui ou un non." },
-      { q: "Face à une objection, le premier réflexe est de…", options: ["Contredire immédiatement", "Écouter et reformuler", "Baisser le prix", "Changer de sujet"], bonne: 1, explication: "On écoute, on reformule pour montrer qu'on a compris, puis on répond." },
-      { q: "Le dernier A d'AIDA demande au vendeur de…", options: ["Attendre la décision", "Conclure : proposer une action concrète", "Ajouter un argument", "Annoncer une remise"], bonne: 1, explication: "Action : on conclut, on propose une suite précise (une commande test, un rendez-vous)." }
+      { q: "« Vos genoux fatigueront moins sur un semi-marathon » est…", options: ["Une caractéristique", "Un avantage", "Une question", "Un bénéfice"], bonne: 3, explication: "C'est ce que le client gagne, lui, dans sa situation : un bénéfice." },
+      { q: "« Et si ça ne se vend pas, vous reprenez les invendus ? » révèle surtout un profil…", options: ["Sécurité", "Orgueil", "Nouveauté", "Confort"], bonne: 0, explication: "Le client cherche une garantie : profil Sécurité." },
+      { q: "« C'est la toute dernière technologie ? » révèle surtout un profil…", options: ["Argent", "Confort", "Nouveauté", "Sécurité"], bonne: 2, explication: "L'attrait pour l'innovation : profil Nouveauté." },
+      { q: "Avant d'argumenter, le vendeur doit d'abord…", options: ["Annoncer le prix", "Présenter toute la gamme", "Traiter les objections", "Découvrir les besoins du client"], bonne: 3, explication: "On n'argumente bien qu'après avoir compris le besoin : c'est la phase de découverte." },
+      { q: "Laquelle est une question ouverte ?", options: ["Vous courez souvent ?", "Comment se passent vos sorties longues ?", "Vous préférez la route ?", "C'est pour vous ?"], bonne: 1, explication: "Une question ouverte appelle une réponse développée, pas un oui ou un non." },
+      { q: "Face à une objection, le premier réflexe est de…", options: ["Contredire immédiatement", "Baisser le prix", "Changer de sujet", "Écouter et reformuler"], bonne: 3, explication: "On écoute, on reformule pour montrer qu'on a compris, puis on répond." },
+      { q: "Le dernier A d'AIDA demande au vendeur de…", options: ["Attendre la décision", "Ajouter un argument", "Conclure : proposer une action concrète", "Annoncer une remise"], bonne: 2, explication: "Action : on conclut, on propose une suite précise (une commande test, un rendez-vous)." }
     ]
   },
 
@@ -129,13 +129,13 @@ window.CONTENT = {
 
   /* ---------- Battle finale ---------- */
   battle: [
-    { q: "« Semelle de 38 mm » est…", options: ["Une caractéristique", "Un avantage", "Un bénéfice", "Une objection"], bonne: 0 },
-    { q: "« Vous reprenez les invendus ? » : quel profil ?", options: ["Orgueil", "Sécurité", "Nouveauté", "Argent"], bonne: 1 },
+    { q: "« Semelle de 38 mm » est…", options: ["Un avantage", "Une caractéristique", "Un bénéfice", "Une objection"], bonne: 1 },
+    { q: "« Vous reprenez les invendus ? » : quel profil ?", options: ["Sécurité", "Orgueil", "Nouveauté", "Argent"], bonne: 0 },
     { q: "Combien de temps dure le pitch au concours ?", options: ["30 secondes", "2 minutes", "5 minutes", "15 minutes"], bonne: 1 },
     { q: "Quel support peut-on utiliser le jour du concours ?", options: ["Un diaporama", "Une vidéo", "Aucun, en dehors des livrables remis", "Un prototype"], bonne: 2 },
     { q: "Prix public 140 € TTC, coefficient 2 : prix d'achat visé par l'enseigne ?", options: ["70 € HT", "58,33 € HT", "65 € HT", "46,67 € HT"], bonne: 1 },
-    { q: "Peut-on descendre sous le prix plancher ?", options: ["Oui, pour conclure", "Non, la marque perd de l'argent", "Oui, si l'acheteur insiste", "Seulement pour la veste"], bonne: 1 },
-    { q: "Avant d'argumenter, on…", options: ["Annonce les prix", "Découvre les besoins", "Fait une remise", "Parle de soi"], bonne: 1 },
+    { q: "Peut-on descendre sous le prix plancher ?", options: ["Oui, pour conclure", "Oui, si l'acheteur insiste", "Non, la marque perd de l'argent", "Seulement pour la veste"], bonne: 2 },
+    { q: "Avant d'argumenter, on…", options: ["Annonce les prix", "Fait une remise", "Parle de soi", "Découvre les besoins"], bonne: 3 },
     { q: "Pendant une visite client mystère, on peut enregistrer le vendeur…", options: ["Oui, discrètement", "Non, jamais sans son accord", "Oui, si c'est pour l'école", "Oui, en audio seulement"], bonne: 1 }
   ],
 

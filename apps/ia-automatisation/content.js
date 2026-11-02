@@ -65,10 +65,10 @@ window.CONTENT = {
 
   /* ---------- Quiz flash après la vidéo ---------- */
   quizFlash: [
-    { q: "Une hallucination d'IA, c'est…", options: ["Un bug qui fait planter l'outil", "Une information fausse donnée avec un aplomb total", "Une image trop colorée", "Un refus de répondre"], bonne: 1,
+    { q: "Une hallucination d'IA, c'est…", options: ["Une information fausse donnée avec un aplomb total", "Un bug qui fait planter l'outil", "Une image trop colorée", "Un refus de répondre"], bonne: 0,
       explication: "Un rapport ultra convaincant, plein de chiffres précis… sortis de nulle part.",
       complement: "Le modèle produit du plausible, pas forcément du vrai : la fluidité du texte ne dit rien de sa justesse." },
-    { q: "La règle d'or face à un chiffre donné par l'IA ?", options: ["Le citer s'il est précis", "Ce n'est jamais une preuve en soi : on le vérifie auprès d'une source fiable", "Demander à l'IA s'il est juste", "L'arrondir"], bonne: 1,
+    { q: "La règle d'or face à un chiffre donné par l'IA ?", options: ["Le citer s'il est précis", "Demander à l'IA s'il est juste", "L'arrondir", "Ce n'est jamais une preuve en soi : on le vérifie auprès d'une source fiable"], bonne: 3,
       explication: "C'est cette rigueur qui sépare le bricoleur de l'expert.",
       complement: "Vous l'appliquerez à {heure:audit} : une synthèse à vérifier, avec des erreurs cachées." },
     { q: "Lequel de ces éléments ne fait pas partie des cinq blocs d'un prompt pro ?", options: ["La tâche", "Le format", "La politesse", "Les contraintes"], bonne: 2,
@@ -77,10 +77,10 @@ window.CONTENT = {
     { q: "Un prompt a bien marché après plusieurs allers-retours. Le réflexe pro ?", options: ["Le supprimer", "Le sauvegarder comme gabarit, puis en faire un skill", "Le publier sur les réseaux", "Recommencer de zéro la prochaine fois"], bonne: 1,
       explication: "Itération, gabarit, puis skill : un package d'instructions, d'exemples et de scripts que toute l'équipe réutilise.",
       complement: "Le skill est un actif de l'agence : c'est la capitalisation de son expérience." },
-    { q: "Une hallucination passe inaperçue dans la synthèse des retours clients. Conséquence ?", options: ["Aucune, elle sera corrigée plus tard", "Elle contamine le brief créatif puis le plan de contenu, sans qu'on la voie", "L'IA la signale automatiquement", "Elle ne touche que la synthèse"], bonne: 1,
+    { q: "Une hallucination passe inaperçue dans la synthèse des retours clients. Conséquence ?", options: ["Aucune, elle sera corrigée plus tard", "L'IA la signale automatiquement", "Elle contamine le brief créatif puis le plan de contenu, sans qu'on la voie", "Elle ne touche que la synthèse"], bonne: 2,
       explication: "Dans une chaîne de livrables, chaque document nourrit le suivant : on vérifie à chaque étape.",
       complement: "Vous construisez cette chaîne à {heure:chaine} : synthèse, brief, plan de contenu, réponse à l'appel d'offres." },
-    { q: "Le RGPD et l'IA, c'est…", options: ["Une interdiction générale d'utiliser l'IA", "Des règles strictes : pas de vrai fichier client dans un chatbot public non autorisé", "Rien, tant que l'outil est gratuit", "Une règle qui ne vise que les grandes entreprises"], bonne: 1,
+    { q: "Le RGPD et l'IA, c'est…", options: ["Une interdiction générale d'utiliser l'IA", "Rien, tant que l'outil est gratuit", "Une règle qui ne vise que les grandes entreprises", "Des règles strictes : pas de vrai fichier client dans un chatbot public non autorisé"], bonne: 3,
       explication: "On privilégie des données fictives, anonymisées, ou un outil d'IA validé par l'organisation.",
       complement: "Attention : retirer les noms ne suffit pas toujours. Des données seulement pseudonymisées restent des données personnelles (CNIL)." },
     { bonus: true, q: "Quel est le montant du contrat que l'agence veut décrocher au Lys Padel Open ?", options: ["4 000 €", "15 000 €", "40 000 €", "400 000 €"], bonne: 2,
@@ -250,12 +250,12 @@ window.CONTENT = {
   },
 
   battle: [
-    { q: "Quels éléments rendent un prompt professionnel ?", options: ["La politesse", "Rôle, contexte, contraintes, format", "La longueur", "Les émojis"], bonne: 1 },
+    { q: "Quels éléments rendent un prompt professionnel ?", options: ["Rôle, contexte, contraintes, format", "La politesse", "La longueur", "Les émojis"], bonne: 0 },
     { q: "85 % de 40 répondants, c'est…", options: ["36", "34", "32", "38"], bonne: 1 },
     { q: "40 réponses sur 3 200 spectateurs permettent de dire…", options: ["Que tous sont satisfaits", "Ce que pensent ces 40 répondants", "Que la majorité veut TikTok", "Rien du tout"], bonne: 1 },
-    { q: "Une citation avec prénom, âge et ville dans un questionnaire anonyme est…", options: ["Une preuve", "Douteuse, et un problème RGPD si elle est réelle", "Normale", "Obligatoire"], bonne: 1 },
-    { q: "Dans la chaîne des 4 livrables, que vient-il après le brief ?", options: ["La synthèse", "Le plan de contenu", "La facture", "La veille"], bonne: 1 },
-    { q: "Un gabarit de prompt sert à…", options: ["Faire joli", "Réutiliser une méthode qui marche", "Payer moins cher", "Éviter de relire"], bonne: 1 },
+    { q: "Une citation avec prénom, âge et ville dans un questionnaire anonyme est…", options: ["Douteuse, et un problème RGPD si elle est réelle", "Une preuve", "Normale", "Obligatoire"], bonne: 0 },
+    { q: "Dans la chaîne des 4 livrables, que vient-il après le brief ?", options: ["La synthèse", "La facture", "Le plan de contenu", "La veille"], bonne: 2 },
+    { q: "Un gabarit de prompt sert à…", options: ["Faire joli", "Payer moins cher", "Éviter de relire", "Réutiliser une méthode qui marche"], bonne: 3 },
     { q: "Une hausse d'abonnés pendant le tournoi prouve que l'affichage a marché ?", options: ["Oui", "Non, corrélation n'est pas causalité", "Oui si elle dépasse 10 %", "Oui avec TikTok"], bonne: 1 },
     { q: "Sur Claude, les skills sont accessibles…", options: ["En entreprise seulement", "Y compris en gratuit, avec l'exécution de code", "Sur Max seulement", "Pas en Europe"], bonne: 1 }
   ],

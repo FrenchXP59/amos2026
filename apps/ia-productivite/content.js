@@ -76,22 +76,22 @@ window.CONTENT = {
     { q: "Dans l'étude Harvard et BCG (2023), sur une tâche hors du terrain fiable de l'IA, la justesse des réponses des consultants…", options: ["Progressait de 25 %", "Chutait de 19 points de pourcentage", "Ne changeait pas", "Doublait"], bonne: 1,
       explication: "C'est la « frontière technologique irrégulière » : selon la tâche, l'IA aide beaucoup… ou fait se tromper avec assurance.",
       complement: "Source : Dell'Acqua et al., HBS Working Paper 24-013, 2023. En anglais : « jagged technological frontier »." },
-    { q: "Une chaîne de prompts en quatre étapes, dans l'ordre…", options: ["Recommandation, options, diagnostic, contre-analyse", "Diagnostic, options, contre-analyse, recommandation", "Options, diagnostic, recommandation, contre-analyse", "Diagnostic, recommandation, options, contre-analyse"], bonne: 1,
+    { q: "Une chaîne de prompts en quatre étapes, dans l'ordre…", options: ["Diagnostic, options, contre-analyse, recommandation", "Recommandation, options, diagnostic, contre-analyse", "Options, diagnostic, recommandation, contre-analyse", "Diagnostic, recommandation, options, contre-analyse"], bonne: 0,
       explication: "Chaque sortie nourrit l'étape suivante. Le diagnostic sépare les faits vérifiés des hypothèses.",
       complement: "Vous la construisez juste après, à {heure:chaine}, sur le cas Nordval." },
-    { q: "Pourquoi vérifier entre chaque étape de la chaîne ?", options: ["Pour gagner du temps", "Parce qu'une petite erreur au diagnostic contamine toute la chaîne", "Parce que l'IA l'exige", "Ce n'est pas utile si le prompt est bon"], bonne: 1,
+    { q: "Pourquoi vérifier entre chaque étape de la chaîne ?", options: ["Pour gagner du temps", "Parce que l'IA l'exige", "Ce n'est pas utile si le prompt est bon", "Parce qu'une petite erreur au diagnostic contamine toute la chaîne"], bonne: 3,
       explication: "La règle d'or de la vidéo : on contrôle chaque maillon avant de passer au suivant.",
       complement: "C'est aussi là que se joue votre valeur ajoutée de manager : l'IA produit, vous validez." },
-    { q: "À quoi sert l'étape de contre-analyse ?", options: ["À traduire la recommandation", "À faire jouer à l'IA un directeur financier sceptique qui attaque vos scénarios", "À raccourcir le texte", "À choisir le scénario le moins cher"], bonne: 1,
+    { q: "À quoi sert l'étape de contre-analyse ?", options: ["À traduire la recommandation", "À raccourcir le texte", "À faire jouer à l'IA un directeur financier sceptique qui attaque vos scénarios", "À choisir le scénario le moins cher"], bonne: 2,
       explication: "On stress-teste la solidité et les risques de ses propres propositions avant le comité.",
       complement: "Les anglo-saxons parlent de « red team » : une équipe chargée de trouver les failles." },
     { q: "Un collaborateur dépose un rapport stratégique généré par l'IA, superbe et plein de chiffres. Premier réflexe ?", options: ["Le transmettre au comité", "Exiger les sources et la méthode, et creuser les hypothèses", "Le refaire soi-même", "Le faire relire par une autre IA uniquement"], bonne: 1,
       explication: "Un chiffre ultra précis sans source n'est pas une preuve. La forme ne garantit jamais le fond.",
       complement: "Vous le vivrez à {heure:audit} : l'audit d'une étude qui contient des erreurs volontaires." },
-    { q: "Depuis août 2026, l'article 50 de l'AI Act impose…", options: ["L'interdiction de l'IA en entreprise", "Une obligation de transparence pour certaines interactions avec l'IA et certains contenus générés", "Un permis pour utiliser ChatGPT", "Rien, il est reporté à 2028"], bonne: 1,
+    { q: "Depuis août 2026, l'article 50 de l'AI Act impose…", options: ["Une obligation de transparence pour certaines interactions avec l'IA et certains contenus générés", "L'interdiction de l'IA en entreprise", "Un permis pour utiliser ChatGPT", "Rien, il est reporté à 2028"], bonne: 0,
       explication: "Exemples : savoir qu'on parle à un chatbot, signaler un contenu réaliste généré par l'IA (2 août 2026).",
       complement: "Plus l'outil est autonome (ChatGPT Work exécute des missions en plusieurs étapes), plus la responsabilité du manager qui l'orchestre augmente." },
-    { bonus: true, q: "Sur les tâches bien adaptées à l'IA, les consultants de l'étude allaient environ…", options: ["5 % plus vite", "25 % plus vite, avec une meilleure qualité", "2 fois plus vite, mais moins bien", "Aussi vite qu'avant"], bonne: 1,
+    { bonus: true, q: "Sur les tâches bien adaptées à l'IA, les consultants de l'étude allaient environ…", options: ["5 % plus vite", "2 fois plus vite, mais moins bien", "25 % plus vite, avec une meilleure qualité", "Aussi vite qu'avant"], bonne: 2,
       explication: "Environ 25 % plus vite, et un travail jugé de meilleure qualité : le vrai gain, mais seulement sur le bon terrain.",
       complement: "758 consultants du BCG. L'étude mesure aussi 12 % de tâches réalisées en plus et une qualité supérieure de plus de 40 %." }
   ],
@@ -246,14 +246,14 @@ window.CONTENT = {
 
   /* ---------- Battle finale ---------- */
   battle: [
-    { q: "Hors de la frontière, selon l'étude Harvard et BCG, l'IA…", options: ["Fait gagner 40 % de temps", "Fait perdre 19 points de réponses justes", "Est sans effet", "Est interdite"], bonne: 1 },
+    { q: "Hors de la frontière, selon l'étude Harvard et BCG, l'IA…", options: ["Fait gagner 40 % de temps", "Est sans effet", "Est interdite", "Fait perdre 19 points de réponses justes"], bonne: 3 },
     { q: "Quelle étape d'une chaîne fait attaquer la recommandation ?", options: ["Le diagnostic", "Les options", "La contre-analyse", "La synthèse"], bonne: 2 },
-    { q: "Qui diffuse la Ligue 2 jusqu'en 2029 ?", options: ["DAZN", "Ligue 1+", "beIN SPORTS", "Canal+ seul"], bonne: 2 },
+    { q: "Qui diffuse la Ligue 2 jusqu'en 2029 ?", options: ["beIN SPORTS", "DAZN", "Ligue 1+", "Canal+ seul"], bonne: 0 },
     { q: "4 200 abonnés à 180 € rapportent…", options: ["1,2 M€", "756 000 €", "420 000 €", "1,8 M€"], bonne: 1 },
     { q: "Un chiffre très précis, sans source, dans une sortie IA, c'est…", options: ["Une preuve", "Une donnée à vérifier avant tout usage", "Un signe de qualité", "Obligatoirement faux"], bonne: 1 },
-    { q: "Depuis le 2 août 2026, l'article 50 de l'AI Act porte sur…", options: ["La transparence des contenus générés", "Le prix des abonnements", "Les droits TV", "Le télétravail"], bonne: 0 },
+    { q: "Depuis le 2 août 2026, l'article 50 de l'AI Act porte sur…", options: ["Le prix des abonnements", "Les droits TV", "Le télétravail", "La transparence des contenus générés"], bonne: 3 },
     { q: "Premier réflexe face au livrable IA d'un collaborateur ?", options: ["Le valider", "Demander la méthode et les sources", "Le jeter", "Le faire réécrire par une autre IA"], bonne: 1 },
-    { q: "Dans une chaîne, pourquoi relire entre deux étapes ?", options: ["Pour gagner du temps", "Parce qu'une erreur au début contamine toute la suite", "Pour changer d'outil", "Ce n'est pas utile"], bonne: 1 }
+    { q: "Dans une chaîne, pourquoi relire entre deux étapes ?", options: ["Parce qu'une erreur au début contamine toute la suite", "Pour gagner du temps", "Pour changer d'outil", "Ce n'est pas utile"], bonne: 0 }
   ],
 
   aRetenir: [

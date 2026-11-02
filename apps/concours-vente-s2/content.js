@@ -56,16 +56,16 @@ window.CONTENT = {
     { q: "Le but d'une visite en client mystère ?", options: ["Piéger le vendeur", "Observer et évaluer l'expérience client, de façon neutre et sans a priori", "Obtenir une remise", "Juger la personnalité du vendeur"], bonne: 1,
       explication: "On observe toute l'expérience, avec un scénario commun en cinq étapes, pour pouvoir comparer.",
       complement: "Vos observations de terrain sont mises en commun à {heure:restitution}." },
-    { q: "Laquelle de ces notes est une observation factuelle ?", options: ["« Ce magasin est nul »", "« Le vendeur avait l'air pressé »", "« Trois marques occupent presque tout le rayon chaussures »", "« L'ambiance est sympa »"], bonne: 2,
+    { q: "Laquelle de ces notes est une observation factuelle ?", options: ["« Trois marques occupent presque tout le rayon chaussures »", "« Ce magasin est nul »", "« Le vendeur avait l'air pressé »", "« L'ambiance est sympa »"], bonne: 0,
       explication: "Un fait se documente : quoi, où, quand. Le reste est une impression.",
       complement: "Des faits, on tire une hypothèse commerciale. Elle ne devient réelle qu'une fois vérifiée face au client : c'est l'exercice de {heure:besoins}." },
     { q: "Quel type de question faut-il éviter pendant la découverte ?", options: ["La question ouverte", "La question fermée", "La question orientée", "La reformulation"], bonne: 2,
       explication: "La question orientée met les mots dans la bouche du client et fausse la découverte.",
       complement: "La question ouverte fait parler, la question fermée vérifie un détail. Vous vous entraînez à les trier à {heure:questions}." },
-    { q: "« Si je résume, vous cherchez une marque différenciante, mais vous voulez limiter le risque de stock, c'est bien cela ? » C'est…", options: ["Une question orientée", "Une reformulation", "Un argument", "Une objection"], bonne: 1,
+    { q: "« Si je résume, vous cherchez une marque différenciante, mais vous voulez limiter le risque de stock, c'est bien cela ? » C'est…", options: ["Une question orientée", "Un argument", "Une objection", "Une reformulation"], bonne: 3,
       explication: "On résume avec ses mots, puis on fait valider : écouter, reformuler, valider l'accord.",
       complement: "Reformuler, ce n'est pas répéter mot pour mot. Vous préparez votre découverte de Kilomètre Nord à {heure:decouverte}." },
-    { bonus: true, q: "Les cinq étapes du scénario de visite, dans l'ordre ?", options: ["Accueil, argumentation, découverte, conclusion, objections", "Accueil, découverte, argumentation, traitement des objections, conclusion", "Découverte, accueil, objections, argumentation, conclusion", "Argumentation, découverte, accueil, objections, conclusion"], bonne: 1,
+    { bonus: true, q: "Les cinq étapes du scénario de visite, dans l'ordre ?", options: ["Accueil, découverte, argumentation, traitement des objections, conclusion", "Accueil, argumentation, découverte, conclusion, objections", "Découverte, accueil, objections, argumentation, conclusion", "Argumentation, découverte, accueil, objections, conclusion"], bonne: 0,
       explication: "La découverte vient avant l'argumentation : on ne vend pas avant d'avoir compris.",
       complement: "Les cinq rôles de votre passage au concours suivent la même logique : accroche, découverte, argumentation, négociation, conclusion." }
   ],
@@ -161,13 +161,13 @@ window.CONTENT = {
 
   /* ---------- Battle finale ---------- */
   battle: [
-    { q: "« Comment choisissez-vous vos marques ? » est une question…", options: ["Fermée", "Ouverte", "Orientée", "Alternative"], bonne: 1 },
+    { q: "« Comment choisissez-vous vos marques ? » est une question…", options: ["Fermée", "Orientée", "Alternative", "Ouverte"], bonne: 3 },
     { q: "« Vous ne trouvez pas que… ? » est une question…", options: ["Ouverte", "Fermée de reformulation", "Orientée, à éviter", "Idéale pour conclure"], bonne: 2 },
     { q: "La reformulation sert à…", options: ["Gagner du temps", "Vérifier qu'on a compris, et le montrer", "Répéter son pitch", "Annoncer le prix"], bonne: 1 },
-    { q: "Au concours, la découverte se place…", options: ["Avant le pitch", "Au début de la négociation, après le pitch", "À la fin", "Elle est interdite"], bonne: 1 },
-    { q: "Un rayon saturé de grandes marques révèle surtout un besoin…", options: ["De marge", "De se différencier", "De formation", "De stock"], bonne: 1 },
-    { q: "Le compte-rendu terrain compte pour…", options: ["2 points sur 20", "10 points sur 20", "Rien", "La moitié de la note"], bonne: 0 },
-    { q: "Dans AIDA, l'Intérêt c'est…", options: ["Le prix", "Le problème du client, appuyé sur un fait", "Le nom de la marque", "La remise"], bonne: 1 },
+    { q: "Au concours, la découverte se place…", options: ["Avant le pitch", "À la fin", "Elle est interdite", "Au début de la négociation, après le pitch"], bonne: 3 },
+    { q: "Un rayon saturé de grandes marques révèle surtout un besoin…", options: ["De se différencier", "De marge", "De formation", "De stock"], bonne: 0 },
+    { q: "Le compte-rendu terrain compte pour…", options: ["10 points sur 20", "2 points sur 20", "Rien", "La moitié de la note"], bonne: 1 },
+    { q: "Dans AIDA, l'Intérêt c'est…", options: ["Le prix", "Le nom de la marque", "Le problème du client, appuyé sur un fait", "La remise"], bonne: 2 },
     { q: "Un pitch de 2 minutes à l'oral, c'est environ…", options: ["80 mots", "260 mots", "600 mots", "1 000 mots"], bonne: 1 }
   ],
 
