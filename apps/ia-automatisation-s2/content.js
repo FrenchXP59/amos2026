@@ -20,7 +20,7 @@ window.CONTENT = {
     classes: {
       m1a: { date: "Vendredi 6 novembre 2026, 9h00 – 12h30", debut: "9:00" }
     },
-    agences: ["Agence 1", "Agence 2", "Agence 3", "Agence 4"],
+    agences: ["Agence 1", "Agence 2", "Agence 3", "Agence 4", "Agence 5"],
     equipes: "agences",
     tirageNote: "Les agences de la séance 1 sont conservées : ne refaites le tirage que si la classe a changé."
   },

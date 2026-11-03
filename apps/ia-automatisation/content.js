@@ -19,7 +19,7 @@ window.CONTENT = {
       m1a: { date: "Mardi 3 novembre 2026, 9h00 – 12h30", debut: "9:00", variables: { seance2: "vendredi 6 novembre, matin" } }
     },
     variables: { seance2: "date à venir" },
-    agences: ["Agence 1", "Agence 2", "Agence 3", "Agence 4"],
+    agences: ["Agence 1", "Agence 2", "Agence 3", "Agence 4", "Agence 5"],
     equipes: "agences",
     tirageNote: "Mêmes agences jusqu'à la soutenance de la séance 2."
   },
@@ -173,7 +173,7 @@ window.CONTENT = {
     accroche: "Un tournoi qui grandit, une agence à choisir.",
     avertissement: "Tournoi, organisateur et chiffres fictifs, créés pour le cours.",
     arrivee: "L'appel d'offres se travaille à {heure:cas}",
-    teaser: "Un tournoi de padel de 3 jours dans la métropole lilloise lance un appel d'offres pour sa communication 2027. Quatre agences, un seul contrat de 40 000 € HT.",
+    teaser: "Un tournoi de padel de 3 jours dans la métropole lilloise lance un appel d'offres pour sa communication 2027. Cinq agences, un seul contrat de 40 000 € HT.",
     seance2Kicker: "Séance 2, {seance2}",
     seance2Titre: "La soutenance devant le client",
     onglets: ["L'appel d'offres", "Les cibles", "Identité du tournoi", "Le travail", "La participation", "Journal de prompts"],
