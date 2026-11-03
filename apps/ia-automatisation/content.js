@@ -109,11 +109,11 @@ window.CONTENT = {
     { t: "Le format imposé", d: "Tableau, rubriques fixes, longueur maximale : c'est le format qui rend le livrable exploitable." },
     { t: "L'auto-critique", d: "« Critique ta réponse comme le ferait le client, puis améliore-la. »" }
   ],
-  defisNote: "Outils gratuits au choix : ChatGPT, Claude, Gemini, Le Chat, Copilot. Pas d'import de fichier nécessaire.",
+  defisNote: "Les défis portent sur d'autres sujets que la démonstration : pas de corrigé à recopier. Outils gratuits au choix : ChatGPT, Claude, Gemini, Le Chat, Copilot.",
   defis: [
-    { n: 1, titre: "Le brief en trois tours", min: 7, consigne: "Partez de la V1, puis améliorez en deux itérations. Gardez les trois versions : elles vont dans le journal." },
-    { n: 2, titre: "Trois registres", min: 7, consigne: "Même information (ouverture de la billetterie) pour trois destinataires : post Instagram, mail à un sponsor, communiqué de presse." },
-    { n: 3, titre: "Le gabarit d'agence", min: 6, consigne: "Transformez votre meilleur prompt en modèle à trous que n'importe quel collègue pourrait réutiliser demain." }
+    { n: 1, titre: "Le brief en trois tours", min: 7, consigne: "Nouveau sujet, tiré des retours 2026 : le brief créatif d'une « initiation padel pour les enfants » pendant le tournoi. Partez de la V1 « Fais-moi un brief pour des initiations enfants », puis deux itérations avec les 5 blocs. Les trois versions vont dans le journal." },
+    { n: 2, titre: "Trois registres", min: 7, consigne: "Une seule information : en 2027, des navettes gratuites relieront le métro au tournoi (la réponse au problème de parking). Trois versions : post Instagram pour les spectateurs, mail aux sponsors, début de communiqué pour la presse locale." },
+    { n: 3, titre: "Le gabarit d'agence", min: 6, consigne: "Transformez votre meilleur prompt du défi 1 en modèle à trous ([événement], [cible], [objectif], [format]…) qu'un collègue pourrait réutiliser demain pour n'importe quelle activation." }
   ],
 
   /* ---------- Audit d'une synthèse qualitative (six erreurs volontaires) ---------- */
