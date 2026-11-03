@@ -391,7 +391,7 @@
   /* ---------- Gabarits communs ---------- */
   // Vote par téléphone : quiz exportés vers quiz.horizonduo.net (outils/export-quiz.mjs).
   const VOTE_SEANCES = { "ia-communication": "B3 · Séance 1", "ia-communication-s2": "B3 · Séance 2", "ia-automatisation": "M1 · Séance 1", "ia-automatisation-s2": "M1 · Séance 2", "ia-productivite": "M2 · Séance 1", "ia-productivite-s2": "M2 · Séance 2", "concours-vente": "B1 · Concours · Séance 1", "concours-vente-s2": "B1 · Concours · Séance 2", "concours-vente-s3": "B1 · Concours · Séance 3", "concours-vente-s4": "B1 · Concours · Séance 4" };
-  const VOTE_ETAPES = { video: ["quizFlash", "Quiz de la vidéo"], final: ["battle", "Battle finale"], iahumain: ["iaHumain", "IA ou humain ?"], critique: ["vraiFaux", "Vrai ou faux"], positionnement: ["positionnement", "Quiz de positionnement"] };
+  const VOTE_ETAPES = { video: ["quizFlash", "Quiz de la vidéo"], final: ["battle", "Battle finale"], iahumain: ["iaHumain", "IA ou humain ?"], critique: ["vraiFaux", "Vrai ou faux"], rupture: ["quelleMarche", "Quelle marche ?"], positionnement: ["positionnement", "Quiz de positionnement"] };
   function voteHTML(id) {
     const dir = location.pathname.split("/").filter(Boolean).slice(-2, -1)[0], label = VOTE_SEANCES[dir], e = VOTE_ETAPES[id];
     if (!label || !e || !C[e[0]] || (id === "video" && C.videoDebat)) return "";

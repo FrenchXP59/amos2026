@@ -47,6 +47,8 @@ for (const [dir, label] of SEANCES) {
   add(`cours-${dir}-battle`, `${label} · Battle finale`, "Questions sur toute la séance. Vote individuel sur téléphone.", mcq(C.battle, "battle", 20));
   if (C.iaHumain) add(`cours-${dir}-iahumain`, `${label} · IA ou humain ?`, "Regardez le visuel projeté, puis votez.",
     C.iaHumain.map((it, i) => ({ id: `${dir}-iahumain-${i + 1}`, type: "quiz", text: `${clean(it.legende)} : IA ou humain ?`, options: ["Généré par IA", "Fait par un humain"], correct: it.reponse === "ia" ? 0 : 1, duration: 20, explanation: clean(it.indice) })));
+  if (C.quelleMarche && C.marches) add(`cours-${dir}-quellemarche`, `${label} · Quelle marche ?`, "Pour chaque tâche, choisissez la marche de l'escalier de l'autonomie.",
+    C.quelleMarche.map((t, i) => ({ id: `${dir}-marche-${i + 1}`, type: "quiz", text: `Quelle marche pour : « ${clean(t.t)} » ?`, options: C.marches.map((m) => `${m.n}. ${clean(m.titre)}`), correct: t.m - 1, duration: 25, explanation: clean(t.why) })));
   if (C.vraiFaux) add(`cours-${dir}-vraifaux`, `${label} · Vrai ou faux`, "Droit, données, biais : vrai ou faux ?",
     C.vraiFaux.map((v, i) => ({ id: `${dir}-vf-${i + 1}`, type: "quiz", text: clean(v.s), options: ["Vrai", "Faux"], correct: v.v ? 0 : 1, duration: 20, explanation: clean(v.e) })));
 }
