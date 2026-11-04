@@ -226,7 +226,7 @@ input.txt:focus{outline:none;border-color:var(--sage);box-shadow:0 0 0 4px #5a79
 .price strong{display:block;font-family:var(--f-title);font-size:24px;letter-spacing:-.03em}
 .price span{font-size:12px;color:var(--muted)}
 /* traps */
-.traps{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.traps{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
 .trap{padding:24px;border-radius:18px;background:var(--card);border:1px solid var(--line);transition:.4s var(--ease)}
 .trap:hover{transform:translateY(-4px);border-color:#e3c3b6}
 .trap .ic{width:42px;height:42px;border-radius:12px;display:grid;place-items:center;background:#f4e2dc;color:var(--ko);margin-bottom:16px}
@@ -495,7 +495,7 @@ footer .srcs{columns:2;gap:30px}footer .srcs a{display:block;margin-bottom:6px;c
   <div class="wrap">
     <div class="head reveal">
       <span class="eyebrow">07 · Les pièges</span>
-      <h2>Six erreurs <em class="s">à ne pas faire.</em></h2>
+      <h2>Huit erreurs <em class="s">à ne pas faire.</em></h2>
     </div>
     <div class="traps">
       <div class="trap reveal d1"><div class="ic" data-i="key-round"></div><h3>Une clé dans le code</h3><p>Jamais de clé d'API ni de mot de passe dans tes fichiers&nbsp;: un site est lisible par tous (clic droit, «&nbsp;Afficher le code source&nbsp;»).</p></div>
@@ -503,6 +503,8 @@ footer .srcs{columns:2;gap:30px}footer .srcs a{display:block;margin-bottom:6px;c
       <div class="trap reveal d3"><div class="ic" data-i="history"></div><h3>Pas de copie</h3><p>L'IA peut tout casser en une demande. Une copie du dossier avant chaque gros changement, toujours.</p></div>
       <div class="trap reveal d1"><div class="ic" data-i="mail"></div><h3>Le formulaire sans RGPD</h3><p>Collecter des e-mails, c'est traiter des données personnelles&nbsp;: mention d'information obligatoire, données minimales.</p></div>
       <div class="trap reveal d2"><div class="ic" data-i="image"></div><h3>L'image «&nbsp;trouvée sur Google&nbsp;»</h3><p>Elle a un auteur. Utilise tes photos, des banques libres de droits, et l'accord des personnes photographiées.</p></div>
+      <div class="trap reveal d1"><div class="ic" data-i="eye"></div><h3>L'icône invisible</h3><p>Une icône Lucide qui ne s'affiche pas&nbsp;? Son nom n'existe sûrement pas&nbsp;: vérifie-le sur lucide.dev, ou colle son code avec le bouton «&nbsp;Copy SVG&nbsp;».</p></div>
+      <div class="trap reveal d2"><div class="ic" data-i="calendar"></div><h3>Le domaine qui expire</h3><p>Un nom de domaine se loue à l'année. Active le renouvellement automatique, sinon ton adresse peut être rachetée par un autre.</p></div>
       <div class="trap reveal d3"><div class="ic" data-i="star"></div><h3>Les faux avis</h3><p>L'IA invente volontiers chiffres, logos partenaires et témoignages. Publier de faux avis est une pratique commerciale trompeuse.</p></div>
     </div>
   </div>
@@ -655,7 +657,7 @@ function build() {
   L.push("");
   if (state.sections.length) { L.push(state.type === "landing" ? "Sections, dans cet ordre :" : "Contenu, réparti entre les pages :"); state.sections.forEach((s) => L.push(hl("sections", `- ${secTxt[s]}`))); L.push("- un pied de page avec les mentions légales [à compléter]"); L.push(""); }
   const o = state.options;
-  if (o.includes("lucide")) L.push(hl("options", "Icônes : Lucide (open source et gratuites), avec un trait fin et cohérent."));
+  if (o.includes("lucide")) L.push(hl("options", "Icônes : Lucide (open source et gratuites), chargé depuis le CDN officiel avec une version précise (pas « latest »). Utilise uniquement des noms d'icônes qui existent sur lucide.dev, appelle lucide.createIcons() et vérifie que chaque icône s'affiche."));
   if (o.includes("anim")) L.push(hl("options", "Animations : discrètes, à l'apparition des sections au défilement."));
   if (o.includes("mobile")) L.push(hl("options", "Responsive : pense d'abord au mobile, puis à l'ordinateur."));
   if (o.includes("access")) L.push(hl("options", "Accessibilité : contrastes suffisants, textes alternatifs sur les images."));
