@@ -158,6 +158,7 @@ export default {
           "n": 1,
           "date": "2026-11-04",
           "heure": "09:00–12:30",
+          "appsOuvertes": true,
           "titre": "Lancement, méthodes de vente, sujet Kilomètre Nord, mission terrain",
           "video": "",
           "apps": [
