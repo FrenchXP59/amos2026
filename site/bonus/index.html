@@ -1,0 +1,714 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Crée ton site · Bonus HORIZON AI</title>
+<meta name="description" content="Bonus AMOS : créer son premier site avec l'IA, rester propriétaire de ses fichiers, le mettre en ligne gratuitement.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500&family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet">
+<script src="icons.js"></script>
+<style>
+:root{
+  --paper:#f4f4ec;--paper-2:#ebede2;--card:#fbfbf6;--ink:#173b41;--ink-2:#0c2b35;--deep:#0a2229;
+  --sage:#5a7968;--sage-2:#8fa98a;--lime:#cbd4ad;--gold:#d9a84e;--gold-2:#f0c977;--line:#d7dcd2;--muted:#627672;
+  --ok:#3f8a62;--ko:#b5523f;--warn:#c58a2b;
+  --f-body:"DM Sans",system-ui,sans-serif;--f-title:"Manrope","DM Sans",sans-serif;--f-serif:"Instrument Serif",Georgia,serif;--f-mono:"JetBrains Mono",ui-monospace,monospace;
+  --r:18px;--ease:cubic-bezier(.2,.8,.2,1);
+}
+*{box-sizing:border-box}html{scroll-behavior:smooth;overflow-x:hidden}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--f-body);font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+h1,h2,h3,h4{font-family:var(--f-title);margin:0;letter-spacing:-.02em;line-height:1.1}
+p{margin:0}a{color:inherit}button{font:inherit;color:inherit;cursor:pointer;border:0;background:none}
+.i{width:1.15em;height:1.15em;flex-shrink:0;vertical-align:-.2em}
+em.s{font-family:var(--f-serif);font-style:italic;font-weight:400;color:var(--sage);letter-spacing:0}
+.wrap{width:min(1180px,100% - 40px);margin:0 auto}
+.eyebrow{font-size:11px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--sage);display:inline-flex;align-items:center;gap:10px}
+.eyebrow:before{content:"";width:22px;height:1px;background:currentColor}
+:focus-visible{outline:3px solid #46a8b1;outline-offset:3px;border-radius:6px}
+/* grain */
+body:after{content:"";position:fixed;inset:0;pointer-events:none;z-index:100;opacity:.05;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence baseFrequency='.85' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+/* progress */
+#progress{position:fixed;top:0;left:0;height:3px;width:0;background:linear-gradient(90deg,var(--sage-2),var(--gold));z-index:60}
+/* nav */
+.nav{position:fixed;top:14px;left:50%;transform:translateX(-50%);z-index:50;display:flex;align-items:center;gap:6px;padding:6px 6px 6px 16px;border-radius:999px;background:#f7f8f1d9;border:1px solid #ffffffb0;box-shadow:0 8px 30px #173b4112;backdrop-filter:blur(14px);font-size:13px;white-space:nowrap;max-width:calc(100% - 24px)}
+.nav .brand{font-family:var(--f-title);font-weight:800;letter-spacing:-.03em;margin-right:8px}.nav .brand span{font-weight:500;color:var(--sage)}
+.nav a.l{padding:7px 11px;border-radius:999px;text-decoration:none;color:var(--muted);font-weight:500}.nav a.l:hover{background:#e3e8db;color:var(--ink)}
+.nav a.home{display:inline-flex;align-items:center;gap:6px;padding:8px 14px;border-radius:999px;background:var(--ink);color:#fff;text-decoration:none;font-weight:600}
+@media(max-width:860px){.nav a.l{display:none}}
+/* HERO */
+.hero{position:relative;min-height:100svh;padding:120px 0 70px;display:flex;align-items:center;overflow:hidden}
+.orb{position:absolute;border-radius:50%;filter:blur(70px);opacity:.55;pointer-events:none;will-change:transform}
+.orb.a{width:520px;height:520px;background:#cbd4ad;left:-160px;top:-120px;animation:float 18s ease-in-out infinite}
+.orb.b{width:420px;height:420px;background:#9cc3c0;right:-120px;bottom:-140px;animation:float 22s ease-in-out infinite reverse}
+.orb.c{width:260px;height:260px;background:#f0c977;right:30%;top:12%;opacity:.35;animation:float 16s ease-in-out infinite}
+@keyframes float{50%{transform:translate(40px,30px) scale(1.08)}}
+.hero-grid{position:relative;display:grid;grid-template-columns:1.02fr 1fr;gap:56px;align-items:center}
+.hero h1{font-size:clamp(46px,6.4vw,92px);font-weight:600;letter-spacing:-.055em;line-height:.98;margin:22px 0 24px}
+.hero h1 em.s{letter-spacing:-.02em}
+.hero h1 .w{display:inline-block;overflow:hidden;vertical-align:bottom;padding-bottom:.08em}
+.hero h1 .w>span{display:inline-block;transform:translateY(105%);animation:up 1s var(--ease) forwards}
+@keyframes up{to{transform:none}}
+.lead{font-size:clamp(16px,1.35vw,19px);color:var(--muted);max-width:520px}
+.lead b{color:var(--ink);font-weight:600}
+.cta{display:flex;flex-wrap:wrap;gap:12px;margin-top:34px}
+.btn{display:inline-flex;align-items:center;gap:12px;padding:15px 22px;border-radius:12px;font-weight:600;font-size:15px;text-decoration:none;transition:transform .25s var(--ease),box-shadow .25s,background .25s}
+.btn.p{background:var(--ink);color:#fff;box-shadow:0 10px 30px #173b4126}.btn.p:hover{transform:translateY(-2px);box-shadow:0 16px 40px #173b4133}
+.btn.o{border:1px solid #bccabd;background:#fff6}.btn.o:hover{background:#fff}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:34px}
+.chip{display:inline-flex;align-items:center;gap:7px;font-size:12px;font-weight:600;padding:7px 12px;border-radius:999px;background:#fffa;border:1px solid var(--line);color:var(--ink)}
+.chip .i{color:var(--sage)}
+/* demo */
+.demo{position:relative;perspective:1400px}
+.demo-card{position:relative;border-radius:22px;background:var(--deep);box-shadow:0 40px 90px -20px #0a222977,0 0 0 1px #ffffff14 inset;overflow:hidden;transform:rotateY(-8deg) rotateX(4deg);transition:transform .6s var(--ease)}
+.demo:hover .demo-card{transform:rotateY(-2deg) rotateX(1deg)}
+.demo-top{display:flex;align-items:center;gap:8px;padding:13px 16px;border-bottom:1px solid #ffffff14;color:#9fb5b0;font-size:12px;font-family:var(--f-mono)}
+.dots{display:flex;gap:6px;margin-right:6px}.dots i{width:10px;height:10px;border-radius:50%;background:#ffffff26}.dots i:first-child{background:#e76e5b}.dots i:nth-child(2){background:#e9b44c}.dots i:nth-child(3){background:#69b97c}
+.demo-body{display:grid;grid-template-columns:.92fr 1.08fr;min-height:430px}
+.term{padding:18px 18px 20px;border-right:1px solid #ffffff12;font-family:var(--f-mono);font-size:12px;line-height:1.75;color:#cfe0da}
+.term .lbl{display:flex;align-items:center;gap:8px;color:var(--gold-2);font-size:10px;letter-spacing:.14em;text-transform:uppercase;margin-bottom:12px}
+.term .tree{margin-top:14px;padding-top:14px;border-top:1px dashed #ffffff1c;color:#8fb0a7}
+.term .tree div{opacity:0;transform:translateX(-6px);transition:.4s var(--ease)}.term .tree div.on{opacity:1;transform:none}
+.term .tree .new{color:var(--gold-2)}
+#typed{white-space:pre-wrap;min-height:170px}
+.caret{display:inline-block;width:7px;height:14px;background:var(--gold-2);vertical-align:-2px;animation:blink 1s steps(1) infinite}
+@keyframes blink{50%{opacity:0}}
+.browser{position:relative;background:#f6f3ea;margin:14px;border-radius:12px;overflow:hidden;box-shadow:0 20px 40px #0006}
+.b-url{display:flex;align-items:center;gap:7px;padding:8px 10px;background:#e8e4d8;font-family:var(--f-mono);font-size:10px;color:#6b6a60}
+.b-url .pill{flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0;background:#fff;border-radius:6px;padding:4px 8px;display:flex;align-items:center;gap:6px}
+.site{position:relative;padding:14px;height:330px;overflow:hidden;color:#1d2a22;font-family:var(--f-title)}
+.site>*{opacity:0;transform:translateY(14px);transition:opacity .55s var(--ease),transform .55s var(--ease)}
+.site>.on{opacity:1;transform:none}
+.s-nav{display:flex;justify-content:space-between;align-items:center;font-size:10px;font-weight:700}
+.s-nav span{display:flex;gap:10px;font-weight:500;color:#5c6a5f}
+.s-hero{margin-top:14px;border-radius:10px;padding:18px 16px;color:#fff;background:radial-gradient(120% 120% at 80% 0%,#3f6e5a 0%,#173b41 55%,#0c2b35 100%);position:relative;overflow:hidden}
+.s-hero:after{content:"";position:absolute;right:-30px;bottom:-40px;width:160px;height:160px;border-radius:50%;border:1px solid #ffffff2a}
+.s-hero small{font-size:8px;letter-spacing:.2em;color:var(--gold-2)}
+.s-hero h4{font-size:21px;margin:6px 0 4px;letter-spacing:-.03em}.s-hero h4 i{font-family:var(--f-serif);font-weight:400;color:var(--lime)}
+.s-hero p{font-size:9px;opacity:.8;max-width:200px;font-family:var(--f-body)}
+.s-hero b{display:inline-flex;margin-top:10px;font-size:9px;background:var(--gold);color:#1d2a22;padding:6px 10px;border-radius:6px}
+.s-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:10px}
+.s-cards div{background:#fff;border-radius:8px;padding:9px;font-size:8.5px;font-family:var(--f-body);box-shadow:0 2px 8px #0000000d}
+.s-cards div .i{width:16px;height:16px;color:#3f6e5a;margin-bottom:4px;display:block}
+.s-cards strong{display:block;font-family:var(--f-title);font-size:10px}
+.s-foot{margin-top:10px;display:flex;justify-content:space-between;font-size:8px;color:#7b8478;font-family:var(--f-body)}
+.deploy{position:absolute;left:50%;bottom:16px;transform:translate(-50%,20px);opacity:0;display:flex;align-items:center;gap:8px;background:#173b41;color:#fff;font-size:11px;font-weight:600;padding:9px 14px;border-radius:999px;box-shadow:0 10px 30px #0005;transition:.5s var(--ease);font-family:var(--f-body);white-space:nowrap}
+.deploy.on{opacity:1;transform:translate(-50%,0)}.deploy .i{color:#7fd39e}
+.float-tag{position:absolute;z-index:2;display:flex;align-items:center;gap:8px;background:#fff;border:1px solid var(--line);padding:9px 13px;border-radius:12px;font-size:12px;font-weight:600;box-shadow:0 14px 30px #173b411f;animation:bob 5s ease-in-out infinite}
+.float-tag .i{color:var(--sage)}
+.float-tag.t1{left:-34px;top:62%}.float-tag.t2{right:-18px;bottom:12%;animation-delay:-2.5s}
+@keyframes bob{50%{transform:translateY(-10px)}}
+.scroll-hint{position:absolute;left:50%;bottom:22px;transform:translateX(-50%);font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);display:flex;flex-direction:column;align-items:center;gap:6px}
+.scroll-hint .i{animation:bob 2s ease-in-out infinite}
+/* marquee */
+.marquee{background:var(--ink);color:#e9efe6;padding:18px 0;overflow:hidden;white-space:nowrap;border-block:1px solid #ffffff12}
+.marquee .track{display:inline-flex;gap:48px;animation:mq 38s linear infinite;font-family:var(--f-title);font-size:clamp(20px,2.4vw,30px);font-weight:600;letter-spacing:-.02em}
+.marquee .track span{display:inline-flex;align-items:center;gap:48px}.marquee .track span:after{content:"✦";color:var(--gold);font-size:.6em}
+.marquee em.s{color:var(--lime)}
+@keyframes mq{to{transform:translateX(-50%)}}
+/* sections */
+section.blk{scroll-margin-top:70px;padding:clamp(80px,11vw,140px) 0}
+.head{max-width:760px;margin-bottom:54px}
+.head h2{font-size:clamp(34px,4.6vw,62px);font-weight:600;letter-spacing:-.045em;margin:18px 0 18px}
+.head p{font-size:clamp(16px,1.3vw,18px);color:var(--muted)}
+.reveal{opacity:0;transform:translateY(34px);transition:opacity .9s var(--ease),transform .9s var(--ease)}
+.reveal.on{opacity:1;transform:none}
+.d1{transition-delay:.08s}.d2{transition-delay:.16s}.d3{transition-delay:.24s}.d4{transition-delay:.32s}.d5{transition-delay:.4s}
+/* vibe */
+.vibe{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.vcard{position:relative;padding:30px 26px 28px;border-radius:var(--r);background:var(--card);border:1px solid var(--line);overflow:hidden;transition:transform .4s var(--ease),box-shadow .4s}
+.vcard:hover{transform:translateY(-6px);box-shadow:0 24px 50px -20px #173b4140}
+.vcard .n{font-family:var(--f-serif);font-style:italic;font-size:56px;line-height:1;color:var(--lime);position:absolute;right:20px;top:12px}
+.vcard .ic{width:48px;height:48px;border-radius:14px;display:grid;place-items:center;background:#e3eadc;color:var(--ink);margin-bottom:20px}
+.vcard .ic .i{width:22px;height:22px}
+.vcard h3{font-size:21px;margin-bottom:8px}.vcard p{color:var(--muted);font-size:15px}
+.quote{margin-top:22px;padding:26px 30px;border-radius:var(--r);background:var(--ink);color:#e8efe8;display:flex;gap:22px;align-items:center}
+.quote .i{width:30px;height:30px;color:var(--gold-2)}
+.quote p{font-size:clamp(17px,1.6vw,21px);font-family:var(--f-title);font-weight:500;letter-spacing:-.01em}.quote p em.s{color:var(--lime)}
+/* compare */
+.dark{background:var(--deep);color:#e7eee9;position:relative;overflow:hidden}
+.dark .eyebrow{color:var(--lime)}.dark .head p{color:#a8bdb7}.dark em.s{color:var(--lime)}
+.dark:before{content:"";position:absolute;width:700px;height:700px;border-radius:50%;background:radial-gradient(circle,#3f6e5a55,transparent 65%);right:-200px;top:-200px}
+.cmp{position:relative;display:grid;grid-template-columns:repeat(5,1fr);gap:12px}
+.tool{position:relative;padding:22px 18px 20px;border-radius:16px;background:#ffffff08;border:1px solid #ffffff17;transition:transform .4s var(--ease),background .4s}
+.tool:hover{transform:translateY(-4px);background:#ffffff0f}
+.tool.best{background:linear-gradient(160deg,#ffffff14,#ffffff05);border-color:#cbd4ad55}
+.tool .tag{font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#9fb5b0}
+.tool h3{font-size:22px;margin:8px 0 16px;color:#fff}
+.tool .badge{position:absolute;top:-11px;right:14px;background:var(--gold);color:#1d2a22;font-size:10px;font-weight:700;padding:4px 9px;border-radius:999px;letter-spacing:.04em}
+.row{padding:11px 0;border-top:1px solid #ffffff12;font-size:13px}
+.row small{display:block;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:#8aa39c;margin-bottom:4px}
+.v{display:flex;gap:8px;align-items:flex-start;line-height:1.45}
+.v .dot{flex-shrink:0;width:20px;height:20px;border-radius:50%;display:grid;place-items:center;margin-top:-1px;transform:scale(0);transition:transform .5s var(--ease)}
+.on .v .dot{transform:scale(1)}
+.v .dot .i{width:12px;height:12px}
+.v.y .dot{background:#3f8a6244;color:#86dca6}.v.n .dot{background:#b5523f44;color:#ff9b85}.v.m .dot{background:#c58a2b44;color:#f5c46b}
+.verdict{margin-top:30px;display:grid;grid-template-columns:auto 1fr;gap:20px;align-items:center;padding:24px 28px;border-radius:16px;border:1px solid #cbd4ad44;background:#cbd4ad12}
+.verdict .big{font-family:var(--f-serif);font-style:italic;font-size:clamp(28px,3vw,40px);color:var(--lime);line-height:1}
+.verdict p{color:#c9d8d2;font-size:15px}
+.src{margin-top:18px;font-size:12px;color:#8aa39c}.src a{color:#b8ccc6}
+.light .src{color:var(--muted)}.light .src a{color:var(--ink)}
+/* parcours */
+.steps{position:relative;display:grid;gap:0}
+.steps:before{content:"";position:absolute;left:31px;top:20px;bottom:20px;width:2px;background:var(--line)}
+.steps .rail{position:absolute;left:31px;top:20px;width:2px;height:0;background:linear-gradient(var(--sage),var(--gold));transition:height .2s linear}
+.step{position:relative;display:grid;grid-template-columns:64px minmax(0,1fr) minmax(0,1fr);gap:28px;padding:26px 0;align-items:start}
+.step .num{position:relative;z-index:1;width:64px;height:64px;border-radius:50%;background:var(--paper);border:2px solid var(--line);display:grid;place-items:center;font-family:var(--f-title);font-weight:800;font-size:19px;transition:.5s var(--ease)}
+.step.on .num{background:var(--ink);color:#fff;border-color:var(--ink);box-shadow:0 0 0 8px #173b4112}
+.step h3{font-size:clamp(22px,2.2vw,28px);margin:8px 0 10px}
+.step p{color:var(--muted)}.step p b{color:var(--ink)}
+.step .k{font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--sage)}
+.vis{border-radius:16px;background:var(--card);border:1px solid var(--line);padding:18px 20px;font-size:14px}
+.vis.code{overflow-x:auto;background:var(--deep);color:#cfe0da;font-family:var(--f-mono);font-size:13px;line-height:1.8;border:0}
+.vis.code .c{color:#7f9a93}.vis.code .g{color:var(--gold-2)}
+.vis ul{margin:0;padding:0;list-style:none;display:grid;gap:9px}
+.vis li{display:flex;gap:10px;align-items:flex-start}.vis li .i{color:var(--sage);margin-top:2px}
+.tip{display:flex;gap:12px;margin-top:14px;padding:13px 15px;border-radius:12px;background:#f5ecd6;border:1px solid #ead9b0;font-size:14px;color:#5b4a22}
+.tip .i{color:var(--warn);margin-top:2px}
+.tip.green{background:#e3ecdf;border-color:#cddbc6;color:#2d4b3a}.tip.green .i{color:var(--ok)}
+/* generator */
+.gen{display:grid;grid-template-columns:1fr 1.05fr;gap:22px;align-items:start}
+.panel{border-radius:22px;background:var(--card);border:1px solid var(--line);padding:26px}
+.field{margin-bottom:22px}.field:last-child{margin-bottom:0}
+.field>label,.field>.lab{display:flex;align-items:center;gap:8px;font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--ink);margin-bottom:10px}
+.field>label .i,.field>.lab .i{color:var(--sage)}
+.seg{display:flex;flex-wrap:wrap;gap:8px}
+.seg button{display:inline-flex;align-items:center;gap:8px;padding:10px 14px;border-radius:11px;border:1px solid #cdd6c9;background:#fff;font-size:14px;font-weight:500;transition:.25s var(--ease)}
+.seg button:hover{border-color:var(--sage)}
+.seg button[aria-pressed=true]{background:var(--ink);color:#fff;border-color:var(--ink);box-shadow:0 6px 16px #173b4125}
+.seg button .i{width:16px;height:16px}
+.swatch{display:inline-flex;gap:3px}.swatch i{width:10px;height:10px;border-radius:50%;display:block;border:1px solid #0000001a}
+input.txt{width:100%;padding:13px 14px;border-radius:11px;border:1px solid #cdd6c9;background:#fff;font:inherit;font-size:15px;color:var(--ink)}
+input.txt:focus{outline:none;border-color:var(--sage);box-shadow:0 0 0 4px #5a796822}
+.out{position:sticky;top:90px;border-radius:22px;background:var(--deep);color:#d7e6e0;overflow:hidden;box-shadow:0 30px 70px -25px #0a2229aa}
+.out-top{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:14px 16px 14px 20px;border-bottom:1px solid #ffffff14}
+.out-top span{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold-2);font-weight:700;display:flex;align-items:center;gap:8px}
+.copy{display:inline-flex;align-items:center;gap:8px;padding:9px 14px;border-radius:10px;background:var(--gold);color:#1d2a22;font-weight:700;font-size:13px;transition:.25s}
+.copy:hover{background:var(--gold-2)}.copy.done{background:#7fd39e}
+#prompt{margin:0;padding:20px 22px 24px;font-family:var(--f-mono);font-size:13px;line-height:1.75;white-space:pre-wrap;max-height:560px;overflow:auto}
+#prompt .hl{color:var(--gold-2);background:#f0c97714;border-radius:4px;transition:background .6s}
+#prompt .flash{background:#f0c97755}
+.out-foot{display:flex;justify-content:space-between;gap:10px;padding:12px 20px;border-top:1px solid #ffffff12;font-size:12px;color:#8aa39c}
+/* lexique */
+.lex{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.flip{perspective:1000px;height:172px}
+.flip button{position:relative;width:100%;height:100%;text-align:left;transform-style:preserve-3d;transition:transform .7s var(--ease)}
+.flip.turn button{transform:rotateY(180deg)}
+.face{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;border-radius:16px;padding:20px;display:flex;flex-direction:column;justify-content:space-between}
+.front{background:var(--card);border:1px solid var(--line)}
+.front .i{width:26px;height:26px;color:var(--sage)}.front .top{display:flex;justify-content:space-between;align-items:flex-start}.front .kind{font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);background:var(--paper-2);padding:4px 8px;border-radius:999px}
+.front h3{font-size:21px}.front small{font-size:11px;color:var(--muted);display:flex;align-items:center;gap:6px}.front small .i{width:13px;height:13px}
+.back{background:var(--ink);color:#e7efe9;transform:rotateY(180deg);font-size:14px;line-height:1.55}
+.back strong{font-family:var(--f-title);color:var(--lime);font-size:13px;letter-spacing:.04em}
+.flip:hover .front{border-color:var(--sage-2)}
+/* host */
+.host{display:grid;grid-template-columns:1.15fr 1fr;gap:22px}
+.drop{position:relative;border-radius:22px;padding:30px;background:linear-gradient(160deg,#173b41,#0c2b35);color:#e7efe9;overflow:hidden;min-height:100%}
+.drop h3{font-size:28px;color:#fff;margin:12px 0 18px}.drop .eyebrow{color:var(--lime)}
+.drop ol{margin:0;padding:0;list-style:none;counter-reset:s;display:grid;gap:14px}
+.drop li{counter-increment:s;display:grid;grid-template-columns:34px 1fr;gap:12px;align-items:start;font-size:15px;color:#cfe0da}
+.drop li:before{content:counter(s);width:34px;height:34px;border-radius:50%;display:grid;place-items:center;background:#ffffff14;border:1px solid #ffffff22;font-weight:700;color:#fff;font-family:var(--f-title)}
+.drop li b{color:#fff}
+.zone{margin-top:24px;border:2px dashed #cbd4ad66;border-radius:16px;padding:22px;display:flex;align-items:center;gap:16px;position:relative;overflow:hidden}
+.zone .fold{width:54px;height:44px;flex-shrink:0;color:var(--gold-2);animation:dropin 3.2s var(--ease) infinite}
+.zone .fold .i{width:100%;height:100%}
+@keyframes dropin{0%{transform:translate(-30px,-40px) rotate(-12deg);opacity:0}30%{opacity:1}55%,80%{transform:none;opacity:1}100%{transform:none;opacity:0}}
+.zone p{font-size:14px;color:#cfe0da}.zone p b{color:#fff;font-family:var(--f-mono);font-weight:500}
+.side{display:grid;gap:16px}
+.mini{border-radius:18px;padding:22px 24px;background:var(--card);border:1px solid var(--line)}
+.mini h3{font-size:19px;display:flex;align-items:center;gap:10px;margin-bottom:8px}.mini h3 .i{color:var(--sage)}
+.mini p{font-size:14.5px;color:var(--muted)}.mini p b{color:var(--ink)}
+.mini.warn{background:#f7eedb;border-color:#ead9b0}.mini.warn h3 .i{color:var(--warn)}
+.price{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px}
+.price div{border-radius:12px;background:#fff;border:1px solid var(--line);padding:12px 14px}
+.price small{font-size:11px;font-weight:700;letter-spacing:.1em;color:var(--muted)}
+.price strong{display:block;font-family:var(--f-title);font-size:24px;letter-spacing:-.03em}
+.price span{font-size:12px;color:var(--muted)}
+/* traps */
+.traps{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.trap{padding:24px;border-radius:18px;background:var(--card);border:1px solid var(--line);transition:.4s var(--ease)}
+.trap:hover{transform:translateY(-4px);border-color:#e3c3b6}
+.trap .ic{width:42px;height:42px;border-radius:12px;display:grid;place-items:center;background:#f4e2dc;color:var(--ko);margin-bottom:16px}
+.trap h3{font-size:18px;margin-bottom:6px}.trap p{font-size:14.5px;color:var(--muted)}
+/* further */
+.further{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.fx{padding:26px;border-radius:18px;border:1px solid var(--line);background:transparent}
+.fx h3{font-size:21px;display:flex;align-items:center;gap:10px;margin-bottom:10px}.fx h3 .i{color:var(--sage)}
+.fx p{color:var(--muted);font-size:15px}.fx p+p{margin-top:8px}
+.pill{display:inline-flex;font-size:11px;font-weight:700;padding:4px 9px;border-radius:999px;background:#e3eadc;color:var(--ink);margin-left:auto;letter-spacing:.04em}
+/* challenge */
+.challenge{position:relative;border-radius:30px;padding:clamp(40px,6vw,80px);background:radial-gradient(120% 140% at 90% 0%,#3f6e5a 0%,#173b41 45%,#0a2229 100%);color:#fff;overflow:hidden;text-align:center}
+.challenge .ring{position:absolute;border:1px solid #ffffff1a;border-radius:50%;left:50%;top:50%;transform:translate(-50%,-50%);animation:pulse 6s ease-out infinite}
+@keyframes pulse{0%{width:120px;height:120px;opacity:1}100%{width:1100px;height:1100px;opacity:0}}
+.challenge .ring:nth-child(2){animation-delay:2s}.challenge .ring:nth-child(3){animation-delay:4s}
+.challenge>*:not(.ring){position:relative}
+.challenge h2{font-size:clamp(36px,5vw,68px);letter-spacing:-.05em;margin:16px 0}.challenge h2 em.s{color:var(--lime)}
+.challenge p{color:#cfe0da;max-width:620px;margin:0 auto;font-size:17px}
+.challenge .eyebrow{color:var(--gold-2)}
+.challenge .btn.p{background:var(--gold);color:#1d2a22;margin-top:28px}
+footer{padding:50px 0 60px;font-size:13px;color:var(--muted)}
+footer .disc{padding:18px 20px;border-radius:14px;border:1px solid var(--line);background:#fff8;display:flex;gap:12px;margin-bottom:26px}
+footer .disc .i{color:var(--sage);margin-top:2px}
+footer .srcs{columns:2;gap:30px}footer .srcs a{display:block;margin-bottom:6px;color:var(--ink)}
+/* responsive */
+@media(max-width:1020px){.hero-grid{grid-template-columns:1fr}.demo{max-width:640px}.cmp{grid-template-columns:repeat(2,1fr)}.cmp .tool.best{grid-column:span 2}.lex{grid-template-columns:repeat(3,1fr)}.gen{grid-template-columns:1fr}.out{position:relative;top:0}.host{grid-template-columns:1fr}.traps{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:720px){
+ .hero{padding-top:100px}.demo-body{grid-template-columns:1fr}.term{border-right:0;border-bottom:1px solid #ffffff12}#typed{min-height:120px}.term .tree{display:none}
+ .float-tag{display:none}.demo-card{transform:none}.vibe{grid-template-columns:1fr}.cmp{grid-template-columns:1fr}.cmp .tool.best{grid-column:auto}
+ .step{grid-template-columns:48px minmax(0,1fr);gap:16px}.step .vis{grid-column:2}.step .num{width:48px;height:48px;font-size:16px}.steps:before,.steps .rail{left:23px}
+ .lex{grid-template-columns:repeat(2,1fr)}.flip{height:200px}.face{padding:16px}.front h3{font-size:18px}.back{font-size:13px}
+ .traps,.further{grid-template-columns:1fr}.verdict{grid-template-columns:1fr}.quote{flex-direction:column;align-items:flex-start}footer .srcs{columns:1}.scroll-hint{display:none}
+ .price{grid-template-columns:1fr 1fr}
+}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{animation:none!important;transition:none!important}.reveal{opacity:1;transform:none}.hero h1 .w>span{transform:none}.site>*{opacity:1;transform:none}.v .dot{transform:scale(1)}}
+</style>
+</head>
+<body>
+<div id="progress"></div>
+
+<nav class="nav" aria-label="Sommaire">
+  <span class="brand">HORIZON <span>AI</span></span>
+  <a class="l" href="#vibe">Vibe coding</a>
+  <a class="l" href="#outils">Outils</a>
+  <a class="l" href="#parcours">Parcours</a>
+  <a class="l" href="#generateur">Générateur</a>
+  <a class="l" href="#lexique">Lexique</a>
+  <a class="l" href="#en-ligne">En ligne</a>
+  <a class="home" href="../convention/"><span data-i="arrow-left"></span>Convention</a>
+</nav>
+
+<!-- HERO -->
+<header class="hero">
+  <div class="orb a"></div><div class="orb b"></div><div class="orb c"></div>
+  <div class="wrap hero-grid">
+    <div>
+      <span class="eyebrow">Bonus AMOS · toutes les classes</span>
+      <h1><span class="w"><span>Crée</span></span> <span class="w"><span style="animation-delay:.08s">ton</span></span> <span class="w"><span style="animation-delay:.16s">site.</span></span><br><span class="w"><span style="animation-delay:.3s"><em class="s">Garde</em></span></span> <span class="w"><span style="animation-delay:.38s"><em class="s">tes fichiers.</em></span></span></h1>
+      <p class="lead">Avec l'IA, une landing page se construit en une heure. Le vrai sujet, c'est ailleurs&nbsp;: <b>à qui appartient ton site, et peux-tu partir avec&nbsp;?</b> Méthode, outils gratuits, générateur de prompt et mise en ligne.</p>
+      <div class="cta">
+        <a class="btn p" href="#generateur"><span data-i="wand-sparkles"></span>Générer mon prompt</a>
+        <a class="btn o" href="#parcours"><span data-i="rocket"></span>Voir le parcours</a>
+      </div>
+      <div class="chips">
+        <span class="chip" data-i="coins">0 € pour démarrer</span>
+        <span class="chip" data-i="folder">Tes fichiers sur ton PC</span>
+        <span class="chip" data-i="globe">En ligne en 30 secondes</span>
+      </div>
+    </div>
+    <div class="demo" aria-hidden="true">
+      <div class="float-tag t1" data-i="sparkles">Prompt → site</div>
+      <div class="float-tag t2" data-i="badge-check">Fichiers à toi</div>
+      <div class="demo-card">
+        <div class="demo-top"><span class="dots"><i></i><i></i><i></i></span>mon-site · agent IA</div>
+        <div class="demo-body">
+          <div class="term">
+            <div class="lbl" data-i="terminal">Ton prompt</div>
+            <div id="typed"></div>
+            <div class="tree" id="tree">
+              <div>📁 mon-site/</div>
+              <div>&nbsp;&nbsp;├─ brief.md</div>
+              <div>&nbsp;&nbsp;├─ images/</div>
+              <div class="new">&nbsp;&nbsp;├─ index.html ✦</div>
+              <div class="new">&nbsp;&nbsp;├─ style.css ✦</div>
+              <div class="new">&nbsp;&nbsp;└─ script.js ✦</div>
+            </div>
+          </div>
+          <div class="browser">
+            <div class="b-url"><span class="dots"><i></i><i></i><i></i></span><span class="pill"><span data-i="lock"></span>trail-citadelle.netlify.app</span></div>
+            <div class="site" id="site">
+              <div class="s-nav">CITADELLE TRAIL<span><a>Parcours</a><a>Programme</a><a>Inscription</a></span></div>
+              <div class="s-hero"><small>LILLE · NOCTURNE</small><h4>Courir la nuit, <i>autrement.</i></h4><p>10 et 21 km au pied de la Citadelle, à la frontale.</p><b>Je m'inscris</b></div>
+              <div class="s-cards">
+                <div><span data-i="map-pin"></span><strong>2 parcours</strong>10 km et 21 km</div>
+                <div><span data-i="moon"></span><strong>Départ 20h</strong>À la frontale</div>
+                <div><span data-i="users"></span><strong>En équipe</strong>Relais à 3</div>
+              </div>
+              <div class="s-foot"><span>[date à compléter]</span><span>Contact</span></div>
+            </div>
+            <div class="deploy" id="deploy"><span data-i="check"></span>En ligne sur Netlify</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="scroll-hint">Défiler<span data-i="chevron-down"></span></div>
+</header>
+
+<div class="marquee" aria-hidden="true"><div class="track" id="mq"></div></div>
+
+<!-- VIBE CODING -->
+<section class="blk" id="vibe">
+  <div class="wrap">
+    <div class="head reveal">
+      <span class="eyebrow">01 · Le principe</span>
+      <h2>Le vibe coding, <em class="s">c'est quoi ?</em></h2>
+      <p>Tu décris ce que tu veux en français, une IA écrit le code, tu regardes le résultat et tu corriges en lui parlant. Tu ne codes pas&nbsp;: tu <b>diriges</b>. C'est le même métier que celui d'un chef de projet face à une agence.</p>
+    </div>
+    <div class="vibe">
+      <div class="vcard reveal d1"><span class="n">1</span><div class="ic" data-i="type"></div><h3>Tu décris</h3><p>Un prompt clair&nbsp;: pour qui, quoi, quel style, quelles sections. Plus ton brief est précis, moins tu corriges.</p></div>
+      <div class="vcard reveal d2"><span class="n">2</span><div class="ic" data-i="bot"></div><h3>L'IA construit</h3><p>Un agent crée les fichiers dans ton dossier&nbsp;: une page HTML, une feuille de style, un peu de JavaScript.</p></div>
+      <div class="vcard reveal d3"><span class="n">3</span><div class="ic" data-i="eye"></div><h3>Tu juges</h3><p>Tu ouvres la page, tu demandes une correction à la fois. Ton œil et ta relecture font la qualité, pas l'outil.</p></div>
+    </div>
+    <div class="quote reveal"><span data-i="lightbulb"></span><p>L'IA écrit vite. <em class="s">C'est toi qui signes.</em> Chaque texte, chiffre ou image publiés engagent ton nom, ton asso ou ton client.</p></div>
+  </div>
+</section>
+
+<!-- COMPARATIF -->
+<section class="blk dark" id="outils">
+  <div class="wrap">
+    <div class="head reveal">
+      <span class="eyebrow">02 · Le critère n°1</span>
+      <h2>Ton site peut-il <em class="s">partir avec toi ?</em></h2>
+      <p>Avoir « accès au code » ne suffit pas. La vraie question&nbsp;: si demain l'outil change ses prix ou ferme ton compte, ton site continue-t-il de tourner ailleurs&nbsp;?</p>
+    </div>
+    <div class="cmp" id="cmp"></div>
+    <div class="verdict reveal">
+      <div class="big">Le bon réflexe</div>
+      <p>Démarre gratuitement avec <b style="color:#fff">Antigravity</b>, poursuis si besoin avec <b style="color:#fff">Claude Code</b> ou <b style="color:#fff">Codex</b>&nbsp;: ce sont les mêmes fichiers, dans le même dossier. Tu changes d'outil, pas de site.</p>
+    </div>
+    <p class="src">Sources consultées le 4 novembre 2026&nbsp;: <a href="https://docs.lovable.dev/integrations/github" target="_blank" rel="noopener">doc Lovable (GitHub)</a> · <a href="https://hostadvice.com/blog/ai/export-your-base44-code/" target="_blank" rel="noopener">export Base44</a> · <a href="https://www.codeagentswarm.com/en/guides/antigravity-plans-and-pricing" target="_blank" rel="noopener">offres Antigravity (source tierce)</a>. Les offres gratuites changent souvent&nbsp;: vérifie au moment de t'inscrire.</p>
+  </div>
+</section>
+
+<!-- PARCOURS -->
+<section class="blk" id="parcours">
+  <div class="wrap">
+    <div class="head reveal">
+      <span class="eyebrow">03 · Le parcours</span>
+      <h2>Du dossier vide <em class="s">au site en ligne.</em></h2>
+      <p>Six étapes, sans terminal ni compte développeur. Compte une heure pour une première landing page.</p>
+    </div>
+    <div class="steps" id="steps">
+      <div class="rail" id="rail"></div>
+      <div class="step">
+        <div class="num">1</div>
+        <div><span class="k">La base</span><h3>Crée ton dossier</h3><p>Tout part d'un <b>dossier sur ton ordinateur</b>. Tu y ranges tes images et tes infos&nbsp;; l'IA ira les chercher. C'est ce dossier qui fait de toi le propriétaire de ton site.</p></div>
+        <div class="vis code">📁 mon-site/<br>&nbsp;├─ <span class="g">brief.md</span> <span class="c"># qui, quoi, pour qui, ton, couleurs</span><br>&nbsp;├─ images/ <span class="c"># logo.png, photo-1.jpg…</span><br>&nbsp;└─ textes/ <span class="c"># tes vrais textes</span>
+          <div class="tip green" style="font-family:var(--f-body);margin-top:14px"><span data-i="image"></span><span>Images de moins de 500&nbsp;Ko, noms simples sans espace ni accent (<code>equipe-1.jpg</code>).</span></div></div>
+      </div>
+      <div class="step">
+        <div class="num">2</div>
+        <div><span class="k">Hors quota</span><h3>Prépare ton prompt</h3><p>Avec le <b>générateur ci-dessous</b>, ou dans un chat gratuit (ChatGPT, Claude, Gemini). Préparer le prompt hors de l'outil, c'est garder ton quota pour la construction.</p></div>
+        <div class="vis"><ul><li><span data-i="check"></span><span>15 à 20 lignes&nbsp;: au-delà, le site devient surchargé.</span></li><li><span data-i="check"></span><span>Demande à l'IA de lire <code>brief.md</code> et le dossier <code>images/</code>.</span></li><li><span data-i="check"></span><span>Exige des emplacements <code>[à compléter]</code> plutôt que des chiffres inventés.</span></li></ul></div>
+      </div>
+      <div class="step">
+        <div class="num">3</div>
+        <div><span class="k">Gratuit à date</span><h3>Lance l'IA dans ton dossier</h3><p>Ouvre le dossier dans <b>Antigravity</b> (Google), colle ton prompt, laisse l'agent créer <code>index.html</code>. Ouvre ce fichier dans ton navigateur&nbsp;: ton site est là.</p></div>
+        <div class="vis code"><span class="c">// L'agent écrit dans TON dossier :</span><br>index.html &nbsp;<span class="g">✦ créé</span><br>style.css &nbsp;&nbsp;<span class="g">✦ créé</span><br>script.js &nbsp;&nbsp;<span class="g">✦ créé</span></div>
+      </div>
+      <div class="step">
+        <div class="num">4</div>
+        <div><span class="k">Une chose à la fois</span><h3>Corrige et sauvegarde</h3><p>Une demande par message&nbsp;: «&nbsp;agrandis le titre&nbsp;», «&nbsp;remplace la photo&nbsp;». Les corrections se font <b>dans l'outil</b>, qui voit tes fichiers.</p></div>
+        <div class="vis"><div class="tip" style="margin-top:0"><span data-i="history"></span><span><b>Avant chaque gros changement, copie ton dossier</b>&nbsp;: <code>mon-site-v1</code>, <code>mon-site-v2</code>… Si l'IA casse tout, tu reviens en arrière en 10 secondes.</span></div></div>
+      </div>
+      <div class="step">
+        <div class="num">5</div>
+        <div><span class="k">30 secondes</span><h3>Mets-le en ligne</h3><p>Crée ton compte gratuit <b>Netlify</b>, puis glisse ton dossier sur la page Netlify Drop. Ton site a une adresse publique en <code>.netlify.app</code>.</p></div>
+        <div class="vis"><ul><li><span data-i="cloud-upload"></span><span>Le dossier glissé doit contenir <code>index.html</code>.</span></li><li><span data-i="refresh-cw"></span><span>Mise à jour&nbsp;: onglet <b>Deploys</b> du même site, pas un nouveau dépôt.</span></li></ul></div>
+      </div>
+      <div class="step">
+        <div class="num">6</div>
+        <div><span class="k">Pour aller plus loin</span><h3>Ton nom, ta marque</h3><p>Un <b>nom de domaine</b> à toi (Namecheap, par exemple), relié à Netlify. Puis, quand tu es à l'aise&nbsp;: GitHub, Claude Code ou Codex.</p></div>
+        <div class="vis"><ul><li><span data-i="globe"></span><span><code>tonprojet.com</code> au lieu de <code>tonprojet.netlify.app</code></span></li><li><span data-i="git-branch"></span><span>GitHub&nbsp;: l'historique automatique de tes versions</span></li></ul></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- GENERATEUR -->
+<section class="blk" id="generateur" style="background:var(--paper-2)">
+  <div class="wrap">
+    <div class="head reveal">
+      <span class="eyebrow">04 · L'atelier</span>
+      <h2>Ton prompt, <em class="s">prêt à coller.</em></h2>
+      <p>Choisis, le prompt s'écrit en direct. Copie-le, colle-le dans Antigravity, Claude Code ou Codex. Il ne consomme aucun quota tant que tu ne l'as pas lancé.</p>
+    </div>
+    <div class="gen">
+      <div class="panel reveal">
+        <div class="field"><div class="lab" data-i="layout-template">Type de projet</div><div class="seg" data-k="type"></div></div>
+        <div class="field"><label for="nom" data-i="flag">Nom du projet</label><input class="txt" id="nom" maxlength="60" placeholder="Ex. Trail de la Citadelle"></div>
+        <div class="field"><div class="lab" data-i="star">Sujet</div><div class="seg" data-k="sujet"></div></div>
+        <div class="field"><div class="lab" data-i="palette">Style</div><div class="seg" data-k="style"></div></div>
+        <div class="field"><div class="lab" data-i="layers">Sections</div><div class="seg" data-k="sections" data-multi="1"></div></div>
+        <div class="field"><div class="lab" data-i="zap">Options</div><div class="seg" data-k="options" data-multi="1"></div></div>
+      </div>
+      <div class="out reveal d2">
+        <div class="out-top"><span data-i="sparkles">Ton prompt</span><button class="copy" id="copy"><span data-i="copy"></span>Copier</button></div>
+        <pre id="prompt" aria-live="polite"></pre>
+        <div class="out-foot"><span id="count"></span><span>Astuce&nbsp;: corrige ensuite dans l'outil, une demande à la fois.</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- LEXIQUE -->
+<section class="blk" id="lexique">
+  <div class="wrap">
+    <div class="head reveal">
+      <span class="eyebrow">05 · Le vocabulaire</span>
+      <h2>Parler le langage <em class="s">du web.</em></h2>
+      <p>Les mots qui reviennent dans les prompts et chez les prestataires. Clique sur une carte pour la retourner.</p>
+    </div>
+    <div class="lex" id="lex"></div>
+  </div>
+</section>
+
+<!-- EN LIGNE -->
+<section class="blk" id="en-ligne" style="padding-top:0">
+  <div class="wrap">
+    <div class="head reveal">
+      <span class="eyebrow">06 · Héberger et nommer</span>
+      <h2>En ligne, <em class="s">gratuitement.</em></h2>
+      <p>L'<b>hébergement</b>, c'est l'ordinateur qui sert ton site au monde entier. Le <b>nom de domaine</b>, c'est son adresse. Deux choses différentes, souvent chez deux prestataires différents.</p>
+    </div>
+    <div class="host">
+      <div class="drop reveal">
+        <span class="eyebrow">Ce que j'utilise · Netlify</span>
+        <h3>Le glisser-déposer</h3>
+        <ol>
+          <li><span><b>Crée d'abord ton compte gratuit</b> sur netlify.com. Sans compte, un site déposé expire s'il n'est pas réclamé.</span></li>
+          <li><span>Va sur <b>app.netlify.com/drop</b>.</span></li>
+          <li><span>Glisse ton dossier <b>mon-site</b>, celui qui contient <b>index.html</b>.</span></li>
+          <li><span>Renomme ton site pour avoir une adresse lisible en <b>.netlify.app</b>.</span></li>
+          <li><span>Pour mettre à jour&nbsp;: onglet <b>Deploys</b> du même site, puis glisse le nouveau dossier.</span></li>
+        </ol>
+        <div class="zone"><div class="fold" data-i="folder"></div><p>Dépose <b>mon-site/</b> ici&nbsp;→ ton site est en ligne. L'offre gratuite autorise aussi les projets commerciaux.</p></div>
+      </div>
+      <div class="side">
+        <div class="mini warn reveal d1"><h3 data-i="triangle-alert">Vercel&nbsp;: attention</h3><p>Gratuit aussi (offre Hobby), mais <b>réservé à un usage personnel et non commercial</b>. Le site d'une junior entreprise, d'un client ou d'une start-up n'y a pas droit.</p></div>
+        <div class="mini reveal d2"><h3 data-i="globe">Le nom de domaine</h3><p>Mon choix&nbsp;: <b>Namecheap</b>, bon rapport qualité-prix (horizonduo.net). Compare toujours le prix de <b>renouvellement</b>, pas seulement la 1re année.</p>
+          <div class="price">
+            <div><small>.COM</small><strong>6,48&nbsp;$</strong><span>1re année · puis 15,98&nbsp;$/an</span></div>
+            <div><small>.NET</small><strong>12,48&nbsp;$</strong><span>1re année · puis 18,58&nbsp;$/an</span></div>
+          </div>
+          <p style="margin-top:10px;font-size:12.5px">Prix Namecheap relevés sur un comparateur le 4/11/2026, hors promotion&nbsp;: à vérifier au moment de commander. Choisis l'extension pour la disponibilité du nom, pas pour le prix.</p>
+        </div>
+      </div>
+    </div>
+    <p class="src light" style="margin-top:20px">Sources&nbsp;: <a href="https://www.netlify.com/blog/thirteen-years-of-netlify-drop" target="_blank" rel="noopener">Netlify Drop</a> · <a href="https://answers.netlify.com/t/can-we-use-netlify-free-plan-for-commercial-purposes/41545/2" target="_blank" rel="noopener">usage commercial Netlify</a> · <a href="https://vercel.com/docs/plans/hobby" target="_blank" rel="noopener">offre Hobby Vercel</a> · <a href="https://domainoffer.net/tld/net/namecheap" target="_blank" rel="noopener">prix Namecheap</a></p>
+  </div>
+</section>
+
+<!-- PIEGES -->
+<section class="blk" style="background:var(--paper-2)">
+  <div class="wrap">
+    <div class="head reveal">
+      <span class="eyebrow">07 · Les pièges</span>
+      <h2>Six erreurs <em class="s">à ne pas faire.</em></h2>
+    </div>
+    <div class="traps">
+      <div class="trap reveal d1"><div class="ic" data-i="key-round"></div><h3>Une clé dans le code</h3><p>Jamais de clé d'API ni de mot de passe dans tes fichiers&nbsp;: un site est lisible par tous (clic droit, «&nbsp;Afficher le code source&nbsp;»).</p></div>
+      <div class="trap reveal d2"><div class="ic" data-i="timer"></div><h3>Le site qui disparaît</h3><p>Déposé sans compte Netlify, ton site expire. Crée ton compte avant de glisser ton dossier.</p></div>
+      <div class="trap reveal d3"><div class="ic" data-i="history"></div><h3>Pas de copie</h3><p>L'IA peut tout casser en une demande. Une copie du dossier avant chaque gros changement, toujours.</p></div>
+      <div class="trap reveal d1"><div class="ic" data-i="mail"></div><h3>Le formulaire sans RGPD</h3><p>Collecter des e-mails, c'est traiter des données personnelles&nbsp;: mention d'information obligatoire, données minimales.</p></div>
+      <div class="trap reveal d2"><div class="ic" data-i="image"></div><h3>L'image «&nbsp;trouvée sur Google&nbsp;»</h3><p>Elle a un auteur. Utilise tes photos, des banques libres de droits, et l'accord des personnes photographiées.</p></div>
+      <div class="trap reveal d3"><div class="ic" data-i="star"></div><h3>Les faux avis</h3><p>L'IA invente volontiers chiffres, logos partenaires et témoignages. Publier de faux avis est une pratique commerciale trompeuse.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ALLER PLUS LOIN -->
+<section class="blk">
+  <div class="wrap">
+    <div class="head reveal">
+      <span class="eyebrow">08 · Pour aller plus loin</span>
+      <h2>Quand tu seras <em class="s">à l'aise.</em></h2>
+    </div>
+    <div class="further">
+      <div class="fx reveal d1"><h3 data-i="git-branch">GitHub<span class="pill">Gratuit</span></h3><p>Un coffre en ligne pour ton dossier, avec l'historique de chaque modification. C'est ta copie <code>mon-site-v1, v2</code>… mais automatique.</p><p>Relié à Netlify, chaque modification envoyée met ton site à jour tout seul. Attention&nbsp;: un dépôt <b>public</b> est visible par tout le monde.</p></div>
+      <div class="fx reveal d2"><h3 data-i="code-xml">Claude Code et Codex<span class="pill">Abonnement</span></h3><p>Ce que j'utilise au quotidien&nbsp;: des agents plus puissants, qui travaillent dans ton dossier sur des projets plus ambitieux (plusieurs pages, base de données, applis).</p><p>Ils nécessitent un abonnement payant. Bonne nouvelle&nbsp;: ils reprennent exactement les fichiers créés avec Antigravity.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- DEFI -->
+<section class="blk" style="padding-top:0">
+  <div class="wrap">
+    <div class="challenge reveal">
+      <span class="ring"></span><span class="ring"></span><span class="ring"></span>
+      <span class="eyebrow">Le défi</span>
+      <h2>Ta landing page en ligne <em class="s">avant le prochain cours.</em></h2>
+      <p>Une page, ton projet&nbsp;: ton asso, ton événement, ton portfolio. Envoie-moi le lien en <code>.netlify.app</code>&nbsp;: les plus réussies seront montrées en début de séance, avec l'accord de leurs auteurs.</p>
+      <a class="btn p" href="#generateur"><span data-i="rocket"></span>Je commence maintenant</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="disc"><span data-i="scale"></span><p>Avis personnel de l'intervenant, Frédéric Legrand, et non une recommandation d'AMOS. Aucun lien commercial avec les outils cités. Informations vérifiées le 4 novembre 2026&nbsp;: les offres gratuites et les prix changent souvent.</p></div>
+    <div class="srcs">
+      <a href="https://docs.lovable.dev/integrations/github" target="_blank" rel="noopener">Lovable · intégration GitHub</a>
+      <a href="https://hostadvice.com/blog/ai/export-your-base44-code/" target="_blank" rel="noopener">HostAdvice · exporter son code Base44</a>
+      <a href="https://www.codeagentswarm.com/en/guides/antigravity-plans-and-pricing" target="_blank" rel="noopener">CodeAgentSwarm · offres Antigravity</a>
+      <a href="https://www.netlify.com/blog/thirteen-years-of-netlify-drop" target="_blank" rel="noopener">Netlify · Netlify Drop</a>
+      <a href="https://answers.netlify.com/t/can-we-use-netlify-free-plan-for-commercial-purposes/41545/2" target="_blank" rel="noopener">Netlify · usage commercial gratuit</a>
+      <a href="https://vercel.com/docs/plans/hobby" target="_blank" rel="noopener">Vercel · offre Hobby</a>
+      <a href="https://domainoffer.net/tld/net/namecheap" target="_blank" rel="noopener">DomainOffer · prix Namecheap</a>
+      <a href="https://lucide.dev/license" target="_blank" rel="noopener">Lucide · licence des icônes (utilisées sur cette page)</a>
+    </div>
+    <p style="margin-top:26px">2026-2027 · HORIZON AI × AMOS · <a href="../convention/">Retour à la convention</a></p>
+  </div>
+</footer>
+
+<script>
+(() => {
+const $ = (s, r = document) => r.querySelector(s), $$ = (s, r = document) => [...r.querySelectorAll(s)];
+const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+const esc = (t) => String(t).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+
+/* ---------- Marquee ---------- */
+const words = ["Landing page", "Front-end", "Back-end", "Prompt", "Nom de domaine", "Hébergement", "Responsive", "Déploiement", "Open source", "DNS", "Vibe coding"];
+const half = words.map((w, i) => `<span>${i % 3 === 1 ? `<em class="s">${w}</em>` : w}</span>`).join("");
+$("#mq").innerHTML = half + half;
+
+/* ---------- Hero demo ---------- */
+const demoPrompt = "Comporte-toi comme un designer premium spécialiste du front-end.\nCrée une landing page pour le Trail de la Citadelle, course nocturne à Lille.\nLis brief.md et utilise mes images.\nStyle sombre et élégant, icônes Lucide.";
+const typed = $("#typed"), site = $$("#site > *"), tree = $$("#tree div"), deploy = $("#deploy");
+const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
+async function demo() {
+  if (reduce) { typed.textContent = demoPrompt; site.forEach((e) => e.classList.add("on")); tree.forEach((e) => e.classList.add("on")); deploy.classList.add("on"); return; }
+  for (;;) {
+    typed.innerHTML = ""; site.forEach((e) => e.classList.remove("on")); tree.forEach((e) => e.classList.remove("on")); deploy.classList.remove("on");
+    tree.slice(0, 3).forEach((e) => e.classList.add("on"));
+    await sleep(600);
+    let s = "";
+    for (const ch of demoPrompt) { s += ch; typed.innerHTML = esc(s) + '<span class="caret"></span>'; await sleep(ch === "\n" ? 260 : 16 + Math.random() * 22); }
+    await sleep(500);
+    for (let i = 3; i < tree.length; i++) { tree[i].classList.add("on"); await sleep(260); }
+    for (const e of site) { e.classList.add("on"); await sleep(420); }
+    await sleep(500); deploy.classList.add("on");
+    await sleep(3800);
+  }
+}
+demo();
+
+/* ---------- Reveal + progress + rail ---------- */
+const io = new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersecting) { e.target.classList.add("on"); io.unobserve(e.target); } }), { threshold: .14, rootMargin: "0px 0px -6% 0px" });
+const observe = () => $$(".reveal:not(.on), .tool:not(.on), .step:not(.on)").forEach((el) => io.observe(el));
+const steps = $("#steps"), rail = $("#rail"), bar = $("#progress");
+function onScroll() {
+  const h = document.documentElement; bar.style.width = (h.scrollTop / (h.scrollHeight - h.clientHeight) * 100) + "%";
+  const r = steps.getBoundingClientRect(), vh = innerHeight;
+  const p = Math.min(1, Math.max(0, (vh * .6 - r.top) / (r.height - 40)));
+  rail.style.height = (p * (r.height - 40)) + "px";
+}
+addEventListener("scroll", onScroll, { passive: true }); addEventListener("resize", onScroll);
+
+/* ---------- Comparatif ---------- */
+const Y = "y", N = "n", M = "m";
+const tools = [
+  { n: "Lovable", t: "Plateforme en ligne", r: [[M, "Oui, limitée"], [M, "Via GitHub, sur toutes les offres"], [M, "En partie : les données peuvent rester chez eux"]] },
+  { n: "Base44", t: "Plateforme en ligne", r: [[M, "Oui, limitée"], [N, "Export réservé aux offres payantes"], [N, "Non : le code dépend de leurs serveurs"]] },
+  { n: "Antigravity", t: "Google · sur ton PC", best: "Pour démarrer", r: [[Y, "Oui à date, limites chaque semaine"], [Y, "Oui, dans ton dossier dès le départ"], [Y, "Oui, à 100 %"]] },
+  { n: "Claude Code", t: "Anthropic · sur ton PC", r: [[N, "Abonnement payant"], [Y, "Oui, dans ton dossier"], [Y, "Oui, à 100 %"]] },
+  { n: "Codex", t: "OpenAI · sur ton PC", r: [[N, "Abonnement payant"], [Y, "Oui, dans ton dossier"], [Y, "Oui, à 100 %"]] }
+];
+const labels = ["Gratuit pour démarrer", "Les fichiers chez moi", "Tourne sans l'outil"];
+const ic = { y: "check", n: "x", m: "triangle-alert" };
+$("#cmp").innerHTML = tools.map((t, i) => `<div class="tool${t.best ? " best" : ""}" style="transition-delay:${i * .07}s">${t.best ? `<span class="badge">${t.best}</span>` : ""}<span class="tag">${t.t}</span><h3>${t.n}</h3>${t.r.map(([k, v], j) => `<div class="row"><small>${labels[j]}</small><div class="v ${k}"><span class="dot" style="transition-delay:${.25 + j * .15 + i * .07}s">${icon(ic[k])}</span><span>${v}</span></div></div>`).join("")}</div>`).join("");
+
+/* ---------- Générateur de prompt ---------- */
+const opts = {
+  type: [["landing", "Landing page", "file-text"], ["multi", "Site multipage", "layers"]],
+  sujet: [["asso", "Asso sportive", "users"], ["event", "Événement sportif", "trophy"], ["portfolio", "Portfolio perso", "badge-check"], ["etudiant", "Projet étudiant", "lightbulb"]],
+  style: [["premium", "Premium sobre", ["#173b41", "#cbd4ad", "#f4f4ec"]], ["sport", "Sport énergique", ["#0d0d0d", "#e4ff3a", "#ff4d2e"]], ["minimal", "Minimaliste", ["#ffffff", "#111111", "#e5e5e5"]], ["outdoor", "Nature et outdoor", ["#2f4a35", "#d9c7a3", "#f2efe6"]]],
+  sections: [["hero", "Hero"], ["presentation", "Présentation"], ["programme", "Programme ou services"], ["chiffres", "Chiffres clés"], ["galerie", "Galerie"], ["faq", "FAQ"], ["contact", "Contact"]],
+  options: [["lucide", "Icônes Lucide", "sparkles"], ["anim", "Animations douces", "zap"], ["mobile", "Mobile d'abord", "monitor-smartphone"], ["access", "Accessible", "eye"]]
+};
+const state = { type: "landing", sujet: "event", style: "premium", sections: ["hero", "presentation", "programme", "chiffres", "faq", "contact"], options: ["lucide", "anim", "mobile", "access"] };
+const sujetTxt = { asso: "une association sportive", event: "un événement sportif", portfolio: "mon portfolio personnel", etudiant: "un projet étudiant" };
+const styleTxt = {
+  premium: ["premium et sobre, beaucoup d'espace, une typographie élégante", "bleu nuit #173B41, vert sauge #CBD4AD et crème #F4F4EC"],
+  sport: ["énergique et contrasté, typographie grasse et dynamique", "noir #0D0D0D, jaune fluo #E4FF3A et orange #FF4D2E"],
+  minimal: ["minimaliste, épuré, en noir et blanc avec beaucoup de blanc", "blanc #FFFFFF, noir #111111 et gris clair #E5E5E5"],
+  outdoor: ["naturel et chaleureux, inspiré de l'outdoor", "vert forêt #2F4A35, sable #D9C7A3 et blanc cassé #F2EFE6"]
+};
+const secTxt = { hero: "un hero avec un titre fort, une phrase d'accroche et un bouton d'action", presentation: "une présentation du projet", programme: "le programme ou les services, en cartes", chiffres: "des chiffres clés (emplacements [à compléter], aucun chiffre inventé)", galerie: "une galerie avec les photos du dossier images/", faq: "une FAQ de 4 questions", contact: "un contact avec un formulaire simple et une mention RGPD [à compléter]" };
+$$(".seg").forEach((seg) => {
+  const k = seg.dataset.k, multi = !!seg.dataset.multi;
+  seg.innerHTML = opts[k].map(([v, l, x]) => `<button type="button" data-v="${v}" aria-pressed="false">${Array.isArray(x) ? `<span class="swatch">${x.map((c) => `<i style="background:${c}"></i>`).join("")}</span>` : x ? icon(x) : ""}${l}</button>`).join("");
+  seg.addEventListener("click", (e) => {
+    const b = e.target.closest("button"); if (!b) return;
+    const v = b.dataset.v;
+    if (multi) { const a = state[k]; const i = a.indexOf(v); i >= 0 ? a.splice(i, 1) : a.push(v); if (k === "sections") a.sort((x, y) => opts.sections.findIndex((o) => o[0] === x) - opts.sections.findIndex((o) => o[0] === y)); }
+    else state[k] = v;
+    render(k);
+  });
+});
+$("#nom").addEventListener("input", () => render("nom"));
+function build() {
+  const nom = $("#nom").value.trim() || "[nom du projet]";
+  const [st, pal] = styleTxt[state.style];
+  const L = [];
+  const hl = (key, t) => `\u0001${key}\u0002${t}\u0003`;
+  L.push("Comporte-toi comme un designer premium spécialiste du front-end.");
+  L.push(state.type === "landing"
+    ? hl("type", `Crée une landing page (une seule page, index.html) pour ${hl("nom", nom)}, ${hl("sujet", sujetTxt[state.sujet])}.`)
+    : hl("type", `Crée un site de 3 pages reliées par un menu (index.html, a-propos.html, contact.html) pour ${hl("nom", nom)}, ${hl("sujet", sujetTxt[state.sujet])}.`));
+  L.push("Avant de commencer, lis le fichier brief.md et utilise les images du dossier images/.");
+  L.push("");
+  L.push(hl("style", `Style : ${st}.`));
+  L.push(hl("style", `Couleurs : ${pal}.`));
+  L.push("Typographies : une police de titre élégante et une police de texte lisible, via Google Fonts.");
+  L.push("");
+  if (state.sections.length) { L.push(state.type === "landing" ? "Sections, dans cet ordre :" : "Contenu, réparti entre les pages :"); state.sections.forEach((s) => L.push(hl("sections", `- ${secTxt[s]}`))); L.push("- un pied de page avec les mentions légales [à compléter]"); L.push(""); }
+  const o = state.options;
+  if (o.includes("lucide")) L.push(hl("options", "Icônes : Lucide (open source et gratuites), avec un trait fin et cohérent."));
+  if (o.includes("anim")) L.push(hl("options", "Animations : discrètes, à l'apparition des sections au défilement."));
+  if (o.includes("mobile")) L.push(hl("options", "Responsive : pense d'abord au mobile, puis à l'ordinateur."));
+  if (o.includes("access")) L.push(hl("options", "Accessibilité : contrastes suffisants, textes alternatifs sur les images."));
+  L.push("");
+  L.push(`Contraintes : HTML, CSS et JavaScript simples (${state.type === "landing" ? "index.html" : "les pages HTML"}, style.css, script.js), sans framework ni étape de build, pour pouvoir glisser le dossier sur Netlify Drop.`);
+  L.push("Textes en français. N'invente ni chiffres, ni avis, ni logos de partenaires : mets des emplacements [à compléter].");
+  L.push("Quand tu as fini, liste les fichiers créés et ce qu'il me reste à compléter.");
+  return L.join("\n");
+}
+let last = "";
+function render(changed) {
+  const raw = build();
+  last = raw.replace(/\u0001[a-z]+\u0002/g, "").replace(/\u0003/g, "");
+  const html = esc(raw).replace(/\u0001([a-z]+)\u0002/g, (_, k) => `<span class="hl${k === changed ? " flash" : ""}">`).replace(/\u0003/g, "</span>");
+  $("#prompt").innerHTML = html;
+  $$(".seg").forEach((seg) => { const k = seg.dataset.k; $$("button", seg).forEach((b) => b.setAttribute("aria-pressed", String(Array.isArray(state[k]) ? state[k].includes(b.dataset.v) : state[k] === b.dataset.v))); });
+  const n = last.split("\n").filter((l) => l.trim()).length;
+  $("#count").textContent = `${n} lignes · ${last.length} caractères`;
+  if (changed) setTimeout(() => $$("#prompt .flash").forEach((e) => e.classList.remove("flash")), 700);
+}
+render();
+$("#copy").addEventListener("click", async () => {
+  const b = $("#copy");
+  try { await navigator.clipboard.writeText(last); }
+  catch { const t = document.createElement("textarea"); t.value = last; document.body.append(t); t.select(); try { document.execCommand("copy"); } catch {} t.remove(); }
+  b.classList.add("done"); b.innerHTML = icon("check") + "Copié"; setTimeout(() => { b.classList.remove("done"); b.innerHTML = icon("copy") + "Copier"; }, 1800);
+});
+
+/* ---------- Lexique ---------- */
+const kinds = {"Vibe coding": "Méthode", "Prompt": "Méthode", "Front-end": "Technique", "Back-end": "Technique", "Landing page": "Format", "Site multipage": "Format", "HTML, CSS, JS": "Technique", "Responsive": "Design", "Hébergement": "En ligne", "Nom de domaine": "En ligne", "DNS": "En ligne", "Déploiement": "En ligne", "Open source": "Droits", "Clé d'API": "Sécurité", "Dépôt (GitHub)": "Outil", "Design system": "Design"};
+const lex = [
+  ["sparkles", "Vibe coding", "Créer une appli ou un site en décrivant ce qu'on veut à une IA, qui écrit le code. On dirige, on juge, on corrige."],
+  ["terminal", "Prompt", "La consigne écrite que tu donnes à l'IA. Plus elle est précise (pour qui, quoi, quel style), meilleur est le résultat."],
+  ["monitor-smartphone", "Front-end", "La partie visible d'un site : mise en page, couleurs, textes, boutons, animations. Ce qui tourne dans le navigateur."],
+  ["server", "Back-end", "La partie invisible : base de données, comptes utilisateurs, paiements. Ce qui tourne sur un serveur."],
+  ["file-text", "Landing page", "Une seule page web, pensée pour une action : s'inscrire, acheter, contacter. On fait défiler, on ne change pas de page."],
+  ["layers", "Site multipage", "Plusieurs pages reliées par un menu (Accueil, À propos, Contact). Plus complet, plus long à construire et à tenir à jour."],
+  ["code-xml", "HTML, CSS, JS", "Le trio du web. HTML : le contenu. CSS : l'apparence. JavaScript : les interactions et les animations."],
+  ["monitor-smartphone", "Responsive", "Un site qui s'adapte à la taille de l'écran. Plus de la moitié des visites se font sur mobile."],
+  ["cloud-upload", "Hébergement", "L'ordinateur, allumé en permanence, qui envoie ton site à chaque visiteur. Netlify, Vercel…"],
+  ["globe", "Nom de domaine", "L'adresse de ton site (horizonduo.net). Tu la loues à l'année chez un registraire comme Namecheap."],
+  ["link", "DNS", "L'annuaire d'Internet : il relie ton nom de domaine à l'hébergeur qui sert ton site."],
+  ["rocket", "Déploiement", "Mettre en ligne une nouvelle version de ton site. Sur Netlify Drop, c'est un glisser-déposer."],
+  ["book-open", "Open source", "Un code public, que chacun peut utiliser et modifier selon sa licence. Exemple : les icônes Lucide de cette page."],
+  ["key-round", "Clé d'API", "Le mot de passe qui permet à ton site d'utiliser un service (paiement, IA, carte). Secrète : jamais dans le code visible."],
+  ["git-branch", "Dépôt (GitHub)", "Un dossier en ligne qui garde l'historique de toutes les versions de ton projet."],
+  ["palette", "Design system", "Les règles visuelles d'un projet : couleurs, polices, espacements, boutons. La garantie d'un site cohérent."]
+];
+$("#lex").innerHTML = lex.map(([i, t, d], k) => `<div class="flip reveal d${(k % 4) + 1}"><button type="button" aria-label="${esc(t)} : afficher la définition"><span class="face front"><span class="top">${icon(i)}<span class="kind">${kinds[t] || ""}</span></span><span><h3>${t}</h3><small>${icon("refresh-cw")}Retourner</small></span></span><span class="face back"><strong>${t.toUpperCase()}</strong><span>${d}</span></span></button></div>`).join("");
+$("#lex").addEventListener("click", (e) => { const f = e.target.closest(".flip"); if (f) f.classList.toggle("turn"); });
+
+observe(); onScroll();
+})();
+</script>
+</body>
+</html>
