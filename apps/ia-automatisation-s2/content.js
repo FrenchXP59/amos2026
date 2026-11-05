@@ -294,11 +294,12 @@ window.CONTENT = {
 
   /* Documents proposés au téléchargement directement dans l'étape (clé = id de l'étape). */
 
-  docsEtapes: {"veille": ["fiche-veille"], "flux": ["modele-flux", "prospects-sponsors"], "skill": ["controle-qualite-agence", "brief-lys-padel", "test-1", "test-2"]},
+  docsEtapes: {"veille": ["fiche-veille"], "flux": ["modele-flux", "spreadsheets/d/1FJdEV0Vo3nridy3w_Hey5x7efAnKPpYoYhSlJRhq5BE", "prospects-sponsors"], "skill": ["controle-qualite-agence", "brief-lys-padel", "test-1", "test-2"]},
 
   ressources: [
     { titre: "Fiche méthode : la veille augmentée", fichier: "ressources/fiche-veille.pdf", type: "PDF", dispo: true },
     { titre: "Modèle de flux : déclencheur, actions, filtre, validation", fichier: "ressources/modele-flux.pdf", type: "PDF", dispo: true },
+    { titre: "Copier le Google Sheet de la démo Make", fichier: "https://docs.google.com/spreadsheets/d/1FJdEV0Vo3nridy3w_Hey5x7efAnKPpYoYhSlJRhq5BE/copy", type: "Google Sheets", dispo: true },
     { titre: "Démo Make : prospects sponsors (CSV à importer dans Google Sheets)", fichier: "ressources/prospects-sponsors-lys-padel.csv", type: "CSV", dispo: true },
     { titre: "Skill prêt à importer : contrôle qualité de l'agence", fichier: "ressources/controle-qualite-agence.zip", type: "ZIP", dispo: true },
     { titre: "Brief du client Lys Padel Open", fichier: "ressources/brief-lys-padel.md", type: "Texte", dispo: true },

@@ -415,7 +415,7 @@
     if (!keys || !C.ressources) return "";
     const docs = keys.map((k) => C.ressources.find((r) => r.dispo && r.fichier.includes(k))).filter(Boolean);
     if (!docs.length) return "";
-    return `<div class="page-docs"><span>À télécharger</span>${docs.map((r) => `<a class="doc-chip" href="${esc(r.fichier)}" download>${esc(r.titre)} <small>${esc(r.type || "PDF")}</small></a>`).join("")}</div>`;
+    return `<div class="page-docs"><span>À télécharger</span>${docs.map((r) => `<a class="doc-chip" href="${esc(r.fichier)}" ${/^https:\/\//.test(r.fichier) ? 'target="_blank" rel="noopener"' : "download"}>${esc(r.titre)} <small>${esc(r.type || "PDF")}</small></a>`).join("")}</div>`;
   }
   function head(p, lede) {
     const i = PAGES.indexOf(p.id);

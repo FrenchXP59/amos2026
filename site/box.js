@@ -184,7 +184,7 @@ import {unlockClass,loadClass} from "./access.mjs";
     const apps = fini
       ? (s.apps || []).map((a) => `<a class="item" href="${esc(a.url)}" target="_blank" rel="noopener"><span class="k">Appli</span><span>${esc(a.label)}</span></a>`)
       : (s.apps || []).length ? [`<span class="item off"><span class="k">Appli</span><span>Projetée en cours, ouverte ici après la séance pour réviser.</span></span>`] : [];
-    const res = (futur ? [] : (s.ressources || [])).map((r) => `<a class="item" href="${esc(r.url)}" download><span class="k">${esc(r.type || "PDF")}</span><span>${esc(r.titre)}</span></a>`);
+    const res = (futur ? [] : (s.ressources || [])).map((r) => `<a class="item" href="${esc(r.url)}" ${/^https:\/\//.test(r.url) ? 'target="_blank" rel="noopener"' : "download"}><span class="k">${esc(r.type || "PDF")}</span><span>${esc(r.titre)}</span></a>`);
     const quiz = fini && s.video && (s.apps || [])[0] ? [`<a class="item" href="${esc(s.apps[0].url.split("#")[0])}#video" target="_blank" rel="noopener"><span class="k">${s.videoSuite ? "Débat" : "Quiz"}</span><span>${s.videoSuite ? "Débat de la vidéo" : "Quiz de la vidéo"}</span></a>`] : [];
     const items = futur ? [`<span class="item off"><span class="k">Bientôt</span><span>Les ressources seront disponibles le jour de la séance.</span></span>`] : quiz.concat(apps, res);
     return `<li class="seance ${stt}" id="s-${cid}-${s.n}">

@@ -56,8 +56,8 @@ function appDocs(appUrl) {
     ctx.window = ctx;   // comme dans un navigateur : window.X est aussi une variable globale
     vm.createContext(ctx);
     for (const src of srcs) vm.runInContext(readFileSync(join(ROOT, dir, src), "utf8"), ctx);
-    docs = (ctx.window.CONTENT?.ressources || []).filter((r) => r.dispo && /\.pdf$/i.test(r.fichier))
-      .map((r) => ({ titre: r.titre, url: posix.normalize(posix.join(dir, r.fichier)), type: r.type || "PDF" }));
+    docs = (ctx.window.CONTENT?.ressources || []).filter((r) => r.dispo && (/^https:\/\//.test(r.fichier) || /\.(pdf|zip|md|csv)$/i.test(r.fichier)))
+      .map((r) => ({ titre: r.titre, url: /^https:\/\//.test(r.fichier) ? r.fichier : posix.normalize(posix.join(dir, r.fichier)), type: r.type || "PDF" }));
   } catch (e) { console.warn(`! documents introuvables pour ${dir} : ${e.message}`); }
   docsCache.set(dir, docs);
   return docs;
