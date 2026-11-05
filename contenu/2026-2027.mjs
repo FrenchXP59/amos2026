@@ -365,7 +365,7 @@ export default {
         {
           "cours": "ia-com",
           "n": 2,
-          "date": "2026-11-05",
+          "date": "2026-11-17",
           "heure": "13:30–17:00",
           "titre": "Visuels, cohérence de marque, mini-kit et pitch devant le client",
           "video": "https://youtu.be/N_iGyGNkVQQ",

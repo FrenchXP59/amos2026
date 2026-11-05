@@ -18,7 +18,7 @@ window.CONTENT = {
     intervenant: "Frédéric Legrand",
     dateSeance: "Séance de 3h30",
     classes: {
-      b3b: { date: "Jeudi 5 novembre 2026, 13h30 – 17h00", debut: "13:30" },
+      b3b: { date: "Mardi 17 novembre 2026, 13h30 – 17h00", debut: "13:30" },
       b3a: { date: "Lundi 23 novembre 2026, 9h00 – 12h30", debut: "9:00" }
     },
     agences: ["Agence 1", "Agence 2", "Agence 3", "Agence 4"],
