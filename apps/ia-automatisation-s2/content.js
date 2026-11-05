@@ -156,7 +156,7 @@ window.CONTENT = {
       { titre: "Validation et envoi", role: "Un humain relit, puis diffusion.",
         prompt: "Créer un brouillon de mail au chef de projet de l'agence. Il relit, corrige, puis envoie au client. Filtre : si aucun article n'a été trouvé, ne rien envoyer." }
     ],
-    note: "Démonstration en direct par l'intervenant sur Make (offre gratuite) : une nouvelle ligne dans Google Sheets déclenche une action, testée avec « Run once ». Les agences dessinent ensuite le flux de reporting de leur réponse : déclencheur, actions, filtre, validation humaine.",
+    note: "Démonstration en direct sur Make (offre gratuite) : chaque nouveau prospect sponsor ajouté dans le Google Sheet « Prospects sponsors Lys Padel » déclenche un e-mail à l'agence, seulement si le montant dépasse 1 000 €. Test avec « Run once » : une ligne à 500 € (bloquée par le filtre), une à 3 000 € (e-mail envoyé). Pour reproduire : le fichier doit être un vrai Google Sheets, pas un CSV ni un .xlsx déposé sur Drive (Fichier → Enregistrer au format Google Sheets), et les montants en chiffres seuls. Les agences dessinent ensuite le flux de reporting de leur réponse : déclencheur, actions, filtre, validation humaine.",
     principesTitre: "Les règles d'un flux fiable",
     principes: [
       { t: "Un déclencheur clair", d: "Un événement précis ou un horaire fixe, jamais « quand j'y pense »." },
@@ -294,11 +294,12 @@ window.CONTENT = {
 
   /* Documents proposés au téléchargement directement dans l'étape (clé = id de l'étape). */
 
-  docsEtapes: {"veille": ["fiche-veille"], "flux": ["modele-flux"], "skill": ["controle-qualite-agence", "brief-lys-padel", "test-1", "test-2"]},
+  docsEtapes: {"veille": ["fiche-veille"], "flux": ["modele-flux", "prospects-sponsors"], "skill": ["controle-qualite-agence", "brief-lys-padel", "test-1", "test-2"]},
 
   ressources: [
     { titre: "Fiche méthode : la veille augmentée", fichier: "ressources/fiche-veille.pdf", type: "PDF", dispo: true },
     { titre: "Modèle de flux : déclencheur, actions, filtre, validation", fichier: "ressources/modele-flux.pdf", type: "PDF", dispo: true },
+    { titre: "Démo Make : prospects sponsors (CSV à importer dans Google Sheets)", fichier: "ressources/prospects-sponsors-lys-padel.csv", type: "CSV", dispo: true },
     { titre: "Skill prêt à importer : contrôle qualité de l'agence", fichier: "ressources/controle-qualite-agence.zip", type: "ZIP", dispo: true },
     { titre: "Brief du client Lys Padel Open", fichier: "ressources/brief-lys-padel.md", type: "Texte", dispo: true },
     { titre: "Test 1 : réponse de l'agence Smash", fichier: "ressources/test-1-reponse-agence.md", type: "Texte", dispo: true },
