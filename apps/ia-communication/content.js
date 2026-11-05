@@ -19,7 +19,7 @@ window.CONTENT = {
     // Adaptation par classe : ouvrir l'appli avec ?classe=b3a ou ?classe=b3b
     // date affichée, heure de début (les horaires du parcours sont recalculés) et variables de texte
     classes: {
-      b3b: { date: "Lundi 2 novembre 2026, 9h00 – 12h30", debut: "9:00", variables: { seance2: "jeudi 5 novembre, après-midi" } },
+      b3b: { date: "Lundi 2 novembre 2026, 9h00 – 12h30", debut: "9:00", variables: { seance2: "mardi 17 novembre, après-midi" } },
       b3a: { date: "Mardi 3 novembre 2026, 13h30 – 17h00", debut: "13:30", variables: { seance2: "lundi 23 novembre, matin" } }
     },
     variables: { seance2: "date à venir" },   // valeur par défaut sans ?classe=
