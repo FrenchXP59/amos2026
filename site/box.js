@@ -208,6 +208,9 @@ import {unlockClass,loadClass} from "./access.mjs";
     if (annee) convention.searchParams.set('annee', annee);
     if (k) convention.searchParams.set('classe', k);
     $('#convention-link').href = convention.href;
+    const home = new URL(convention);
+    home.searchParams.set('accueil', '1');
+    $('#home-link').href = home.href;
     if (!annee) { main.innerHTML = `<p class="muted">Aucune année publiée.</p>`; return; }
     let P;
     try { P = await getPublic(annee); } catch (e) { main.innerHTML = `<p class="muted">Données de l'année ${esc(annee)} introuvables.</p>`; return; }

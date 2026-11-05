@@ -153,7 +153,8 @@ function moveJoy(e){if(!joyActive)return;const r=joy.getBoundingClientRect(),dx=
 joy.onpointerdown=e=>{joyActive=true;joy.setPointerCapture(e.pointerId);moveJoy(e);};joy.onpointermove=moveJoy;joy.onpointerup=joy.onpointercancel=()=>{joyActive=false;knob.style.transform='';world?.setTouch(0,0);};
 window.addEventListener('pagehide',()=>{world?.dispose();audio?.close();});document.addEventListener('visibilitychange',()=>{if(document.hidden&&soundOn)stopSound();});
 if(!amosContext)toast('Le programme AMOS est momentanément indisponible. L’accès à la box reste proposé dans « Mon cours ».');
-if(store.get('horizon-direct')==='yes')openAccess();
+// A voluntary home visit bypasses access automation without changing the saved preference.
+if(new URLSearchParams(location.search).get('accueil')!=='1' && store.get('horizon-direct')==='yes')openAccess();
 
 }
 start().catch(error=>{console.error("Ouverture de la convention impossible",error);document.querySelector("#app").innerHTML='<main style="padding:40px"><h1>La convention est momentanément indisponible.</h1><a href="../#/">Ouvrir la box IA et mes cours</a></main>';});

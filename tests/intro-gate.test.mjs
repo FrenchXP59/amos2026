@@ -11,3 +11,17 @@ test('Intro only intercepts the bare entry and preserves direct class and year l
  assert.equal(open('https://example.test/box/', 'yes'),null);
  assert.equal(open('https://example.test/box/',null,true),'https://example.test/box/convention/?annee=2026-2027');
 });
+
+test('Voluntary home visit bypasses the access modal while preserving the next normal visit',()=>{
+ const source=readFileSync(new URL('../convention/src/main.js',import.meta.url),'utf8');
+ const guard=source.match(/if\(new URLSearchParams\(location.search\)[^\n]+openAccess\(\);/)[0];
+ for(const preference of [null,'no','yes']){
+  let calls=0;
+  const context={URLSearchParams,location:{search:'?accueil=1&annee=2026-2027'},store:{get:()=>preference},openAccess:()=>calls++};
+  runInNewContext(guard,context);
+  assert.equal(calls,0);
+  context.location.search='?annee=2026-2027';
+  runInNewContext(guard,context);
+  assert.equal(calls,preference==='yes'?1:0);
+ }
+});

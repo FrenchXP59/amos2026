@@ -6,6 +6,18 @@
   const $ = (s, r = document) => r.querySelector(s);
   const $$ = (s, r = document) => Array.from(r.querySelectorAll(s));
   const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+  const siteRoot = new URL('../../', document.currentScript.src);
+  const siteNav = document.createElement('nav');
+  siteNav.className = 'site-nav';
+  siteNav.setAttribute('aria-label', 'Navigation AMOS');
+  for (const [label, path] of [['Accueil / Bonus', 'convention/?accueil=1'], ['2026–2027', '#/2026-2027'], ['Convention 3D', 'convention/']]) {
+    const link = document.createElement('a');
+    link.textContent = label;
+    link.href = new URL(path, siteRoot).href;
+    siteNav.append(link);
+  }
+  document.querySelector('.topbar').after(siteNav);
+  new ResizeObserver(() => document.documentElement.style.setProperty('--site-nav-h', `${siteNav.offsetHeight}px`)).observe(siteNav);
   const LETTERS = ["A", "B", "C", "D", "E", "F"];
 
   /* ---------- Stockage local (facultatif, protégé) ---------- */

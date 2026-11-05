@@ -150,8 +150,8 @@ h1, h2, h3 { font-family: var(--font-display); line-height: 1.02; margin: 0; let
 .layout {
   display: grid;
   grid-template-columns: var(--rail-w) 1fr;
-  height: calc(100vh - var(--top-h) - var(--bottom-h));
-  height: calc(100dvh - var(--top-h) - var(--bottom-h));
+  height: calc(100vh - var(--top-h) - var(--bottom-h) - var(--site-nav-h, 0px));
+  height: calc(100dvh - var(--top-h) - var(--bottom-h) - var(--site-nav-h, 0px));
 }
 
 /* ---------- Le parcours (rail) ---------- */
@@ -852,3 +852,9 @@ canvas.confetti { position: fixed; inset: 0; width: 100vw; height: 100vh; z-inde
 /* Rappel : vote par téléphone */
 .vote-tel { margin-top: 12px; padding: 10px 14px; border-left: 3px solid var(--accent, #4CAF7A); background: var(--surface); border-radius: 0 var(--r-m) var(--r-m) 0; font-size: .92rem; max-width: 80ch; }
 .vote-tel span { font-size: .75rem; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); margin-right: 8px; }
+
+/* Global destinations remain reachable on every lesson, including small screens. */
+.site-nav { display:flex; flex-wrap:wrap; gap:8px; padding:10px 16px; border-bottom:1px solid var(--line); }
+.site-nav a { color:inherit; text-decoration:none; font:inherit; font-weight:700; border:1px solid currentColor; border-radius:999px; padding:10px 14px; min-height:44px; display:inline-flex; align-items:center; }
+.site-nav a:focus-visible { outline:3px solid currentColor; outline-offset:3px; }
+@media print { .site-nav { display:none; } }

@@ -159,3 +159,6 @@ details.obj li { margin: 4px 0; }
 .pw-wrap { position: relative; display: block; }
 .pw-wrap input { width: 100%; padding-right: 92px; }
 .pw-toggle { position: absolute; right: 6px; top: 50%; transform: translateY(-50%); border: 0; background: transparent; color: inherit; font: inherit; font-size: .85rem; font-weight: 600; text-decoration: underline; cursor: pointer; padding: 6px 8px; }
+
+.top .convention-link, .top .year { min-height:44px; display:inline-flex; align-items:center; }
+@media(max-width:600px){.top .brand{flex-basis:100%}.top .years{order:1}}
