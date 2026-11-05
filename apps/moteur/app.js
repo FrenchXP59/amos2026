@@ -951,6 +951,7 @@
           <div class="fiche-body"><div>
             ${f.points ? `<ul class="fiche-points">${f.points.map((x) => `<li>${Array.isArray(x) ? `<strong>${esc(x[0])}</strong> ${esc(x[1])}` : esc(x)}</li>`).join("")}</ul>` : ""}
             ${f.exemple ? `<p class="ask">${esc(f.exemple)}</p>` : ""}
+            ${f.lien ? `<p style="margin-top:12px"><a class="btn small lamp" href="${esc(f.lien.url)}" target="_blank" rel="noopener">${esc(f.lien.label)}</a></p>` : ""}
           </div></div>
         </article>`).join("")}</div>
       ${F.note ? `<p class="muted" style="margin-top:14px;max-width:80ch">${esc(F.note)}</p>` : ""}
