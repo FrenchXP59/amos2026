@@ -1,0 +1,187 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex">
+<title>Calculateur prix Kilomètre Nord</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700;900&family=Barlow+Condensed:wght@600;700&display=swap">
+<style>
+/* Layout : une colonne mobile d'abord ; produit → prix → cascade → zone d'accord → négociation. Deux colonnes au-delà de 760px. */
+:root{
+  --bg:#f3f6f4; --card:#ffffff; --fg:#16211b; --muted:#56655c; --line:#d5e0d9;
+  --accent:#008B57; --accent-ink:#ffffff; --soft:#e6f3ec; --bad:#b3261e; --bad-bg:#fdecea; --warn:#9a5b00; --warn-bg:#fff4e0; --tva:#7d8a9c; --cost:#5b6b62; --brand:#d99a00;
+  --display:"Barlow Condensed","Arial Narrow",Arial,sans-serif; --body:Lato,"Helvetica Neue",Arial,sans-serif;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0f1512;--card:#17201b;--fg:#e4ece7;--muted:#9fb0a6;--line:#2c3a32;--accent:#2fb67f;--accent-ink:#06130d;--soft:#1d2d25;--bad:#ff8a80;--bad-bg:#3a1a18;--warn:#f0b35a;--warn-bg:#2d2414;--tva:#8e9bb0;--cost:#73867b;--brand:#e8b13a;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0f1512;--card:#17201b;--fg:#e4ece7;--muted:#9fb0a6;--line:#2c3a32;--accent:#2fb67f;--accent-ink:#06130d;--soft:#1d2d25;--bad:#ff8a80;--bad-bg:#3a1a18;--warn:#f0b35a;--warn-bg:#2d2414;--tva:#8e9bb0;--cost:#73867b;--brand:#e8b13a;color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--fg);font:16px/1.45 var(--body);padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:18px 40px}
+.wrap{max-width:980px;margin:0 auto;display:grid;gap:16px}
+header{display:grid;gap:4px}
+.tag{font:700 .72rem/1 var(--body);text-transform:uppercase;letter-spacing:.09em;color:var(--accent)}
+h1,h2{font-family:var(--display);margin:0;text-wrap:balance}
+h1{font-size:2.1rem;line-height:1.05}
+h2{font-size:1.25rem;text-transform:uppercase;letter-spacing:.05em;color:var(--accent)}
+p{margin:0}
+.muted{color:var(--muted);font-size:.9rem}
+.grid{display:grid;gap:16px;grid-template-columns:minmax(0,1fr)}
+@media (min-width:760px){.grid{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}}
+.grid>*{min-width:0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:14px 16px;display:grid;grid-template-columns:minmax(0,1fr);gap:12px}
+.prods{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.prod{border:2px solid var(--line);background:var(--card);color:var(--fg);border-radius:8px;padding:10px 6px;font:700 .95rem var(--body);cursor:pointer;display:grid;gap:2px;text-align:center}
+.prod small{font-weight:400;color:var(--muted);font-size:.78rem}
+.prod[aria-pressed="true"]{border-color:var(--accent);background:var(--soft)}
+.prod:focus-visible,input:focus-visible,button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.field{display:grid;grid-template-columns:minmax(0,1fr);gap:4px}
+.field label{font-size:.78rem;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--muted)}
+.inrow{display:flex;align-items:center;gap:8px}
+.inrow input{flex:1;min-width:0;width:0;font:700 1.5rem var(--display);padding:6px 10px;border:1px solid var(--line);border-radius:6px;background:var(--bg);color:var(--fg);font-variant-numeric:tabular-nums}
+.inrow span{font-weight:700;color:var(--muted);white-space:nowrap}
+.step-btn{border:1px solid var(--line);background:var(--bg);color:var(--fg);border-radius:6px;width:40px;height:40px;font:700 1.2rem var(--body);cursor:pointer}
+.cascade{display:grid;gap:4px}
+.row{display:grid;grid-template-columns:1fr auto;gap:10px;align-items:baseline;padding:7px 10px;border-radius:6px;background:var(--soft)}
+.row .v{font:700 1.3rem var(--display);font-variant-numeric:tabular-nums;white-space:nowrap}
+.row .l{font-weight:700}
+.row .l small{display:block;font-weight:400;color:var(--muted);font-size:.8rem}
+.row.key{background:var(--accent);color:var(--accent-ink)}
+.row.key .l small{color:inherit;opacity:.85}
+.row.plain{background:transparent;border:1px dashed var(--line)}
+.op{font-size:.85rem;color:var(--muted);padding-left:14px}
+.bar{display:flex;height:28px;border-radius:6px;overflow:hidden}
+.bar div{min-width:0}
+.legend{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:.8rem;color:var(--muted)}
+.legend i{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:5px;vertical-align:-1px}
+.ruler{position:relative;height:112px}
+.ruler .track{position:absolute;left:0;right:0;top:52px;height:22px;border-radius:4px;background:var(--line);opacity:.5}
+.ruler .z{position:absolute;top:52px;height:22px;background:var(--accent);opacity:.45;border-radius:3px}
+.ruler .loss{position:absolute;top:52px;height:22px;left:0;background:var(--bad);opacity:.22;border-radius:4px 0 0 4px}
+.ruler .m{position:absolute;top:42px;height:42px;width:3px;margin-left:-1.5px;background:var(--fg)}
+.ruler .m.pl{background:var(--bad)}.ruler .m.mx{background:var(--accent)}.ruler .m.pr{background:var(--brand);width:5px;margin-left:-2.5px}
+.ruler .t{position:absolute;font-size:.75rem;font-weight:700;transform:translateX(-50%);white-space:nowrap}
+.ruler .t.top{top:0}.ruler .t.up{top:20px}.ruler .t.dn{top:90px}
+.ruler .t.pl{color:var(--bad)}.ruler .t.mx{color:var(--accent)}.ruler .t.pr{color:var(--warn)}
+.verdict{padding:10px 12px;border-radius:6px;font-weight:700}
+.verdict.good{background:var(--soft);color:var(--accent)}
+.verdict.bad{background:var(--bad-bg);color:var(--bad)}
+.verdict.warn{background:var(--warn-bg);color:var(--warn)}
+.kpis{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.kpi{border:1px solid var(--line);border-radius:6px;padding:8px 10px;display:grid;gap:2px}
+.kpi b{font:700 1.35rem var(--display);font-variant-numeric:tabular-nums}
+.kpi span{font-size:.78rem;color:var(--muted)}
+.rules{font-size:.85rem;color:var(--muted);display:grid;gap:4px}
+.rules b{color:var(--fg)}
+@media (prefers-reduced-motion:no-preference){.ruler .m,.ruler .z,.ruler .t{transition:left .25s,width .25s}}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <header>
+    <span class="tag">Concours de vente B1 · Défi Kilomètre Nord</span>
+    <h1>Calculateur de prix et zone d'accord</h1>
+    <p class="muted">Choisis ta référence, ton prix public, puis teste ton prix d'achat négocié. Règles du sujet : TVA 20 %, coefficient de l'enseigne 2.</p>
+  </header>
+
+  <div class="grid">
+    <section class="card" aria-labelledby="h-prix">
+      <h2 id="h-prix">1 · Ton produit</h2>
+      <div class="prods" role="group" aria-label="Référence">
+        <button class="prod" data-k="route" aria-pressed="true">Chaussure route<small>plancher 55 €</small></button>
+        <button class="prod" data-k="trail" aria-pressed="false">Chaussure trail<small>plancher 63 €</small></button>
+        <button class="prod" data-k="veste" aria-pressed="false">Veste<small>plancher 35 €</small></button>
+      </div>
+      <div class="field">
+        <label for="ttc">Prix public TTC (payé par le coureur)</label>
+        <div class="inrow"><button class="step-btn" data-d="-5" aria-label="Moins 5 euros">−</button><input id="ttc" type="number" inputmode="decimal" step="1" min="0"><span>€ TTC</span><button class="step-btn" data-d="5" aria-label="Plus 5 euros">+</button></div>
+      </div>
+
+      <h2>2 · La mécanique du prix</h2>
+      <div class="cascade" id="cascade"></div>
+      <div class="bar" id="bar" aria-hidden="true"></div>
+      <div class="legend"><span><i style="background:var(--cost)"></i>coût marque (plancher)</span><span><i style="background:var(--brand)"></i>marge marque</span><span><i style="background:var(--accent)"></i>marge enseigne</span><span><i style="background:var(--tva)"></i>TVA</span></div>
+    </section>
+
+    <section class="card" aria-labelledby="h-nego">
+      <h2 id="h-nego">3 · La zone d'accord</h2>
+      <div class="ruler" id="ruler" aria-hidden="true"></div>
+      <div id="zoneTxt"></div>
+
+      <h2>4 · Teste ton prix négocié</h2>
+      <div class="field">
+        <label for="prix">Prix d'achat HT proposé à l'enseigne</label>
+        <div class="inrow"><button class="step-btn" data-p="-1" aria-label="Moins 1 euro">−</button><input id="prix" type="number" inputmode="decimal" step="0.5" min="0"><span>€ HT</span><button class="step-btn" data-p="1" aria-label="Plus 1 euro">+</button></div>
+      </div>
+      <div class="field">
+        <label for="qte">Quantité de la commande test</label>
+        <div class="inrow"><input id="qte" type="number" inputmode="numeric" step="5" min="0" value="60"><span>pièces</span></div>
+      </div>
+      <div class="verdict" id="verdict" role="status" aria-live="polite"></div>
+      <div class="kpis" id="kpis"></div>
+    </section>
+  </div>
+
+  <section class="card rules">
+    <p><b>Les formules.</b> Prix HT = prix TTC ÷ 1,2 (la TVA de 20 % se calcule sur le HT). Prix d'achat max de l'enseigne = prix HT ÷ 2. Coefficient = prix de vente HT ÷ prix d'achat HT. Marge de négociation = prix d'achat − plancher.</p>
+    <p><b>La règle d'or.</b> Jamais sous le plancher : en dessous, la marque perd de l'argent sur chaque pièce. Et chaque euro cédé doit rapporter une contrepartie.</p>
+    <p>Le coefficient de 2 est une simplification pédagogique du sujet : dans la réalité, il varie selon les enseignes et les produits.</p>
+  </section>
+</div>
+
+<script>
+(function(){
+  var P={route:{nom:"chaussure route",ttc:140,pl:55},trail:{nom:"chaussure trail",ttc:160,pl:63},veste:{nom:"veste",ttc:90,pl:35}};
+  var k="route", $=function(id){return document.getElementById(id)};
+  var eur=function(n,d){if(!isFinite(n))return "–";return n.toLocaleString("fr-FR",{minimumFractionDigits:d===0?0:2,maximumFractionDigits:d===0?0:2})+" €"};
+  var num=function(el){var v=parseFloat(String(el.value).replace(",","."));return isFinite(v)?v:NaN};
+  function setProd(nk){k=nk;document.querySelectorAll(".prod").forEach(function(b){b.setAttribute("aria-pressed",b.dataset.k===k)});$("ttc").value=P[k].ttc;$("prix").value=(Math.floor(P[k].ttc/2.4*100)/100).toFixed(2);run()}
+  function run(){
+    var p=P[k],ttc=num($("ttc")),pl=p.pl,ht=ttc/1.2,tva=ttc-ht,mx=ht/2,mini=pl*2.4,ouv=Math.round(mx*1.11),pr=num($("prix")),q=num($("qte"))||0;
+    $("cascade").innerHTML=
+      '<div class="row"><span class="l">Prix public TTC<small>ce que paie le coureur</small></span><span class="v">'+eur(ttc)+'</span></div>'+
+      '<div class="op">− TVA 20 % : '+eur(tva)+' (TTC ÷ 1,2)</div>'+
+      '<div class="row"><span class="l">Prix de vente HT<small>ce qui reste au magasin</small></span><span class="v">'+eur(ht)+'</span></div>'+
+      '<div class="op">− marge de l\'enseigne : '+eur(ht-mx)+' (coefficient 2 : HT ÷ 2)</div>'+
+      '<div class="row key"><span class="l">Prix d\'achat max<small>le plafond de l\'acheteur</small></span><span class="v">'+eur(mx)+'</span></div>'+
+      '<div class="op">− plancher de la marque</div>'+
+      '<div class="row plain"><span class="l">Prix plancher<small>coût de la marque : jamais en dessous</small></span><span class="v">'+eur(pl)+'</span></div>';
+    // barre : décomposition au prix max
+    var mm=Math.max(0,mx-pl),parts=[[Math.min(pl,ttc),"var(--cost)"],[mm,"var(--brand)"],[ht-mx,"var(--accent)"],[tva,"var(--tva)"]];
+    $("bar").innerHTML=ttc>0?parts.map(function(x){return '<div style="flex:'+Math.max(0,x[0])+' 0 0;background:'+x[1]+'"></div>'}).join(""):"";
+    // règle graduée
+    var lo=Math.min(pl,mx,isFinite(pr)?pr:pl)-4,hi=Math.max(ouv,mx,isFinite(pr)?pr:mx)+3,pos=function(v){return Math.max(0,Math.min(100,(v-lo)/(hi-lo)*100))};
+    var r='<div class="track"></div><div class="loss" style="width:'+pos(pl)+'%"></div>';
+    if(mx>pl)r+='<div class="z" style="left:'+pos(pl)+'%;width:'+(pos(mx)-pos(pl))+'%"></div>';
+    r+='<div class="m pl" style="left:'+pos(pl)+'%"></div><div class="t up pl" style="left:'+pos(pl)+'%">Plancher '+eur(pl)+'</div>';
+    r+='<div class="m mx" style="left:'+pos(mx)+'%"></div><div class="t dn mx" style="left:'+pos(mx)+'%">Max '+eur(mx)+'</div>';
+    if(isFinite(pr)){r+='<div class="m pr" style="left:'+pos(pr)+'%"></div><div class="t top pr" style="left:'+pos(pr)+'%">Ton prix '+eur(pr)+'</div>'}
+    $("ruler").innerHTML=r;
+    $("zoneTxt").innerHTML=mx>=pl
+      ? '<p>Zone d\'accord : <b>de '+eur(pl)+' à '+eur(mx)+' HT</b>, soit <b>'+eur(mx-pl)+'</b> pour négocier. Prix d\'ouverture conseillé : <b>'+eur(ouv,0)+' HT</b> (max × 1,11, comme sur la fiche).</p><p class="muted">Prix public minimum pour qu\'un accord existe : '+eur(mini)+' TTC.</p>'
+      : '<p class="verdict bad">Aucune zone d\'accord : ton prix public est trop bas. Il faut au moins '+eur(mini)+' TTC pour une '+p.nom+'.</p>';
+    // verdict
+    var v=$("verdict");
+    if(!isFinite(pr)){v.className="verdict warn";v.textContent="Entre un prix d'achat HT."}
+    else if(mx<pl){v.className="verdict bad";v.textContent="Aucun accord possible avec ce prix public."}
+    else if(pr<pl){v.className="verdict bad";v.textContent="Sous le plancher : tu perds "+eur(pl-pr)+" sur chaque pièce. Interdit."}
+    else if(pr>mx+1e-9){v.className="verdict warn";v.textContent="Au-dessus du max de l'enseigne : l'acheteur ne peut pas accepter. Il te faut céder au moins "+eur(pr-mx)+"."}
+    else {v.className="verdict good";v.textContent="Dans la zone d'accord. Tu gardes "+eur(pr-pl)+" par pièce au-dessus de ton plancher."}
+    var coef=pr>0?ht/pr:NaN;
+    $("kpis").innerHTML=
+      '<div class="kpi"><b>'+(isFinite(coef)?coef.toFixed(2).replace(".",","):"–")+'</b><span>coefficient de l\'enseigne (objectif : 2 ou plus)</span></div>'+
+      '<div class="kpi"><b>'+eur(ht-pr)+'</b><span>marge de l\'enseigne par pièce</span></div>'+
+      '<div class="kpi"><b>'+eur(pr-pl)+'</b><span>ta marge au-dessus du plancher, par pièce</span></div>'+
+      '<div class="kpi"><b>'+eur((pr-pl)*q)+'</b><span>ta marge sur '+q+' pièces</span></div>'+
+      '<div class="kpi"><b>'+eur((ouv-pr)*q)+'</b><span>coût de tes concessions depuis l\'ouverture ('+eur(ouv,0)+'), sur '+q+' pièces</span></div>'+
+      '<div class="kpi"><b>'+eur(pr*1.2*2)+'</b><span>prix public TTC qu\'il faudrait pour que ton prix tienne au coefficient 2</span></div>';
+  }
+  document.querySelectorAll(".prod").forEach(function(b){b.addEventListener("click",function(){setProd(b.dataset.k)})});
+  document.querySelectorAll("[data-d]").forEach(function(b){b.addEventListener("click",function(){$("ttc").value=Math.max(0,(num($("ttc"))||0)+(+b.dataset.d));run()})});
+  document.querySelectorAll("[data-p]").forEach(function(b){b.addEventListener("click",function(){$("prix").value=Math.max(0,(num($("prix"))||0)+(+b.dataset.p)).toFixed(2);run()})});
+  ["ttc","prix","qte"].forEach(function(id){$(id).addEventListener("input",run)});
+  setProd("route");
+})();
+</script>
+</body>
+</html>
