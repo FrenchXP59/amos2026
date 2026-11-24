@@ -1,0 +1,401 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex">
+<title>Jeu du jury</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700;900&family=Barlow+Condensed:wght@600;700&display=swap">
+<style>
+/* Deux vues : animateur (par défaut : tirage, corrigé, points) et projection (?vue=projection : question, chrono, scores, sans corrigé).
+   Les deux fenêtres partagent l'état via localStorage (événement storage). */
+:root{
+  --bg:#f3f6f4; --card:#ffffff; --fg:#16211b; --muted:#56655c; --line:#d5e0d9;
+  --accent:#008B57; --accent-ink:#ffffff; --soft:#e6f3ec; --bad:#b3261e; --bad-bg:#fdecea; --warn:#9a5b00; --warn-bg:#fff4e0;
+  --cA:#1F3C88; --cB:#7B3FA0; --cC:#D25A05; --cD:#0E8A5F; --cE:#C62828;
+  --display:"Barlow Condensed","Arial Narrow",Arial,sans-serif; --body:Lato,"Helvetica Neue",Arial,sans-serif;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0f1512;--card:#17201b;--fg:#e4ece7;--muted:#9fb0a6;--line:#2c3a32;--accent:#2fb67f;--accent-ink:#06130d;--soft:#1d2d25;--bad:#ff8a80;--bad-bg:#3a1a18;--warn:#f0b35a;--warn-bg:#2d2414;--cA:#6f8fe0;--cB:#b585d6;--cC:#f08a3c;--cD:#3cc08f;--cE:#ef6f6f;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0f1512;--card:#17201b;--fg:#e4ece7;--muted:#9fb0a6;--line:#2c3a32;--accent:#2fb67f;--accent-ink:#06130d;--soft:#1d2d25;--bad:#ff8a80;--bad-bg:#3a1a18;--warn:#f0b35a;--warn-bg:#2d2414;--cA:#6f8fe0;--cB:#b585d6;--cC:#f08a3c;--cD:#3cc08f;--cE:#ef6f6f;color-scheme:dark}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.45 var(--body);padding:18px max(16px,env(safe-area-inset-right,0px)) 40px max(16px,env(safe-area-inset-left,0px))}
+.wrap{max-width:1180px;margin:0 auto;display:grid;grid-template-columns:minmax(0,1fr);gap:16px}
+@media (min-width:980px){.wrap{grid-template-columns:minmax(0,1fr) 320px}}
+header{display:flex;flex-wrap:wrap;align-items:end;gap:8px 16px;grid-column:1/-1}
+header .t{flex:1;min-width:220px;display:grid;gap:4px}
+.tag{font:700 .72rem/1 var(--body);text-transform:uppercase;letter-spacing:.09em;color:var(--accent)}
+h1,h2,h3{font-family:var(--display);margin:0;text-wrap:balance}
+h1{font-size:2.1rem;line-height:1.05}
+h2{font-size:1.35rem}
+h3{font-size:1rem;text-transform:uppercase;letter-spacing:.05em;color:var(--muted)}
+p{margin:0}
+.muted{color:var(--muted);font-size:.9rem}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:14px 16px;display:grid;gap:12px;min-width:0}
+.btn{border:1px solid var(--line);background:var(--card);color:var(--fg);border-radius:8px;padding:9px 14px;font:700 .92rem var(--body);cursor:pointer}
+.btn:hover{border-color:var(--accent)}
+.btn.main{background:var(--accent);border-color:var(--accent);color:var(--accent-ink);font-size:1.05rem;padding:12px 20px}
+.btn.on{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.btn.danger{color:var(--bad)}
+.btn[disabled]{opacity:.4;cursor:default}
+button:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.row{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.chip{display:inline-block;color:#fff;border-radius:4px;padding:2px 8px;font:700 .8rem var(--body);white-space:nowrap}
+.cA{background:var(--cA)}.cB{background:var(--cB)}.cC{background:var(--cC)}.cD{background:var(--cD)}.cE{background:var(--cE)}
+.stage{border-left:10px solid var(--accent)}
+.stage .meta{display:flex;flex-wrap:wrap;gap:6px 14px;align-items:center}
+.team-big{font:700 2rem/1.05 var(--display)}
+.jure{font-size:.95rem;color:var(--muted)}
+.jure b{color:var(--fg)}
+.qtext{font:700 1.7rem/1.25 var(--body);text-wrap:pretty}
+.empty{font-size:1.1rem;color:var(--muted);padding:24px 0}
+.timer{display:flex;align-items:center;gap:12px}
+.timer .clock{font:700 2.4rem/1 var(--display);font-variant-numeric:tabular-nums;min-width:3.2ch}
+.timer .track{flex:1;height:10px;border-radius:5px;background:var(--line);overflow:hidden}
+.timer .fill{height:100%;background:var(--accent);width:100%;transition:width .25s linear}
+.timer.late .clock{color:var(--bad)}.timer.late .fill{background:var(--bad)}
+.answer{background:var(--soft);border-radius:8px;padding:12px 14px;display:grid;gap:6px}
+.answer .lab{font:700 .72rem var(--body);letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.answer .crit{font-weight:700}
+.pts{display:flex;gap:8px;flex-wrap:wrap}
+.pts .btn{min-width:64px;font:700 1.3rem var(--display)}
+.score-list{display:grid;gap:8px}
+.sc{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:2px 10px;align-items:center}
+.sc .n{font-weight:700;overflow-wrap:anywhere}
+.sc .v{font:700 1.5rem var(--display);font-variant-numeric:tabular-nums}
+.sc .bar{grid-column:1/-1;height:8px;border-radius:4px;background:var(--line);overflow:hidden}
+.sc .bar i{display:block;height:100%;background:var(--accent)}
+.sc.cur .n{color:var(--accent)}
+.teams{display:grid;gap:6px}
+.tm{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:8px;align-items:center}
+.tm input[type=text]{width:100%;min-width:0;font:700 .95rem var(--body);padding:6px 8px;border:1px solid var(--line);border-radius:6px;background:var(--bg);color:var(--fg)}
+.tm .c{font-size:.8rem;color:var(--muted);white-space:nowrap}
+.opts{display:grid;gap:8px}
+.seg{display:flex;flex-wrap:wrap;gap:6px}
+.seg .btn{padding:6px 10px;font-size:.82rem}
+details summary{cursor:pointer;font-weight:700}
+details ul{margin:6px 0 0 18px;padding:0;font-size:.9rem}
+.log{display:grid;gap:4px;font-size:.85rem;max-height:220px;overflow:auto}
+.log div{display:flex;gap:8px;justify-content:space-between;border-bottom:1px dashed var(--line);padding-bottom:3px}
+.note{font-size:.8rem;color:var(--muted)}
+.hide{display:none!important}
+/* Projection : plus grand, sans contrôles animateur */
+body.proj .anim{display:none!important}
+body.proj .qtext{font-size:2.6rem}
+body.proj .team-big{font-size:2.8rem}
+body.proj .timer .clock{font-size:3.4rem}
+body.proj .wrap{max-width:1400px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="t">
+      <span class="tag">B1A · Concours de vente · Kilomètre Nord</span>
+      <h1>Le jeu du jury</h1>
+      <p class="muted anim">Vue animateur. Projette la vue projection : elle n'affiche jamais le corrigé.</p>
+    </div>
+    <div class="row anim">
+      <a class="btn" id="openProj" href="?vue=projection" target="_blank" rel="noopener">Ouvrir la vue projection</a>
+    </div>
+  </header>
+
+  <main style="display:grid;gap:16px;min-width:0">
+    <section class="card stage" id="stage" aria-live="polite">
+      <div id="stageBody"><p class="empty">Clique sur « Tirer une question » pour commencer.</p></div>
+      <div class="timer" id="timer">
+        <span class="clock" id="clock">45</span>
+        <div class="track"><div class="fill" id="fill"></div></div>
+        <button class="btn anim" id="btnTimer" type="button">Lancer 45 s</button>
+      </div>
+    </section>
+
+    <section class="card anim">
+      <div class="row">
+        <button class="btn main" id="btnDraw" type="button">Tirer une question</button>
+        <button class="btn" id="btnSame" type="button" title="Autre question pour la même équipe">Autre question, même équipe</button>
+        <button class="btn" id="btnReveal" type="button">Afficher le corrigé</button>
+      </div>
+      <div id="answerBox" class="answer hide"></div>
+      <div id="scoring" class="hide" style="display:grid;gap:8px">
+        <h3>Points pour <span id="scTeam"></span></h3>
+        <div class="pts" id="ptsRow">
+          <button class="btn" data-p="0" type="button">0</button>
+          <button class="btn" data-p="1" type="button">1</button>
+          <button class="btn" data-p="2" type="button">2</button>
+          <button class="btn" id="btnBonus" type="button">+1 juré (<span id="bonusTeam"></span>)</button>
+        </div>
+        <div class="row">
+          <button class="btn main" id="btnValid" type="button" disabled>Valider les points</button>
+          <span class="note" id="validNote"></span>
+        </div>
+      </div>
+    </section>
+
+    <section class="card anim">
+      <details>
+        <summary>Fiche de l'équipe tirée : ce que le jury doit chercher</summary>
+        <ul id="teamPoints"></ul>
+      </details>
+    </section>
+  </main>
+
+  <aside style="display:grid;gap:16px;align-content:start;min-width:0">
+    <section class="card">
+      <h2>Scores</h2>
+      <div class="score-list" id="scores"></div>
+      <div class="row anim">
+        <button class="btn" id="btnUndo" type="button">Annuler le dernier</button>
+      </div>
+    </section>
+
+    <section class="card anim">
+      <h2>Réglages</h2>
+      <div class="opts">
+        <h3>Questions</h3>
+        <div class="seg" id="segSource">
+          <button class="btn" data-s="mixte" type="button">Mixte</button>
+          <button class="btn" data-s="equipe" type="button">Équipe seulement</button>
+          <button class="btn" data-s="generique" type="button">Génériques seulement</button>
+        </div>
+        <h3>Familles</h3>
+        <div class="seg" id="segCats"></div>
+        <p class="note" id="poolNote"></p>
+        <h3>Équipes (case = en jeu, clic sur le nombre = forcer le prochain tirage)</h3>
+        <div class="teams" id="teams"></div>
+        <div class="row">
+          <button class="btn" id="btnRecycle" type="button">Remettre les questions jouées</button>
+          <button class="btn danger" id="btnReset" type="button">Nouvelle partie</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="card anim">
+      <h2>Historique</h2>
+      <div class="log" id="log"></div>
+    </section>
+  </aside>
+</div>
+
+<script src="questions.js"></script>
+<script>
+(function(){
+  "use strict";
+  var CATS = window.JURY_CATS, EQ = window.JURY_EQUIPES, QS = window.JURY_QUESTIONS;
+  var PROJ = /[?&]vue=projection\b/.test(location.search);
+  if (PROJ) document.body.classList.add("proj");
+  var KEY = "kn-jeu-jury-v1", DUREE = 45;
+  var QBY = {}; QS.forEach(function(q){ QBY[q.id] = q; });
+
+  function fresh(){
+    var teams = {};
+    EQ.forEach(function(e){ teams[e.id] = { actif: true, nom: e.nom, score: 0 }; });
+    return { teams: teams, used: [], log: [], cur: null, source: "mixte", cats: Object.keys(CATS), force: null };
+  }
+  function load(){
+    var s = null;
+    try { s = JSON.parse(localStorage.getItem(KEY)); } catch (e) { s = null; }
+    var f = fresh();
+    if (!s || typeof s !== "object") return f;
+    // fusion : une équipe ajoutée dans questions.js apparaît sans perdre la partie
+    EQ.forEach(function(e){ if (!s.teams || !s.teams[e.id]) { s.teams = s.teams || {}; s.teams[e.id] = f.teams[e.id]; } });
+    ["used","log","cats"].forEach(function(k){ if (!Array.isArray(s[k])) s[k] = f[k]; });
+    if (!s.source) s.source = "mixte";
+    return s;
+  }
+  var S = load();
+  function save(){ try { localStorage.setItem(KEY, JSON.stringify(S)); } catch (e) {} }
+
+  var $ = function(id){ return document.getElementById(id); };
+  function el(tag, cls, txt){ var n = document.createElement(tag); if (cls) n.className = cls; if (txt != null) n.textContent = txt; return n; }
+  function nom(id){ return (S.teams[id] && S.teams[id].nom) || id; }
+  function actives(){ return EQ.map(function(e){ return e.id; }).filter(function(id){ return S.teams[id] && S.teams[id].actif; }); }
+  function pick(a){ return a[Math.floor(Math.random() * a.length)]; }
+  function asked(id){ return S.log.filter(function(l){ return l.equipe === id; }).length; }
+
+  function pool(team){
+    var used = {}; S.used.forEach(function(id){ used[id] = 1; });
+    var ok = function(q){ return !used[q.id] && S.cats.indexOf(q.cat) >= 0; };
+    var spec = QS.filter(function(q){ return q.equipe === team && ok(q); });
+    var gen = QS.filter(function(q){ return q.equipe === null && ok(q); });
+    return { spec: spec, gen: gen };
+  }
+  function lastCat(team){
+    for (var i = S.log.length - 1; i >= 0; i--) if (S.log[i].equipe === team) return QBY[S.log[i].qid] && QBY[S.log[i].qid].cat;
+    return null;
+  }
+  function chooseQ(team){
+    var p = pool(team), list;
+    if (S.source === "equipe") list = p.spec;
+    else if (S.source === "generique") list = p.gen;
+    else list = (p.spec.length && (Math.random() < 0.6 || !p.gen.length)) ? p.spec : p.gen;
+    if (!list.length) return null;
+    var lc = lastCat(team), other = list.filter(function(q){ return q.cat !== lc; });
+    return pick(other.length ? other : list);
+  }
+  function draw(sameTeam){
+    var act = actives();
+    if (!act.length) return;
+    var team;
+    if (sameTeam && S.cur) team = S.cur.equipe;
+    else if (S.force && act.indexOf(S.force) >= 0) team = S.force;
+    else {
+      var min = Math.min.apply(null, act.map(asked));
+      var cand = act.filter(function(id){ return asked(id) === min; });
+      if (S.cur && cand.length > 1) cand = cand.filter(function(id){ return id !== S.cur.equipe; });
+      team = pick(cand);
+    }
+    S.force = null;
+    var q = chooseQ(team);
+    var others = act.filter(function(id){ return id !== team; });
+    S.cur = q ? { equipe: team, qid: q.id, jure: others.length ? pick(others) : null, start: null, reveal: false, pts: null, bonus: false, done: false }
+              : { equipe: team, qid: null };
+    if (q) S.used.push(q.id);
+    save(); render();
+  }
+
+  function renderStage(){
+    var b = $("stageBody"); b.textContent = "";
+    var c = S.cur;
+    var stage = $("stage");
+    if (!c) { b.appendChild(el("p", "empty", "Clique sur « Tirer une question » pour commencer.")); stage.style.borderLeftColor = ""; return; }
+    var q = c.qid ? QBY[c.qid] : null;
+    var meta = el("div", "meta");
+    meta.appendChild(el("span", "team-big", nom(c.equipe)));
+    if (q) {
+      meta.appendChild(el("span", "chip c" + q.cat, CATS[q.cat]));
+      meta.appendChild(el("span", "muted", q.equipe ? "Question spécifique · " + q.id : "Question générique · " + q.id));
+    }
+    b.appendChild(meta);
+    if (c.jure) { var j = el("p", "jure"); j.append("Posée par le juré de "); j.appendChild(el("b", null, nom(c.jure))); j.append(" · le juré choisit qui répond"); b.appendChild(j); }
+    if (!q) { b.appendChild(el("p", "empty", "Plus de question disponible pour cette équipe avec ces réglages. Remets les questions jouées ou élargis les familles.")); stage.style.borderLeftColor = ""; return; }
+    stage.style.borderLeftColor = "var(--c" + q.cat + ")";
+    b.appendChild(el("p", "qtext", q.q));
+  }
+  function renderAnswer(){
+    var c = S.cur, q = c && c.qid ? QBY[c.qid] : null;
+    var box = $("answerBox"), sc = $("scoring");
+    $("btnReveal").disabled = !q; $("btnSame").disabled = !c;
+    if (!q) { box.classList.add("hide"); sc.classList.add("hide"); return; }
+    $("btnReveal").textContent = c.reveal ? "Masquer le corrigé" : "Afficher le corrigé";
+    box.textContent = "";
+    if (c.reveal) {
+      box.appendChild(el("span", "lab", "Réponse attendue"));
+      box.appendChild(el("p", null, q.r));
+      var cr = el("p", "crit"); cr.textContent = "2 pts si " + q.p; box.appendChild(cr);
+      box.classList.remove("hide");
+    } else box.classList.add("hide");
+    sc.classList.remove("hide");
+    $("scTeam").textContent = nom(c.equipe);
+    $("bonusTeam").textContent = c.jure ? nom(c.jure) : "—";
+    $("btnBonus").disabled = !c.jure || c.done;
+    $("btnBonus").classList.toggle("on", !!c.bonus);
+    Array.prototype.forEach.call($("ptsRow").querySelectorAll("[data-p]"), function(x){
+      x.classList.toggle("on", c.pts === +x.dataset.p); x.disabled = c.done;
+    });
+    $("btnValid").disabled = c.pts == null || c.done;
+    $("validNote").textContent = c.done ? "Points enregistrés." : (c.pts == null ? "Choisis 0, 1 ou 2." : "");
+  }
+  function renderScores(){
+    var box = $("scores"); box.textContent = "";
+    var act = EQ.map(function(e){ return e.id; });
+    var max = Math.max.apply(null, act.map(function(id){ return S.teams[id].score; }).concat([1]));
+    act.slice().sort(function(a, b){ return S.teams[b].score - S.teams[a].score; }).forEach(function(id){
+      if (!S.teams[id].actif) return;
+      var r = el("div", "sc" + (S.cur && S.cur.equipe === id ? " cur" : ""));
+      r.appendChild(el("span", "n", nom(id)));
+      r.appendChild(el("span", "v", String(S.teams[id].score)));
+      var bar = el("div", "bar"), i = el("i"); i.style.width = (100 * S.teams[id].score / max) + "%"; bar.appendChild(i); r.appendChild(bar);
+      box.appendChild(r);
+    });
+  }
+  function renderSettings(){
+    Array.prototype.forEach.call($("segSource").children, function(x){ x.classList.toggle("on", x.dataset.s === S.source); });
+    var sc = $("segCats"); sc.textContent = "";
+    Object.keys(CATS).forEach(function(k){
+      var bt = el("button", "btn" + (S.cats.indexOf(k) >= 0 ? " on" : ""), CATS[k]); bt.type = "button";
+      bt.onclick = function(){ var i = S.cats.indexOf(k); if (i >= 0) { if (S.cats.length > 1) S.cats.splice(i, 1); } else S.cats.push(k); save(); render(); };
+      sc.appendChild(bt);
+    });
+    var tb = $("teams"); tb.textContent = "";
+    EQ.forEach(function(e){
+      var t = S.teams[e.id], row = el("div", "tm");
+      var cb = el("input"); cb.type = "checkbox"; cb.checked = t.actif; cb.setAttribute("aria-label", "En jeu : " + t.nom);
+      cb.onchange = function(){ t.actif = cb.checked; save(); render(); };
+      var nm = el("input"); nm.type = "text"; nm.value = t.nom; nm.setAttribute("aria-label", "Nom de l'équipe");
+      nm.onchange = function(){ t.nom = nm.value.trim() || e.nom; save(); render(); };
+      var nspec = QS.filter(function(q){ return q.equipe === e.id; }).length;
+      var c = el("button", "btn" + (S.force === e.id ? " on" : ""), asked(e.id) + " q. · " + nspec + " spé."); c.type = "button";
+      c.title = "Forcer le prochain tirage sur cette équipe";
+      c.onclick = function(){ S.force = S.force === e.id ? null : e.id; save(); render(); };
+      row.appendChild(cb); row.appendChild(nm); row.appendChild(c); tb.appendChild(row);
+    });
+    var left = QS.length - S.used.length;
+    $("poolNote").textContent = left + " questions non jouées sur " + QS.length + ".";
+    var tp = $("teamPoints"); tp.textContent = "";
+    var eq = S.cur && EQ.filter(function(e){ return e.id === S.cur.equipe; })[0];
+    (eq ? eq.points : ["Aucune équipe tirée."]).forEach(function(x){ tp.appendChild(el("li", null, x)); });
+    var lg = $("log"); lg.textContent = "";
+    S.log.slice().reverse().forEach(function(l){
+      var d = el("div"); d.appendChild(el("span", null, nom(l.equipe) + " · " + l.qid)); d.appendChild(el("b", null, l.pts + (l.bonus ? " (+1 " + nom(l.jure) + ")" : ""))); lg.appendChild(d);
+    });
+    if (!S.log.length) lg.appendChild(el("p", "note", "Aucun point enregistré."));
+  }
+  var tick = null;
+  function renderTimer(){
+    var c = S.cur, left = DUREE;
+    if (c && c.start) left = Math.max(0, DUREE - Math.floor((Date.now() - c.start) / 1000));
+    $("clock").textContent = String(left);
+    $("fill").style.width = (100 * left / DUREE) + "%";
+    $("timer").classList.toggle("late", !!(c && c.start) && left <= 10);
+    $("btnTimer").textContent = c && c.start ? "Relancer 45 s" : "Lancer 45 s";
+    $("btnTimer").disabled = !(c && c.qid);
+    if (c && c.start && left > 0) { if (!tick) tick = setInterval(renderTimer, 250); }
+    else if (tick) { clearInterval(tick); tick = null; }
+  }
+  function render(){ renderStage(); if (!PROJ) { renderAnswer(); renderSettings(); } renderScores(); renderTimer(); }
+
+  // actions animateur
+  $("btnDraw").onclick = function(){ draw(false); };
+  $("btnSame").onclick = function(){ draw(true); };
+  $("btnReveal").onclick = function(){ if (S.cur) { S.cur.reveal = !S.cur.reveal; save(); render(); } };
+  $("btnTimer").onclick = function(){ if (S.cur) { S.cur.start = Date.now(); save(); render(); } };
+  Array.prototype.forEach.call($("ptsRow").querySelectorAll("[data-p]"), function(x){
+    x.onclick = function(){ if (S.cur && !S.cur.done) { S.cur.pts = +x.dataset.p; save(); render(); } };
+  });
+  $("btnBonus").onclick = function(){ if (S.cur && !S.cur.done) { S.cur.bonus = !S.cur.bonus; save(); render(); } };
+  $("btnValid").onclick = function(){
+    var c = S.cur; if (!c || c.pts == null || c.done) return;
+    S.teams[c.equipe].score += c.pts;
+    if (c.bonus && c.jure) S.teams[c.jure].score += 1;
+    S.log.push({ equipe: c.equipe, qid: c.qid, pts: c.pts, bonus: !!c.bonus, jure: c.jure, t: Date.now() });
+    c.done = true; save(); render();
+  };
+  $("btnUndo").onclick = function(){
+    var l = S.log.pop(); if (!l) return;
+    S.teams[l.equipe].score -= l.pts;
+    if (l.bonus && l.jure) S.teams[l.jure].score -= 1;
+    if (S.cur && S.cur.qid === l.qid) S.cur.done = false;
+    save(); render();
+  };
+  Array.prototype.forEach.call($("segSource").children, function(x){ x.onclick = function(){ S.source = x.dataset.s; save(); render(); }; });
+  $("btnRecycle").onclick = function(){ S.used = S.cur && S.cur.qid ? [S.cur.qid] : []; save(); render(); };
+  var armed = false;
+  $("btnReset").onclick = function(){
+    if (!armed) { armed = true; $("btnReset").textContent = "Confirmer : tout remettre à zéro"; setTimeout(function(){ armed = false; $("btnReset").textContent = "Nouvelle partie"; }, 4000); return; }
+    armed = false; var keep = {}; EQ.forEach(function(e){ keep[e.id] = S.teams[e.id].nom; });
+    S = fresh(); EQ.forEach(function(e){ S.teams[e.id].nom = keep[e.id]; });
+    $("btnReset").textContent = "Nouvelle partie"; save(); render();
+  };
+  document.addEventListener("keydown", function(ev){
+    if (PROJ || /INPUT|TEXTAREA/.test((ev.target || {}).tagName || "")) return;
+    if (ev.key === "c" || ev.key === "C") $("btnReveal").click();
+    if (ev.key === "t" || ev.key === "T") $("btnTimer").click();
+    if (ev.key === "Enter" && !ev.ctrlKey && document.activeElement === document.body) $("btnDraw").click();
+  });
+  // synchro entre fenêtres (vue animateur ↔ vue projection)
+  window.addEventListener("storage", function(ev){ if (ev.key === KEY) { S = load(); render(); } });
+  render();
+})();
+</script>
+</body>
+</html>
