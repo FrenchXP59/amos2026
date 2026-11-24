@@ -207,10 +207,11 @@ window.CONTENT = {
     ["Marge brute", "Prix de vente HT moins prix d'achat HT."]
   ]),
   /* Documents proposés au téléchargement directement dans l'étape (clé = id de l'étape). */
-  docsEtapes: {"argumentaire": ["fiches-methode", "sujet-kilometre-nord"], "leviers": ["negociation-sans-perdre"], "plan": ["negociation-sans-perdre", "grille-jury"]},
+  docsEtapes: {"argumentaire": ["fiches-methode", "sujet-kilometre-nord"], "leviers": ["negociation-sans-perdre", "calcul-prix"], "plan": ["calcul-prix", "negociation-sans-perdre", "grille-jury"]},
   /* Séance 3 : support « Négocier sans perdre » (prix TTC → HT, plafond de l'acheteur, zone d'accord, escalier des concessions). */
   ressources: KN.ressources.concat([
-    { titre: "Négocier sans perdre : prix, marge et concessions", fichier: "../concours-vente/ressources/negociation-sans-perdre.pdf", type: "PDF", dispo: true }
+    { titre: "Négocier sans perdre : prix, marge et concessions", fichier: "../concours-vente/ressources/negociation-sans-perdre.pdf", type: "PDF", dispo: true },
+    { titre: "Calculateur de prix et zone d'accord", fichier: "https://amos-box-2026.horizonduo.net/apps/calcul-prix/index.html", type: "Appli", dispo: true }
   ]),
   actus: []
 };

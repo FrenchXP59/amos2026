@@ -202,7 +202,9 @@ window.CONTENT = {
     ["Auto-évaluation", "Évaluation de sa propre prestation avec la grille du jury, pour fixer ses priorités."]
   ]),
   /* Documents proposés au téléchargement directement dans l'étape (clé = id de l'étape). */
-  docsEtapes: {"techniques": ["fiche-objections"], "autoeval": ["grille-auto-evaluation"]},
-  ressources: KN.ressources,
+  docsEtapes: {"techniques": ["fiche-objections"], "duel": ["calcul-prix"], "simulations": ["calcul-prix"], "autoeval": ["grille-auto-evaluation"]},
+  ressources: KN.ressources.concat([
+    { titre: "Calculateur de prix et zone d'accord (1 à 3 produits)", fichier: "https://amos-box-2026.horizonduo.net/apps/calcul-prix/index.html", type: "Appli", dispo: true }
+  ]),
   actus: []
 };

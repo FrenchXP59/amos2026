@@ -1091,7 +1091,7 @@
     <header class="page-head"><h1>Ressources</h1><p class="lede">Les documents de la séance, à télécharger.</p></header>
     <div class="res-list">${C.ressources.map((r) => `
       <div class="res"><span class="type">${esc(r.type)}</span><strong>${esc(r.titre)}</strong>
-        ${r.dispo ? `<a class="btn small lamp" href="${esc(r.fichier)}" download>Télécharger</a>` : `<span class="soon">Disponible après la séance</span>`}
+        ${r.dispo ? `<a class="btn small lamp" href="${esc(r.fichier)}" ${/^https:\/\//.test(r.fichier) ? 'target="_blank" rel="noopener">Ouvrir' : "download>Télécharger"}</a>` : `<span class="soon">Disponible après la séance</span>`}
       </div>`).join("")}</div>
     ${(C.actus || []).length ? `<section class="section"><h2>Les sources</h2>
       <ul>${C.actus.map((a) => `<li><a href="${esc(a.src)}" target="_blank" rel="noopener">${esc(a.titre)}</a> <span class="muted">(${esc(a.date)}, ${esc(a.srcNom)})</span></li>`).join("")}</ul>
