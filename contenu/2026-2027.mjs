@@ -449,7 +449,8 @@ export default {
           "date": "2026-11-25",
           "heure": "13:30–17:00",
           "titre": "Recommandation, charte IA d'équipe et comité de direction",
-          "video": "",
+          "video": "https://youtu.be/CWgEGPNacEc",
+          "videoSuite": "debat",
           "apps": [
             {
               "outil": "appli-ia-productivite",
@@ -488,7 +489,8 @@ export default {
           "date": "2026-11-26",
           "heure": "13:30–17:00",
           "titre": "Recommandation, charte IA d'équipe et comité de direction",
-          "video": "",
+          "video": "https://youtu.be/CWgEGPNacEc",
+          "videoSuite": "debat",
           "apps": [
             {
               "outil": "appli-ia-productivite",

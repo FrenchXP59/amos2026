@@ -32,7 +32,7 @@
       tirageNote: "Les cellules de la séance 1, avec leurs points. Pour corriger un nom : clic sur les scores."
     },
 
-    videos: { s1: { titre: "Manager une équipe augmentée", duree: "4 à 5 min", url: "" } },
+    videos: { s1: { titre: "Manager une équipe augmentée", duree: "4 min 50", url: "https://youtu.be/CWgEGPNacEc" } },
 
     parcours: [
       { id: "accueil", heure: "13:30", duree: 10, titre: "Retour au club", sous: "Cellules et programme" },
