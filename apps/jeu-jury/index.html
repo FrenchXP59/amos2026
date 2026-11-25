@@ -198,6 +198,8 @@ body.proj .wrap{max-width:1400px}
     if (!s || typeof s !== "object") return f;
     // fusion : une équipe ajoutée dans questions.js apparaît sans perdre la partie
     EQ.forEach(function(e){ if (!s.teams || !s.teams[e.id]) { s.teams = s.teams || {}; s.teams[e.id] = f.teams[e.id]; } });
+    // nom provisoire remplacé par le vrai nom de l'équipe (ex. « Équipe 5 » → « EWA »)
+    EQ.forEach(function(e){ var t = s.teams[e.id]; if (t && /^Équipe \d$/.test(t.nom) && t.nom !== e.nom) t.nom = e.nom; });
     ["used","log","cats"].forEach(function(k){ if (!Array.isArray(s[k])) s[k] = f[k]; });
     if (!s.source) s.source = "mixte";
     return s;
