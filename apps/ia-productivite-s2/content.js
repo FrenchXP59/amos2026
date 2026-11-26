@@ -236,12 +236,14 @@
 
     /* Documents proposés au téléchargement directement dans l'étape (clé = id de l'étape). */
 
-    docsEtapes: {"modele": ["fiche-modelisation"], "charte": ["modele-charte-ia"], "cas": ["grille-evaluation"]},
+    docsEtapes: {"modele": ["fiche-modelisation", "dossier-nordval.pdf", "dossier-nordval.md"], "audit": ["dossier-nordval.pdf", "dossier-nordval.md"], "charte": ["modele-charte-ia"], "cas": ["grille-evaluation", "dossier-nordval.pdf"]},
 
     ressources: [
       { titre: "Fiche méthode : modéliser un scénario avec l'IA", fichier: "ressources/fiche-modelisation.pdf", type: "PDF", dispo: true },
       { titre: "Modèle de charte d'usage de l'IA", fichier: "ressources/modele-charte-ia.pdf", type: "PDF", dispo: true },
-      { titre: "Grille d'évaluation et barème", fichier: "../ia-productivite/ressources/grille-evaluation.pdf", type: "PDF", dispo: true }
+      { titre: "Grille d'évaluation et barème", fichier: "../ia-productivite/ressources/grille-evaluation.pdf", type: "PDF", dispo: true },
+      { titre: "Dossier Olympique Nordval", fichier: "../ia-productivite/ressources/dossier-nordval.pdf", type: "PDF", dispo: true },
+      { titre: "Dossier Olympique Nordval (texte à copier)", fichier: "ressources/dossier-nordval.md", type: "Texte", dispo: true }
     ],
 
     actus: [
