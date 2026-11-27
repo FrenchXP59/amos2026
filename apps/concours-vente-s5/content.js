@@ -34,15 +34,10 @@ window.CONTENT = {
     { id: "accueil", heure: "9:00", duree: 10, titre: "Jour J", sous: "Les équipes, la journée" },
     { id: "jourj", type: "fiches", data: "jourJ", heure: "9:10", duree: 15, titre: "Le concours, mode d'emploi", sous: "Déroulé, livrables, règles",
       lede: "Tout ce qu'il faut savoir pour cet après-midi. Aucune surprise sur l'organisation : les seules surprises seront le profil de l'acheteur et l'objection." },
-    { id: "repetition", type: "tour", data: "repetition", heure: "9:25", duree: 85, titre: "Répétition générale", sous: "Dans l'ordre officiel",
-      lede: "On tire l'ordre de passage, puis chaque équipe passe en conditions réelles. C'est le même ordre cet après-midi." },
-    { id: "pause", heure: "10:50", duree: 15, titre: "Pause", sous: "Ravitaillement" },
-    { id: "reflexive", type: "fiches", data: "noteReflexive", heure: "11:05", duree: 35, titre: "La note réflexive", sous: "4 points individuels, sans IA",
-      lede: "Seul, à la main, sans IA ni téléphone : 30 minutes, une page. Elle est ramassée à la fin du temps." },
-    { id: "reglages", type: "cas", heure: "11:40", duree: 40, titre: "Derniers réglages", sous: "Corriger, imprimer, répéter",
-      lede: "Ce que la répétition a révélé se corrige maintenant. Puis on imprime, et on répète les relais." },
-    { id: "checklist", type: "fiches", data: "checklist", heure: "12:20", duree: 10, titre: "La check-list", sous: "Avant de partir déjeuner",
-      lede: "Cochez tout, ou revenez en avance à 13h15." }
+    { id: "repetition", type: "tour", data: "repetition", heure: "9:25", duree: 150, titre: "Les passages", sous: "30 minutes par équipe",
+      lede: "On tire l'ordre de passage, puis chaque équipe passe : 15 minutes d'épreuve, puis 15 minutes d'échanges et de délibération du jury." },
+    { id: "reflexive", type: "fiches", data: "noteReflexive", heure: "11:55", duree: 35, titre: "La note réflexive", sous: "Individuelle, sur papier, sans IA",
+      lede: "Seul, à la main, sans IA ni téléphone : 30 minutes. Le sujet est distribué sur papier et ramassé à la fin du temps." }
   ],
 
   /* ---------- Le concours, mode d'emploi ---------- */
@@ -64,15 +59,15 @@ window.CONTENT = {
 
   /* ---------- Répétition générale ---------- */
   repetition: {
-    intro: "Tirez d'abord l'ordre de passage, puis faites passer les équipes dans cet ordre. 15 minutes chacune : le simulateur pour les 12 minutes de soutenance, puis 3 minutes de retours.",
+    intro: "Tirez d'abord l'ordre de passage, puis faites passer les équipes dans cet ordre. 30 minutes par équipe : 15 minutes d'épreuve (pitch 2 min, négociation 10 min avec l'objection vers la 7e minute, questions du jury 3 min), puis 15 minutes d'échanges et de délibération. 5 équipes : 2 h 30.",
     ordre: true,
     minutes: 15,
     simulateur: true,
-    questionsTitre: "Les retours, en 3 minutes",
+    questionsTitre: "Échanges et délibération, 15 minutes",
     questions: [
-      "Une chose à garder absolument.",
-      "Une chose à corriger avant cet après-midi.",
-      "Le pitch tient-il dans les 2 minutes ? Tout le monde a-t-il parlé ?"
+      "Retours à l'équipe : une chose à garder, une chose à corriger.",
+      "L'acheteur révèle son profil ; l'équipe dit à quels indices elle l'a repéré.",
+      "L'équipe sort ; le jury délibère et note sur la grille avant d'appeler l'équipe suivante."
     ],
     award: false
   },
@@ -86,10 +81,18 @@ window.CONTENT = {
   },
 
   methodes: KN.methodes,
-  noteReflexive: Object.assign({}, KN.noteReflexive, {
-    intro: "Individuelle, à la main, sans IA ni téléphone : 30 minutes, une page. Nom, prénom et équipe en haut de la feuille. Vos documents d'équipe (auto-évaluation, feuille de route) sont autorisés.",
+  noteReflexive: {
+    intro: "Individuelle, à la main, sans IA ni téléphone : 30 minutes. Le sujet est distribué sur papier.",
+    items: [
+      { sigle: "1", titre: "Avant de commencer", sous: "Sur la feuille du sujet",
+        points: ["Nom, prénom, équipe et date en haut de la feuille.", "Téléphone éteint et rangé. Calculatrice autorisée."] },
+      { sigle: "2", titre: "Pendant l'épreuve", sous: "30 minutes",
+        points: ["Répondez sous chaque question, dans les cadres prévus.", "Pour les calculs, montrez chaque étape."] },
+      { sigle: "3", titre: "À la fin", sous: "Copie ramassée",
+        points: ["La copie est ramassée à la fin du temps, même incomplète."] }
+    ],
     chrono: 30
-  }),
+  },
   client: Object.assign({}, KN.client, {
     arrivee: "Séance 5 : la répétition générale",
     teaser: "Dernière matinée avant le concours : ordre de passage, répétition en conditions réelles, derniers réglages. Le concours a lieu {concours}.",
@@ -107,7 +110,7 @@ window.CONTENT = {
   jury: KN.jury,
   glossaire: KN.glossaire,
   /* Documents proposés au téléchargement directement dans l'étape (clé = id de l'étape). */
-  docsEtapes: {"jourj": ["grille-jury"], "reflexive": ["note-reflexive"]},
-  ressources: KN.ressources,
+  docsEtapes: {"jourj": ["grille-jury"]},
+  ressources: KN.ressources.filter((r) => !/note-reflexive/.test(r.fichier || "")),
   actus: []
 };
